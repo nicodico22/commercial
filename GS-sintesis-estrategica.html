@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Síntesis Estratégica — Glamping Soul</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Mono:wght@300;400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --charcoal: #1e1e1e;
+  --olive: #5C6229;
+  --olive-dark: #3d4319;
+  --burgundy: #6B2D2D;
+  --navy: #2C3E50;
+  --teal: #1a5c5c;
+  --gold: #9a8c5a;
+  --gold-light: #c4b87a;
+  --linen: #F5F0E8;
+  --linen2: #e8e2d6;
+  --linen3: #ddd7c9;
+  --text: #2B2B2B;
+  --muted: #6b6458;
+  --cream: #f8f4e8;
+  --red-soft: #f5eaea;
+  --green-soft: #eef0e4;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--linen);
+  color: var(--text);
+  font-family: 'Libre Baskerville', serif;
+  font-size: 16px;
+  line-height: 1.8;
+  overflow-x: hidden;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--linen2); }
+::-webkit-scrollbar-thumb { background: var(--gold); }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  padding: 20px 6vw;
+  display: flex; justify-content: space-between; align-items: center;
+  transition: all .5s ease;
+}
+nav.scrolled {
+  background: rgba(30,30,30,.97);
+  backdrop-filter: blur(16px);
+  padding: 14px 6vw;
+  border-bottom: 1px solid rgba(154,140,90,.2);
+}
+.nav-logo {
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  letter-spacing: .3em; color: var(--gold); text-decoration: none;
+  text-transform: uppercase;
+}
+.nav-links { display: flex; gap: 36px; list-style: none; }
+.nav-links a {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: .15em; color: rgba(245,240,232,.4);
+  text-decoration: none; text-transform: uppercase; transition: color .3s;
+}
+.nav-links a:hover { color: var(--gold); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh; background: var(--charcoal);
+  display: grid; grid-template-columns: 1fr 1fr;
+  position: relative; overflow: hidden;
+}
+.hero-left {
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 12vh 6vw 10vh;
+  position: relative; z-index: 2;
+}
+.hero-right {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 12vh 8vw 10vh 4vw;
+  border-left: 1px solid rgba(154,140,90,.2);
+  position: relative; z-index: 2;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 30% 70%, rgba(92,98,41,.08) 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 20%, rgba(44,62,80,.1) 0%, transparent 60%);
+}
+.eyebrow {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: .3em; color: var(--gold); text-transform: uppercase;
+  margin-bottom: 24px; opacity: 0;
+  animation: fadeUp .8s ease .3s forwards;
+}
+.hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(48px, 7.5vw, 96px); font-weight: 300;
+  line-height: .92; color: var(--linen);
+  opacity: 0; animation: fadeUp .8s ease .5s forwards;
+}
+.hero-title em { font-style: italic; color: var(--gold); }
+.hero-subtitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(16px, 2vw, 22px); font-weight: 300;
+  font-style: italic; color: rgba(245,240,232,.5);
+  margin-top: 20px;
+  opacity: 0; animation: fadeUp .8s ease .7s forwards;
+}
+
+/* Hero right: KPIs */
+.hero-kpis { display: flex; flex-direction: column; gap: 28px; }
+.kpi {
+  opacity: 0; animation: fadeUp .8s ease var(--d) forwards;
+  padding-bottom: 28px; border-bottom: 1px solid rgba(154,140,90,.15);
+}
+.kpi:last-child { border-bottom: none; padding-bottom: 0; }
+.kpi-val {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(36px, 5vw, 60px); font-weight: 300;
+  color: var(--gold); line-height: 1;
+}
+.kpi-lbl {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: .15em; color: rgba(245,240,232,.4);
+  text-transform: uppercase; margin-top: 4px;
+}
+.hero-scroll {
+  position: absolute; bottom: 40px; left: 6vw;
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: .2em; color: rgba(245,240,232,.25);
+  display: flex; align-items: center; gap: 16px; text-transform: uppercase;
+  opacity: 0; animation: fadeUp .8s ease 1.2s forwards;
+}
+.hero-scroll::after { content: ''; width: 40px; height: 1px; background: rgba(245,240,232,.25); }
+
+/* ── ALERT BAND ── */
+.alert-band {
+  background: var(--burgundy); padding: 28px 6vw;
+  display: flex; align-items: center; gap: 24px;
+}
+.alert-icon {
+  font-family: 'DM Mono', monospace; font-size: 22px;
+  color: rgba(245,240,232,.5); flex-shrink: 0;
+}
+.alert-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(15px, 2vw, 20px); font-style: italic;
+  color: var(--linen); line-height: 1.5;
+}
+.alert-text strong { font-style: normal; color: var(--gold-light); }
+
+/* ── SECTIONS ── */
+.section { padding: 100px 6vw; }
+.section-dark { background: var(--charcoal); }
+.section-olive { background: var(--olive); }
+.section-linen2 { background: var(--linen2); }
+
+.section-label {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: .3em; color: var(--gold); text-transform: uppercase;
+  margin-bottom: 12px; display: flex; align-items: center; gap: 16px;
+}
+.section-label::after { content: ''; height: 1px; width: 40px; background: var(--gold); opacity: .5; }
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(32px, 5vw, 60px); font-weight: 300; line-height: 1.05;
+  margin-bottom: 40px;
+}
+.section-title em { font-style: italic; color: var(--olive); }
+.section-title-linen { color: var(--linen); }
+.section-title-linen em { color: var(--gold); }
+
+/* ── THREAT TABLE ── */
+.threat-table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 14px; }
+.threat-table thead th {
+  font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: .2em;
+  text-transform: uppercase; padding: 12px 16px; text-align: left;
+  background: var(--charcoal); color: var(--gold);
+  border-bottom: 1px solid rgba(154,140,90,.4);
+}
+.threat-table tbody tr { border-bottom: 1px solid rgba(43,43,43,.08); transition: background .2s; }
+.threat-table tbody tr:hover td { background: rgba(92,98,41,.04); }
+.threat-table tbody td { padding: 12px 16px; vertical-align: top; line-height: 1.5; }
+.threat-table tbody td:first-child { font-weight: 700; font-size: 13px; }
+.badge {
+  display: inline-block; font-family: 'DM Mono', monospace;
+  font-size: 8px; letter-spacing: .1em; padding: 4px 10px;
+  text-transform: uppercase; color: var(--linen);
+}
+.badge-critical { background: var(--burgundy); }
+.badge-high     { background: #8B4513; }
+.badge-mhigh    { background: #7a6020; }
+.badge-mid      { background: var(--navy); }
+.badge-low      { background: var(--muted); }
+.row-critical td { background: rgba(107,45,45,.04) !important; }
+
+/* ── PRICE BAR CHART ── */
+.price-chart { margin-top: 32px; display: flex; flex-direction: column; gap: 0; }
+.price-segment-label {
+  font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: .2em;
+  text-transform: uppercase; color: var(--linen); padding: 8px 16px;
+}
+.price-row {
+  display: grid; grid-template-columns: 220px 1fr 120px;
+  align-items: center; gap: 16px; padding: 8px 16px;
+  border-bottom: 1px solid rgba(255,255,255,.05);
+}
+.price-row:hover { background: rgba(255,255,255,.03); }
+.price-row.gs-row { background: rgba(154,140,90,.12) !important; }
+.price-name { font-size: 13px; color: var(--linen); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.price-name.gs-name { color: var(--gold); font-weight: 700; }
+.price-bar-wrap { height: 12px; background: rgba(255,255,255,.06); border-radius: 2px; overflow: hidden; }
+.price-bar { height: 100%; border-radius: 2px; transition: width .5s ease; }
+.price-val { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); text-align: right; }
+.price-val.gs-val { color: var(--gold); font-weight: 500; }
+
+/* ── AGENCY GRID ── */
+.agency-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px,1fr)); gap: 2px; margin-top: 32px; }
+.agency-card { padding: 28px 24px; background: var(--linen); position: relative; overflow: hidden; }
+.agency-card::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+}
+.agency-card.p1::before { background: var(--burgundy); }
+.agency-card.p2::before { background: #8B4513; }
+.agency-card.p3::before { background: var(--olive); }
+.agency-name { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.agency-market { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: .1em; color: var(--muted); text-transform: uppercase; margin-bottom: 12px; }
+.agency-covers { font-size: 12px; color: var(--muted); line-height: 1.6; margin-bottom: 12px; }
+.agency-prio {
+  font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: .1em;
+  padding: 3px 10px; text-transform: uppercase; display: inline-block;
+}
+.prio-urgent { background: var(--burgundy); color: var(--linen); }
+.prio-high   { background: #8B4513; color: var(--linen); }
+.prio-mid    { background: var(--navy); color: var(--linen); }
+.no-gs { color: var(--burgundy); font-family: 'DM Mono', monospace; font-size: 10px; margin-top: 8px; display: block; }
+
+/* ── BRAND DNA TABLE ── */
+.dna-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 24px; }
+.dna-table th {
+  font-family: 'DM Mono', monospace; font-size: 7px; letter-spacing: .2em;
+  text-transform: uppercase; padding: 10px 10px; background: var(--charcoal); color: var(--gold);
+  text-align: center; border-right: 1px solid rgba(255,255,255,.06);
+}
+.dna-table th:first-child { text-align: left; }
+.dna-table td {
+  padding: 10px; text-align: center; vertical-align: middle; line-height: 1.4;
+  border-bottom: 1px solid rgba(43,43,43,.06); border-right: 1px solid rgba(43,43,43,.04);
+}
+.dna-table td:first-child { text-align: left; font-size: 11px; color: var(--muted); font-family: 'DM Mono', monospace; letter-spacing: .05em; }
+.dna-table tr:nth-child(even) td { background: rgba(43,43,43,.02); }
+.dna-table tr:hover td { background: rgba(92,98,41,.04); }
+.dna-gs { background: rgba(154,140,90,.1) !important; }
+.dna-gs td { color: var(--gold) !important; font-weight: 600; }
+.stars { color: var(--olive); letter-spacing: 1px; }
+
+/* ── DIFFERENTIALS ── */
+.diff-grid { display: flex; flex-direction: column; gap: 2px; margin-top: 32px; }
+.diff-item {
+  display: grid; grid-template-columns: 56px 1fr;
+  transition: transform .2s;
+}
+.diff-item:hover { transform: translateX(4px); }
+.diff-num {
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Mono', monospace; font-size: 18px;
+  color: rgba(245,240,232,.3);
+}
+.diff-content { padding: 24px 28px; }
+.diff-title { font-size: 16px; font-weight: 600; color: var(--linen); margin-bottom: 8px; line-height: 1.3; }
+.diff-body { font-size: 13px; color: rgba(245,240,232,.55); line-height: 1.7; }
+.diff-evidence { font-family: 'DM Mono', monospace; font-size: 9px; color: rgba(154,140,90,.6); margin-top: 10px; line-height: 1.5; }
+.d-olive    { background: var(--olive); }
+.d-navy     { background: var(--navy); }
+.d-burgundy { background: var(--burgundy); }
+.d-dark     { background: #2a2a2a; }
+.d-teal     { background: var(--teal); }
+
+/* ── ALERTS ── */
+.alerts-list { display: flex; flex-direction: column; gap: 2px; margin-top: 32px; }
+.alert-card { display: grid; grid-template-columns: 80px 1fr; }
+.alert-level {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--linen); text-align: center; padding: 16px 8px;
+  gap: 6px;
+}
+.alert-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--linen); opacity: .6; }
+.alert-body { padding: 24px 28px; }
+.alert-title { font-size: 16px; font-weight: 700; color: var(--linen); margin-bottom: 8px; line-height: 1.3; }
+.alert-desc { font-size: 13px; color: rgba(245,240,232,.55); line-height: 1.7; margin-bottom: 10px; }
+.alert-action { font-family: 'DM Mono', monospace; font-size: 9px; color: rgba(200,212,168,.8); line-height: 1.5; }
+.a-critical { background: var(--burgundy); }
+.a-high     { background: #8B4513; }
+.a-mid      { background: var(--navy); }
+.a-strat    { background: var(--olive); }
+
+/* ── ACTION PLAN ── */
+.plan-horizon { margin-bottom: 8px; }
+.horizon-label {
+  background: var(--charcoal); color: var(--gold);
+  font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: .2em;
+  text-transform: uppercase; padding: 10px 16px;
+}
+.horizon-label.h-urgent { background: var(--burgundy); color: var(--linen); }
+.horizon-label.h-short  { background: var(--navy); color: var(--linen); }
+.horizon-label.h-mid    { background: var(--olive); color: var(--linen); }
+.plan-row {
+  display: grid; grid-template-columns: 20px 1fr;
+  gap: 12px; padding: 12px 16px; align-items: start;
+  border-bottom: 1px solid rgba(43,43,43,.07);
+  background: var(--linen); transition: background .2s;
+}
+.plan-row:hover { background: var(--cream); }
+.plan-arrow { color: var(--gold); font-size: 14px; padding-top: 2px; }
+.plan-action { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+.plan-why { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+/* ── FIVE COORDINATES ── */
+.coords-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; margin-top: 32px; }
+.coord-card { padding: 36px 28px; text-align: center; }
+.coord-num {
+  font-family: 'DM Mono', monospace; font-size: 28px;
+  color: rgba(245,240,232,.15); margin-bottom: 16px;
+}
+.coord-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 400; color: var(--linen); margin-bottom: 8px; line-height: 1.2; }
+.coord-desc { font-size: 12px; color: rgba(245,240,232,.45); line-height: 1.6; }
+
+/* ── CONCLUSION ── */
+.conclusion { background: var(--charcoal); padding: 100px 6vw; text-align: center; }
+.conclusion-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(20px, 3vw, 36px); font-weight: 300; font-style: italic;
+  color: var(--linen); max-width: 800px; margin: 0 auto; line-height: 1.5;
+}
+.conclusion-text em { color: var(--gold); font-style: normal; }
+
+/* ── FOOTER ── */
+footer {
+  background: #111; padding: 60px 6vw;
+  display: flex; justify-content: space-between; align-items: flex-end;
+}
+.footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 300; color: var(--linen); }
+.footer-tag { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: .2em; color: var(--gold); margin-top: 6px; }
+.footer-meta { text-align: right; font-family: 'DM Mono', monospace; font-size: 9px; color: rgba(245,240,232,.2); line-height: 2; }
+
+/* ── DIVIDER ── */
+.divider { height: 1px; background: linear-gradient(to right, transparent, var(--gold), transparent); opacity: .2; margin: 0; }
+
+/* ── UTILITY ── */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s ease, transform .8s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.intro-text { font-size: 15px; line-height: 1.9; color: var(--muted); max-width: 680px; margin-bottom: 32px; }
+
+@keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+
+@media (max-width: 768px) {
+  .hero { grid-template-columns: 1fr; }
+  .hero-right { display: none; }
+  .nav-links { display: none; }
+  footer { flex-direction: column; gap: 24px; }
+  .footer-meta { text-align: left; }
+  .coords-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#" class="nav-logo">Glamping Soul</a>
+  <ul class="nav-links">
+    <li><a href="#amenazas">Amenazas</a></li>
+    <li><a href="#precios">Precios</a></li>
+    <li><a href="#distribucion">Distribución</a></li>
+    <li><a href="#adn">ADN</a></li>
+    <li><a href="#diferenciadores">Diferenciadores</a></li>
+    <li><a href="#alertas">Alertas</a></li>
+    <li><a href="#plan">Plan</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <p class="eyebrow">Inteligencia Competitiva · Síntesis Estratégica · Mayo 2026</p>
+    <h1 class="hero-title">Glamping Soul<br>vs.<br><em>9 Competidores</em></h1>
+    <p class="hero-subtitle">Patagonia Argentina · Primer Anillo · Análisis Integral</p>
+    <span class="hero-scroll">Comenzar</span>
+  </div>
+  <div class="hero-right">
+    <div class="hero-kpis">
+      <div class="kpi" style="--d:.6s">
+        <div class="kpi-val">9</div>
+        <div class="kpi-lbl">Competidores analizados</div>
+      </div>
+      <div class="kpi" style="--d:.75s">
+        <div class="kpi-val">5</div>
+        <div class="kpi-lbl">Agencias clave sin Glamping Soul</div>
+      </div>
+      <div class="kpi" style="--d:.9s">
+        <div class="kpi-val">★★★★★</div>
+        <div class="kpi-lbl">Coherencia PENSAR / DECIR / HACER</div>
+      </div>
+      <div class="kpi" style="--d:1.05s">
+        <div class="kpi-val">0</div>
+        <div class="kpi-lbl">Competidores con los 5 atributos de GS</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ALERT BAND -->
+<div class="alert-band">
+  <div class="alert-icon">!</div>
+  <p class="alert-text">
+    <strong>La ventaja competitiva existe. La distribución es la brecha.</strong>
+    Ninguno de los 9 competidores ocupa simultáneamente las 5 coordenadas de Glamping Soul.
+    El trabajo estratégico es hacerlo visible — en las agencias correctas, en las ferias correctas, con la narrativa correcta.
+  </p>
+</div>
+
+<!-- THREAT MAP -->
+<section class="section" id="amenazas">
+  <p class="section-label">01 — Mapa de amenazas</p>
+  <h2 class="section-title reveal">Nivel de amenaza<br><em>por competidor.</em></h2>
+  <div class="reveal">
+    <table class="threat-table">
+      <thead>
+        <tr>
+          <th>Competidor</th>
+          <th>Destino</th>
+          <th>Nivel</th>
+          <th>Motivo principal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="row-critical">
+          <td>Patagonia Eco Domes</td>
+          <td>El Chaltén, AR</td>
+          <td><span class="badge badge-critical">Muy Alto</span></td>
+          <td>Mismo destino, mismo producto, menor precio</td>
+        </tr>
+        <tr class="row-critical">
+          <td>Explora Patagonia</td>
+          <td>Torres del Paine CL + <strong>El Chaltén AR</strong></td>
+          <td><span class="badge badge-critical">Muy Alto</span></td>
+          <td>Apertura de lodge en El Chaltén — competencia territorial directa</td>
+        </tr>
+        <tr>
+          <td>Pristine Camps</td>
+          <td>Multi-destino AR</td>
+          <td><span class="badge badge-high">Alto</span></td>
+          <td>Competencia directa en zona Perito Moreno post-Moreno Camp</td>
+        </tr>
+        <tr>
+          <td>Patagonia Camp</td>
+          <td>Torres del Paine, CL</td>
+          <td><span class="badge badge-high">Alto</span></td>
+          <td>Mismo viajero, misma agencia distribuidora, destino Patagonia</td>
+        </tr>
+        <tr>
+          <td>Aguas Arriba Lodge</td>
+          <td>El Chaltén, AR</td>
+          <td><span class="badge badge-mhigh">Medio-Alto</span></td>
+          <td>Mismo destino base, precio 2x mayor</td>
+        </tr>
+        <tr>
+          <td>EcoCamp Patagonia</td>
+          <td>Torres del Paine, CL</td>
+          <td><span class="badge badge-mhigh">Medio-Alto</span></td>
+          <td>Mismo tipo de viajero, sostenibilidad certificada, precio 3x</td>
+        </tr>
+        <tr>
+          <td>Eolo Patagonia</td>
+          <td>El Calafate, AR</td>
+          <td><span class="badge badge-mid">Medio</span></td>
+          <td>Misma zona futura (Perito Moreno), R&C, precio 2x</td>
+        </tr>
+        <tr>
+          <td>Awasi Patagonia</td>
+          <td>Torres del Paine, CL</td>
+          <td><span class="badge badge-low">Bajo-Medio</span></td>
+          <td>Mismo canal B2B, destino diferente, precio 6x</td>
+        </tr>
+        <tr>
+          <td>Tierra Patagonia</td>
+          <td>Torres del Paine, CL</td>
+          <td><span class="badge badge-low">Bajo-Medio</span></td>
+          <td>Marca aspiracional, mismo canal, destino diferente</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PRICE MAP -->
+<section class="section section-dark" id="precios">
+  <p class="section-label" style="color:rgba(245,240,232,.4);">02 — Mapa de precios</p>
+  <h2 class="section-title section-title-linen reveal">Posicionamiento<br><em>por tarifa.</em></h2>
+  <p class="intro-text reveal" style="color:rgba(245,240,232,.4);">Referencia enero 2026 · 2 noches · 2 adultos. Glamping Soul opera en el segmento de mayor densidad competitiva. La diferenciación no puede ser de precio — debe ser de narrativa, distribución y coherencia de marca.</p>
+
+  <div class="price-chart reveal">
+    <!-- ULTRA-LUJO EXTREMO -->
+    <div style="background:rgba(107,45,45,.3);margin-bottom:2px;">
+      <div class="price-segment-label">ULTRA-LUJO EXTREMO</div>
+    </div>
+    <div class="price-row"><span class="price-name">Awasi Patagonia</span><div class="price-bar-wrap"><div class="price-bar" style="width:100%;background:var(--burgundy);"></div></div><span class="price-val">$9,680</span></div>
+    <div class="price-row"><span class="price-name">Tierra Patagonia</span><div class="price-bar-wrap"><div class="price-bar" style="width:86%;background:var(--burgundy);"></div></div><span class="price-val">$8,340</span></div>
+    <div class="price-row"><span class="price-name">Explora Patagonia</span><div class="price-bar-wrap"><div class="price-bar" style="width:63%;background:#8B4513;"></div></div><span class="price-val">$6,080</span></div>
+    <div class="price-row"><span class="price-name">EcoCamp Patagonia</span><div class="price-bar-wrap"><div class="price-bar" style="width:58%;background:#8B4513;"></div></div><span class="price-val">$5,622</span></div>
+    <div class="price-row"><span class="price-name">Aguas Arriba Lodge</span><div class="price-bar-wrap"><div class="price-bar" style="width:52%;background:#8B4513;"></div></div><span class="price-val">$4,835–5,279</span></div>
+
+    <!-- LUJO PREMIUM -->
+    <div style="background:rgba(122,96,32,.3);margin-bottom:2px;margin-top:4px;">
+      <div class="price-segment-label">LUJO PREMIUM</div>
+    </div>
+    <div class="price-row"><span class="price-name">Eolo Patagonia</span><div class="price-bar-wrap"><div class="price-bar" style="width:46%;background:#7a6020;"></div></div><span class="price-val">$4,430</span></div>
+    <div class="price-row"><span class="price-name">Pristine Camps</span><div class="price-bar-wrap"><div class="price-bar" style="width:27%;background:#7a6020;"></div></div><span class="price-val">$2,642</span></div>
+
+    <!-- LUJO ACCESIBLE -->
+    <div style="background:rgba(44,62,80,.4);margin-bottom:2px;margin-top:4px;">
+      <div class="price-segment-label">LUJO ACCESIBLE</div>
+    </div>
+    <div class="price-row"><span class="price-name">Patagonia Camp</span><div class="price-bar-wrap"><div class="price-bar" style="width:25%;background:var(--navy);"></div></div><span class="price-val">$2,280–2,640</span></div>
+    <div class="price-row gs-row"><span class="price-name gs-name">GLAMPING SOUL ◄</span><div class="price-bar-wrap"><div class="price-bar" style="width:19%;background:var(--gold);"></div></div><span class="price-val gs-val">$1,572–2,360</span></div>
+    <div class="price-row"><span class="price-name">Patagonia Eco Domes</span><div class="price-bar-wrap"><div class="price-bar" style="width:15%;background:var(--navy);"></div></div><span class="price-val">$1,161–1,653</span></div>
+  </div>
+</section>
+
+<!-- DISTRIBUTION -->
+<section class="section section-linen2" id="distribucion">
+  <p class="section-label">03 — Red de distribución</p>
+  <h2 class="section-title reveal">Las 5 agencias clave.<br><em>Glamping Soul no está en ninguna.</em></h2>
+  <p class="intro-text reveal">Scott Dunn distribuye 7 de 9 competidores analizados. Ninguna de las 5 agencias principales tiene a Glamping Soul en su portfolio. Este es el gap estratégico más urgente.</p>
+
+  <div class="agency-grid reveal">
+    <div class="agency-card p1">
+      <div class="agency-name">Scott Dunn</div>
+      <div class="agency-market">UK / USA · Luxury tailor-made</div>
+      <div class="agency-covers">Distribuye a: Patagonia Camp, EcoCamp, Pristine, Eolo, Explora, Aguas Arriba, Awasi — <strong>7/9 competidores</strong></div>
+      <span class="agency-prio prio-urgent">Prioridad 1 — URGENTE</span>
+      <span class="no-gs">✗ No tiene a Glamping Soul</span>
+    </div>
+    <div class="agency-card p1">
+      <div class="agency-name">andBeyond</div>
+      <div class="agency-market">Global · Luxury tailor-made</div>
+      <div class="agency-covers">Distribuye a: Patagonia Camp, EcoCamp, Explora, Eolo, Awasi — <strong>5/9 competidores</strong></div>
+      <span class="agency-prio prio-urgent">Prioridad 2 — ALTA</span>
+      <span class="no-gs">✗ No tiene a Glamping Soul</span>
+    </div>
+    <div class="agency-card p1">
+      <div class="agency-name">Swoop Patagonia</div>
+      <div class="agency-market">UK · Patagonia specialist</div>
+      <div class="agency-covers">Distribuye a: Patagonia Camp, EcoCamp, Explora, Aguas Arriba, Awasi — <strong>5/9 competidores</strong></div>
+      <span class="agency-prio prio-high">Prioridad 3 — ALTA</span>
+      <span class="no-gs">✗ No tiene a Glamping Soul</span>
+    </div>
+    <div class="agency-card p2">
+      <div class="agency-name">Jacada Travel</div>
+      <div class="agency-market">UK · LatAm luxury specialist</div>
+      <div class="agency-covers">Distribuye a: Patagonia Camp, EcoCamp, Pristine, Aguas Arriba — <strong>4/9 competidores</strong></div>
+      <span class="agency-prio prio-high">Prioridad 4 — ALTA</span>
+      <span class="no-gs">✗ No tiene a Glamping Soul</span>
+    </div>
+    <div class="agency-card p2">
+      <div class="agency-name">LANDED Travel</div>
+      <div class="agency-market">USA · LatAm luxury specialist</div>
+      <div class="agency-covers">Distribuye a: Patagonia Camp, Explora, Eolo, Awasi — <strong>4/9 competidores</strong></div>
+      <span class="agency-prio prio-mid">Prioridad 5 — MEDIA</span>
+      <span class="no-gs">✗ No tiene a Glamping Soul</span>
+    </div>
+    <div class="agency-card p3" style="background:rgba(92,98,41,.08);border-left:3px solid var(--olive);">
+      <div class="agency-name" style="color:var(--olive);">Audley Travel</div>
+      <div class="agency-market">UK · Luxury tailor-made</div>
+      <div class="agency-covers">Distribuye a Explora en <strong>El Chaltén</strong> — necesitan la alternativa argentina ahora</div>
+      <span class="agency-prio prio-urgent">PRIORIDAD INMEDIATA</span>
+      <span class="no-gs">✗ No tiene a Glamping Soul — primer contacto urgente</span>
+    </div>
+  </div>
+</section>
+
+<!-- BRAND DNA -->
+<section class="section section-dark" id="adn">
+  <p class="section-label" style="color:rgba(245,240,232,.4);">04 — ADN de marca</p>
+  <h2 class="section-title section-title-linen reveal">Coherencia<br><em>PENSAR / DECIR / HACER.</em></h2>
+  <div class="reveal" style="overflow-x:auto;">
+    <table class="dna-table">
+      <thead>
+        <tr>
+          <th>Atributo</th>
+          <th style="background:rgba(154,140,90,.15);">Glamping Soul</th>
+          <th>Explora</th>
+          <th>Aguas Arriba</th>
+          <th>EcoCamp</th>
+          <th>Awasi</th>
+          <th>Tierra Pat.</th>
+          <th>Pat. Camp</th>
+          <th>Pristine</th>
+          <th>Eco Domes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Tono de marca</td>
+          <td class="dna-gs">Poético + honesto</td>
+          <td>Expedicionario</td><td>Honesto</td><td>Eco-aventura</td>
+          <td>Austero</td><td>Minimalista</td><td>Aspiracional</td>
+          <td>Visual</td><td>Funcional</td>
+        </tr>
+        <tr>
+          <td>Concepto diferencial</td>
+          <td class="dna-gs">Storydoing + rareza</td>
+          <td>"Go Deeper"</td><td>Aislam. total</td><td>Pionero eco</td>
+          <td>Ultra-personal.</td><td>Arq. icónica</td><td>Yurts + natur.</td>
+          <td>6 suites exclusivas</td><td>Glamping cómodo</td>
+        </tr>
+        <tr>
+          <td>Sustentabilidad real</td>
+          <td class="dna-gs"><span class="stars">★★★★★</span></td>
+          <td><span class="stars">★★★★★</span></td><td><span class="stars">★★★</span></td><td><span class="stars">★★★★★</span></td>
+          <td><span class="stars">★★★</span></td><td><span class="stars">★★★</span></td><td><span class="stars">★★★</span></td>
+          <td><span class="stars">★★</span></td><td><span class="stars">★★★</span></td>
+        </tr>
+        <tr>
+          <td>Consistencia de marca</td>
+          <td class="dna-gs"><span class="stars">★★★★★</span></td>
+          <td><span class="stars">★★★★★</span></td><td><span class="stars">★★★★★</span></td><td><span class="stars">★★★★★</span></td>
+          <td><span class="stars">★★★★★</span></td><td><span class="stars">★★★★★</span></td><td><span class="stars">★★★</span></td>
+          <td><span class="stars">★★</span></td><td><span class="stars">★★</span></td>
+        </tr>
+        <tr>
+          <td>Precio / 2 noches</td>
+          <td class="dna-gs">$1,572–2,360</td>
+          <td>$6,080</td><td>$4,835–5,279</td><td>$5,622</td>
+          <td>$9,680</td><td>$8,340</td><td>$2,280–2,640</td>
+          <td>$2,642</td><td>$1,161–1,653</td>
+        </tr>
+        <tr>
+          <td>Rating Booking</td>
+          <td class="dna-gs">9.2 ★</td>
+          <td>9.4 ★</td><td>10.0 ★</td><td>N/D</td>
+          <td>N/D</td><td>9.1 ★</td><td>N/D</td>
+          <td>9.3 ★</td><td>9.6 ★</td>
+        </tr>
+        <tr>
+          <td>Canal distribución</td>
+          <td class="dna-gs">Booking + directo</td>
+          <td>Directo/agencias</td><td>Booking + directo</td><td>Directo/agencias</td>
+          <td>Directo/agencias</td><td>Directo/agencias</td><td>Directo/agencias</td>
+          <td>Booking + B2B</td><td>Booking + directo</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="font-family:'DM Mono',monospace;font-size:9px;color:rgba(245,240,232,.25);margin-top:12px;">Columna dorada = Glamping Soul. ★ = valoración interna 1–5.</p>
+</section>
+
+<!-- DIFFERENTIALS -->
+<section class="section" id="diferenciadores">
+  <p class="section-label">05 — Diferenciadores únicos de Glamping Soul</p>
+  <h2 class="section-title reveal">Lo que ningún<br><em>otro puede decir.</em></h2>
+  <p class="intro-text reveal">De los 9 competidores analizados, ninguno ocupa simultáneamente estas 5 coordenadas. El territorio es exclusivo. El trabajo es hacerlo visible.</p>
+  <div class="diff-grid reveal">
+    <div class="diff-item">
+      <div class="diff-num d-olive">01</div>
+      <div class="diff-content d-olive">
+        <p class="diff-title">Coherencia total PENSAR / DECIR / HACER</p>
+        <p class="diff-body">Ningún competidor en el rango $1,500–$3,000/2 noches tiene este nivel. Pristine lo declara pero no ejecuta. Eco Domes ejecuta pero no declara. Glamping Soul hace ambas — y puede probarlo con reviews y con la narrativa de los fundadores.</p>
+        <p class="diff-evidence">► Rating 9.2 con 48 reseñas consistentes. Concepto "rareza por consistencia" no replicado en rango de precio.</p>
+      </div>
+    </div>
+    <div class="diff-item">
+      <div class="diff-num d-navy">02</div>
+      <div class="diff-content d-navy">
+        <p class="diff-title">El único glamping con filosofía de marca en Argentina patagónica</p>
+        <p class="diff-body">Patagonia Camp y EcoCamp están en Chile. Pristine tiene brechas narrativas. Eco Domes no tiene filosofía de marca. Glamping Soul es el único operador de glamping en el corredor El Chaltén–Perito Moreno con identidad conceptual desarrollada y ejecutada.</p>
+        <p class="diff-evidence">► Mercado de referencia: el lado argentino de la Patagonia — Fitz Roy + Perito Moreno — sin rival filosófico.</p>
+      </div>
+    </div>
+    <div class="diff-item">
+      <div class="diff-num d-burgundy">03</div>
+      <div class="diff-content d-burgundy">
+        <p class="diff-title">Argentina como destino exclusivo en el segmento glamping filosófico</p>
+        <p class="diff-body">Los competidores más sofisticados (Awasi, Tierra, Explora en Torres del Paine, EcoCamp) están en Chile. Glamping Soul es la única propuesta de glamping de lujo con narrativa de marca sólida en el lado argentino de la Patagonia.</p>
+        <p class="diff-evidence">► El viajero global quiere Fitz Roy y Perito Moreno — no solo Torres del Paine. Ese destino es de Glamping Soul.</p>
+      </div>
+    </div>
+    <div class="diff-item">
+      <div class="diff-num d-dark">04</div>
+      <div class="diff-content d-dark">
+        <p class="diff-title">La antigüedad como evidencia de storydoing</p>
+        <p class="diff-body">10+ años operando en El Chaltén antes de que existiera el glamping como concepto en la región. Pristine tiene 4 años. Eco Domes no comunica su historia. La antigüedad no es un dato — es la prueba de que el compromiso es real.</p>
+        <p class="diff-evidence">► Aguas Arriba tiene la historia pero no la escala de marca de Glamping Soul para contarla.</p>
+      </div>
+    </div>
+    <div class="diff-item">
+      <div class="diff-num d-teal">05</div>
+      <div class="diff-content d-teal">
+        <p class="diff-title">Dos destinos propios como itinerario cerrado</p>
+        <p class="diff-body">Ningún competidor directo ofrece un itinerario de glamping con dos propiedades en el lado argentino (Fitz Roy + Perito Moreno). Un "circuit patagónico argentino" de 7 noches que ningún competidor puede replicar en el corto plazo.</p>
+        <p class="diff-evidence">► Ni Awasi ni Explora ni Pristine tienen este circuito en Argentina a este precio. Es territorio exclusivo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ALERTS -->
+<section class="section section-dark" id="alertas">
+  <p class="section-label" style="color:rgba(245,240,232,.4);">06 — Alertas competitivas</p>
+  <h2 class="section-title section-title-linen reveal">Prioridades de<br><em>monitoreo y acción.</em></h2>
+  <div class="alerts-list reveal">
+    <div class="alert-card">
+      <div class="alert-level a-critical"><div class="alert-dot"></div>CRÍTICA</div>
+      <div class="alert-body a-critical">
+        <p class="alert-title">Explora en El Chaltén</p>
+        <p class="alert-desc">Explora Patagonia Sur opera ahora en El Chaltén, Argentina. Explora tiene 30+ años de marca, 34K seguidores LinkedIn, distribución en andBeyond + Scott Dunn + Virtuoso + Audley Travel, y precio $6,080/2 noches. El viajero que busca "lodge de expedición en El Chaltén" verá a Explora como la opción ultra-premium conocida y a Glamping Soul como la alternativa auténtica más accesible.</p>
+        <p class="alert-action">→ Acción: Contactar a Audley Travel de inmediato — necesitan la alternativa argentina al lodge de Explora. La coexistencia puede ser estratégica si se trabaja el posicionamiento "entry point".</p>
+      </div>
+    </div>
+    <div class="alert-card">
+      <div class="alert-level a-high"><div class="alert-dot"></div>ALTA</div>
+      <div class="alert-body a-high">
+        <p class="alert-title">Pristine y la zona Perito Moreno</p>
+        <p class="alert-desc">Con la apertura de Moreno Camp (2026), Pristine El Calafate y Glamping Soul van a competir directamente por el viajero de glamping en la zona glaciar. Pristine tiene $2,294/2 noches en noviembre y una red B2B en construcción.</p>
+        <p class="alert-action">→ Acción: La ventana para establecer presencia con Aura Selections y Luxury Latin America antes de que Pristine consolide esas relaciones es de 6–12 meses.</p>
+      </div>
+    </div>
+    <div class="alert-card">
+      <div class="alert-level a-mid"><div class="alert-dot"></div>MEDIA</div>
+      <div class="alert-body a-mid">
+        <p class="alert-title">Rating Booking.com</p>
+        <p class="alert-desc">Patagonia Eco Domes tiene 9.6 (Exceptional) y Aguas Arriba tiene 10.0 en Booking.com. Glamping Soul está en 9.2 (Wonderful). La diferencia de 0.4–0.8 puntos puede representar pérdida de clicks y reservas en búsquedas filtradas por rating.</p>
+        <p class="alert-action">→ Acción: Gestión proactiva de reviews en Booking.com como objetivo de temporada. Meta: superar 9.5.</p>
+      </div>
+    </div>
+    <div class="alert-card">
+      <div class="alert-level a-strat"><div class="alert-dot"></div>ESTRATÉGICA</div>
+      <div class="alert-body a-strat">
+        <p class="alert-title">Fusión Beckons — Tierra Hotels</p>
+        <p class="alert-desc">La integración de Tierra Patagonia en Beckons (Baillie Lodges + ~$100M) eleva el estándar de marca del segmento "glamping/lodge de lujo en Patagonia". El impacto: sube el piso de expectativas del viajero y del agente.</p>
+        <p class="alert-action">→ Acción: Construir narrativa a la altura del nuevo estándar. La ventaja es la autenticidad — algo que el capital institucional no puede comprar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACTION PLAN -->
+<section class="section section-linen2" id="plan">
+  <p class="section-label">07 — Plan de acción</p>
+  <h2 class="section-title reveal">Prioridades<br><em>por horizonte.</em></h2>
+
+  <div class="plan-horizon reveal">
+    <div class="horizon-label h-urgent">INMEDIATO · 0–3 MESES</div>
+    <div class="plan-row">
+      <span class="plan-arrow">→</span>
+      <div><p class="plan-action">Contactar a Scott Dunn (UK + USA)</p><p class="plan-why">Distribuye 7/9 competidores analizados — el gap más urgente del portfolio.</p></div>
+    </div>
+    <div class="plan-row">
+      <span class="plan-arrow">→</span>
+      <div><p class="plan-action">Contactar a Jacada Travel (UK)</p><p class="plan-why">Especialista LatAm luxury, distribuye EcoCamp, Patagonia Camp, Aguas Arriba.</p></div>
+    </div>
+    <div class="plan-row">
+      <span class="plan-arrow">→</span>
+      <div><p class="plan-action">Contactar a Audley Travel (UK)</p><p class="plan-why">Distribuye a Explora en El Chaltén — necesitan la alternativa argentina ahora.</p></div>
+    </div>
+    <div class="plan-row">
+      <span class="plan-arrow">→</span>
+      <div><p class="plan-action">Gestión activa de reviews Booking.com</p><p class="plan-why">Subir de 9.2 a 9.5+ para igualar benchmark competitivo.</p></div>
+    </div>
+    <div class="plan-row">
+      <span class="plan-arrow">→</span>
+      <div><p class="plan-action">Iniciar membresía LATA</p><p class="plan-why">EcoCamp y Patagonia Camp son miembros. Glamping Soul tiene el perfil para ganar premios de sustentabilidad.</p></div>
+    </div>
+  </div>
+
+  <div class="plan-horizon reveal" style="margin-top:8px;">
+    <div class="horizon-label h-short">CORTO PLAZO · 3–6 MESES</div>
+    <div class="plan-row">
+      <span class="plan-arrow">→</span>
+      <div><p class="plan-action">Construir perfil LinkedIn activo</p><p class="plan-why">Gap crítico vs. competidores con 7K–34K seguidores. El canal de descubrimiento de los agentes.</p></div>
+    </div>
+    <div class="plan-row">
+      <span class="plan-arrow">→</span>
+      <div><p class="plan-action">Contactar andBeyond y LANDED Travel</p><p class="plan-why">Distribuyen 4–5 competidores. El perfil de Glamping Soul es compatible.</p></div>
+    </div>
+    <div class="plan-row">
+      <span class="plan-arrow">→</span>
+      <div><p class="plan-action">Evaluar membresía Welcome Beyond</p><p class="plan-why">Patagonia Camp es miembro. Plataforma curada de alta calidad, menor costo que Virtuoso.</p></div>
+    </div>
+    <div class="plan-row">
+      <span class="plan-arrow">→</span>
+      <div><p class="plan-action">Evaluar membresía Johansens Collection</p><p class="plan-why">Aguas Arriba es Preferred Partner. Válida para mercado UK/Europa boutique.</p></div>
+    </div>
+    <div class="plan-row">
+      <span class="plan-arrow">→</span>
+      <div><p class="plan-action">Desarrollar kit de presentación B2B</p><p class="plan-why">Documento 1–2 páginas con el diferencial PENSAR/DECIR/HACER para agencias. La conversación de ventas en una hoja.</p></div>
+    </div>
+  </div>
+
+  <div class="plan-horizon reveal" style="margin-top:8px;">
+    <div class="horizon-label h-mid">MEDIANO PLAZO · 6–18 MESES</div>
+    <div class="plan-row">
+      <span class="plan-arrow">→</span>
+      <div><p class="plan-action">Asistir a ILTM Cannes</p><p class="plan-why">La feria de ultra-lujo donde Explora, Awasi y Tierra tienen presencia habitual.</p></div>
+    </div>
+    <div class="plan-row">
+      <span class="plan-arrow">→</span>
+      <div><p class="plan-action">Asistir a Pure Life Experiences</p><p class="plan-why">Feria alineada con la filosofía de Glamping Soul: lujo no masivo, intimidad, propósito.</p></div>
+    </div>
+    <div class="plan-row">
+      <span class="plan-arrow">→</span>
+      <div><p class="plan-action">Construir el "Patagonian Circuit" como producto</p><p class="plan-why">Chalten Camp + Moreno Camp como itinerario 2-propiedad — diferencial único en el mercado a este precio.</p></div>
+    </div>
+    <div class="plan-row">
+      <span class="plan-arrow">→</span>
+      <div><p class="plan-action">Obtener certificación B-Corp o similar</p><p class="plan-why">Explora es B-Corp, EcoCamp tiene ISO 14001. La credencial ambiental formal elevaría la narrativa al nivel de los competidores con mayor distribución.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- FIVE COORDINATES -->
+<section class="section section-dark">
+  <p class="section-label" style="color:rgba(245,240,232,.4);">08 — Síntesis final</p>
+  <h2 class="section-title section-title-linen reveal">El territorio que<br><em>Glamping Soul puede dominar.</em></h2>
+  <p class="intro-text reveal" style="color:rgba(245,240,232,.4);">De los 9 competidores analizados, ninguno ocupa simultáneamente estas 5 coordenadas.</p>
+  <div class="coords-grid reveal">
+    <div class="coord-card d-olive">
+      <div class="coord-num">01</div>
+      <div class="coord-title">Argentina patagónica</div>
+      <div class="coord-desc">No Chile — el lado del Fitz Roy y el Perito Moreno, donde viven los dos iconos más fotografiados de la Patagonia.</div>
+    </div>
+    <div class="coord-card d-navy">
+      <div class="coord-num">02</div>
+      <div class="coord-title">Glamping filosófico</div>
+      <div class="coord-desc">Con storydoing verificable — no solo storytelling. La práctica real que las reviews confirman temporada tras temporada.</div>
+    </div>
+    <div class="coord-card d-burgundy">
+      <div class="coord-num">03</div>
+      <div class="coord-title">Doble destino icónico</div>
+      <div class="coord-desc">Fitz Roy + Perito Moreno bajo una sola marca. Un circuito patagónico argentino que ningún competidor puede replicar a corto plazo.</div>
+    </div>
+    <div class="coord-card d-dark">
+      <div class="coord-num">04</div>
+      <div class="coord-title">Precio accesible al lujo</div>
+      <div class="coord-desc">$2,000–2,500 / 2 noches. Sin rival directo en atributos de marca. El espacio entre Eco Domes y Aguas Arriba que nadie ocupa con filosofía.</div>
+    </div>
+    <div class="coord-card d-teal" style="grid-column: span 2;">
+      <div class="coord-num">05</div>
+      <div class="coord-title">Coherencia PENSAR / DECIR / HACER de 5 estrellas</div>
+      <div class="coord-desc">Solo Glamping Soul y Explora tienen coherencia perfecta en el segmento. Explora tiene 30 años y $6,080/noche para sostenerla. Glamping Soul tiene el mismo nivel de coherencia con una fracción de los recursos de visibilidad — el activo más subexplotado del portfolio.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONCLUSION -->
+<div class="conclusion">
+  <p class="conclusion-text reveal">
+    "El territorio de Glamping Soul es exclusivo. El trabajo estratégico es hacerlo visible.
+    La ventaja competitiva existe. <em>La distribución es la brecha.</em>"
+  </p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <p class="footer-brand">Glamping Soul</p>
+    <p class="footer-tag">A Constellation of Rare Places · Patagonia, Argentina</p>
+  </div>
+  <div class="footer-meta">
+    <p>Inteligencia Competitiva — Síntesis Estratégica</p>
+    <p>Mayo 2026 · Uso interno exclusivo</p>
+    <p>hello@glampingsoul.com · glampingsoul.com</p>
+  </div>
+</footer>
+
+<script>
+// Nav scroll
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 60));
+
+// Reveal on scroll
+const reveals = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.08 });
+reveals.forEach(r => obs.observe(r));
+</script>
+</body>
+</html>
