@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Distribución Online — Glamping Soul</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Mono:wght@300;400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --charcoal: #1e1e1e;
+  --olive: #5C6229;
+  --burgundy: #6B2D2D;
+  --navy: #2C3E50;
+  --teal: #1a5c5c;
+  --gold: #9a8c5a;
+  --gold-light: #c4b87a;
+  --linen: #F5F0E8;
+  --linen2: #e8e2d6;
+  --linen3: #ddd7c9;
+  --text: #2B2B2B;
+  --muted: #6b6458;
+  --cream: #f8f4e8;
+  --red-soft: #f5eaea;
+  --green-soft: #eef0e4;
+  --amber: #7a5c20;
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--linen);
+  color: var(--text);
+  font-family: 'Libre Baskerville', serif;
+  font-size: 15px;
+  line-height: 1.8;
+  overflow-x: hidden;
+}
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--linen2); }
+::-webkit-scrollbar-thumb { background: var(--gold); }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  padding: 18px 6vw; display: flex; justify-content: space-between; align-items: center;
+  transition: all .4s;
+}
+nav.scrolled { background: rgba(30,30,30,.97); backdrop-filter: blur(16px); padding: 12px 6vw; border-bottom: 1px solid rgba(154,140,90,.2); }
+.nav-logo { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: .3em; color: var(--gold); text-decoration: none; text-transform: uppercase; }
+.nav-links { display: flex; gap: 28px; list-style: none; }
+.nav-links a { font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: .15em; color: rgba(245,240,232,.4); text-decoration: none; text-transform: uppercase; transition: color .3s; }
+.nav-links a:hover { color: var(--gold); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh; background: var(--charcoal);
+  display: grid; grid-template-columns: 1.2fr 0.8fr;
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 20% 80%, rgba(92,98,41,.1) 0%, transparent 55%),
+              radial-gradient(ellipse at 80% 20%, rgba(107,45,45,.08) 0%, transparent 55%);
+}
+.hero-left { display: flex; flex-direction: column; justify-content: flex-end; padding: 12vh 6vw 10vh; position: relative; z-index: 2; }
+.hero-right { border-left: 1px solid rgba(154,140,90,.15); padding: 12vh 5vw 10vh 4vw; display: flex; flex-direction: column; justify-content: center; position: relative; z-index: 2; }
+.eyebrow { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: .3em; color: var(--gold); text-transform: uppercase; margin-bottom: 20px; opacity: 0; animation: fadeUp .8s ease .3s forwards; }
+.hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(44px, 7vw, 88px); font-weight: 300; line-height: .9; color: var(--linen); opacity: 0; animation: fadeUp .8s ease .5s forwards; }
+.hero-title em { font-style: italic; color: var(--gold); }
+.hero-sub { font-family: 'Cormorant Garamond', serif; font-size: clamp(14px, 1.8vw, 20px); font-style: italic; color: rgba(245,240,232,.45); margin-top: 18px; opacity: 0; animation: fadeUp .8s ease .7s forwards; }
+.hero-meta { margin-top: 40px; display: flex; flex-direction: column; gap: 8px; opacity: 0; animation: fadeUp .8s ease .9s forwards; }
+.hero-meta-row { display: flex; gap: 16px; align-items: baseline; }
+.hero-meta-label { font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: .15em; color: var(--gold); text-transform: uppercase; min-width: 100px; }
+.hero-meta-val { font-size: 13px; color: rgba(245,240,232,.5); }
+
+/* Hero right: KPIs */
+.hero-kpis { display: flex; flex-direction: column; gap: 24px; }
+.kpi { opacity: 0; animation: fadeUp .8s ease var(--d) forwards; padding-bottom: 24px; border-bottom: 1px solid rgba(154,140,90,.12); }
+.kpi:last-child { border-bottom: none; padding-bottom: 0; }
+.kpi-val { font-family: 'Cormorant Garamond', serif; font-size: clamp(32px, 4.5vw, 52px); font-weight: 300; color: var(--gold); line-height: 1; }
+.kpi-lbl { font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: .15em; color: rgba(245,240,232,.35); text-transform: uppercase; margin-top: 4px; }
+
+/* ── ALERT BAND ── */
+.alert-band { background: var(--burgundy); padding: 24px 6vw; display: flex; align-items: flex-start; gap: 20px; }
+.alert-icon { font-family: 'DM Mono', monospace; font-size: 18px; color: rgba(245,240,232,.4); flex-shrink: 0; padding-top: 2px; }
+.alert-content {}
+.alert-tag { font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: .2em; color: rgba(245,240,232,.5); text-transform: uppercase; margin-bottom: 6px; }
+.alert-text { font-family: 'Cormorant Garamond', serif; font-size: clamp(14px, 1.8vw, 19px); font-style: italic; color: var(--linen); line-height: 1.5; }
+.alert-text strong { font-style: normal; color: var(--gold-light); }
+
+/* ── SECTIONS ── */
+.section { padding: 80px 6vw; }
+.section-dark { background: var(--charcoal); }
+.section-linen2 { background: var(--linen2); }
+.section-olive { background: var(--olive); }
+.section-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: .3em; color: var(--gold); text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; gap: 14px; }
+.section-label::after { content: ''; height: 1px; width: 36px; background: var(--gold); opacity: .4; }
+.section-label.linen { color: rgba(245,240,232,.4); }
+.section-label.linen::after { background: rgba(245,240,232,.2); }
+.section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 4.5vw, 56px); font-weight: 300; line-height: 1.05; margin-bottom: 32px; }
+.section-title em { font-style: italic; color: var(--olive); }
+.section-title-linen { color: var(--linen); }
+.section-title-linen em { color: var(--gold); }
+.intro-body { font-size: 14px; line-height: 1.9; color: var(--muted); max-width: 700px; margin-bottom: 32px; }
+.intro-body-linen { color: rgba(245,240,232,.5); }
+.hline { height: 1px; background: linear-gradient(to right, transparent, var(--gold), transparent); opacity: .15; margin: 0; }
+
+/* ── AGENCY CARDS (venden GS) ── */
+.agency-cards { display: flex; flex-direction: column; gap: 2px; margin-top: 8px; }
+.agency-card {
+  display: grid; grid-template-columns: 200px 1fr 1fr;
+  background: var(--linen); transition: all .2s;
+  border-left: 3px solid transparent;
+}
+.agency-card:hover { transform: translateX(3px); }
+.agency-card.active { border-left-color: var(--olive); background: var(--green-soft); }
+.agency-card.critical { border-left-color: var(--burgundy); background: var(--red-soft); }
+.agency-card.strategic { border-left-color: var(--gold); background: var(--cream); }
+.card-identity { padding: 22px 20px; border-right: 1px solid rgba(43,43,43,.08); }
+.card-name { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+.card-domain { font-family: 'DM Mono', monospace; font-size: 8px; color: var(--muted); letter-spacing: .05em; margin-bottom: 8px; }
+.card-origin { font-family: 'DM Mono', monospace; font-size: 8px; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; }
+.card-contacts { display: inline-block; font-family: 'DM Mono', monospace; font-size: 9px; color: var(--gold); border: 1px solid var(--gold); padding: 2px 8px; margin-top: 8px; }
+.card-gs { padding: 22px 20px; border-right: 1px solid rgba(43,43,43,.08); }
+.card-gs-label { font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: .15em; color: var(--olive); text-transform: uppercase; margin-bottom: 8px; }
+.card-gs-content { font-size: 13px; color: var(--text); line-height: 1.6; }
+.card-eval { padding: 22px 20px; }
+.card-eval-label { font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: .15em; color: var(--muted); text-transform: uppercase; margin-bottom: 8px; }
+.card-eval-content { font-size: 13px; color: var(--muted); line-height: 1.6; font-style: italic; }
+.card-header { padding: 10px 20px; background: var(--charcoal); display: grid; grid-template-columns: 200px 1fr 1fr; }
+.card-header span { font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: .15em; color: var(--gold); text-transform: uppercase; }
+
+/* ── PRIORITY TABLE ── */
+.data-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 8px; }
+.data-table thead th { font-family: 'DM Mono', monospace; font-size: 7px; letter-spacing: .2em; text-transform: uppercase; padding: 10px 14px; background: var(--charcoal); color: var(--gold); text-align: left; border-right: 1px solid rgba(255,255,255,.05); }
+.data-table tbody tr { border-bottom: 1px solid rgba(43,43,43,.07); transition: background .2s; }
+.data-table tbody tr:hover td { background: rgba(92,98,41,.04) !important; }
+.data-table tbody td { padding: 10px 14px; vertical-align: top; line-height: 1.5; border-right: 1px solid rgba(43,43,43,.04); }
+.data-table tbody tr:nth-child(even) td { background: var(--linen2); }
+.data-table tbody tr:nth-child(odd) td { background: var(--linen); }
+.td-name { font-weight: 700; font-size: 13px; }
+.td-domain { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); }
+.td-num { font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500; text-align: center !important; }
+.td-num.high { color: var(--burgundy); }
+.td-num.med { color: var(--amber); }
+.td-note { font-size: 12px; color: var(--muted); font-style: italic; }
+.badge { display: inline-block; font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: .08em; padding: 3px 8px; text-transform: uppercase; color: var(--linen); }
+.badge-critical { background: var(--burgundy); }
+.badge-high { background: #8B4513; }
+.badge-mid { background: var(--navy); }
+.badge-low { background: var(--muted); }
+.badge-active { background: var(--olive); }
+.badge-none { background: rgba(43,43,43,.15); color: var(--muted); }
+.row-critical td { background: rgba(107,45,45,.05) !important; }
+.row-highlight td { background: var(--cream) !important; }
+
+/* ── OUTSIDE BASE TABLE ── */
+.outside-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap: 2px; margin-top: 8px; }
+.outside-card { background: var(--linen); padding: 22px 20px; border-left: 3px solid var(--olive); transition: transform .2s; }
+.outside-card:hover { transform: translateX(3px); }
+.outside-name { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.outside-domain { font-family: 'DM Mono', monospace; font-size: 8px; color: var(--muted); margin-bottom: 10px; }
+.outside-gs { font-size: 12px; color: var(--olive); margin-bottom: 6px; }
+.outside-note { font-size: 12px; color: var(--muted); font-style: italic; line-height: 1.5; }
+.outside-tag { font-family: 'DM Mono', monospace; font-size: 8px; color: var(--linen); background: var(--burgundy); padding: 2px 8px; display: inline-block; margin-top: 8px; }
+
+/* ── OPPORTUNITY CARDS ── */
+.opp-list { display: flex; flex-direction: column; gap: 2px; margin-top: 8px; }
+.opp-item { display: grid; grid-template-columns: 64px 1fr; }
+.opp-num { display: flex; align-items: center; justify-content: center; font-family: 'DM Mono', monospace; font-size: 20px; color: rgba(245,240,232,.2); }
+.opp-body { padding: 22px 24px; }
+.opp-tag { font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: .15em; color: rgba(245,240,232,.4); text-transform: uppercase; margin-bottom: 8px; }
+.opp-title { font-size: 16px; font-weight: 600; color: var(--linen); margin-bottom: 8px; line-height: 1.3; }
+.opp-desc { font-size: 13px; color: rgba(245,240,232,.5); line-height: 1.7; margin-bottom: 10px; }
+.opp-action { font-family: 'DM Mono', monospace; font-size: 9px; color: rgba(200,212,168,.7); line-height: 1.5; }
+.opp-urgent { background: var(--burgundy); }
+.opp-high { background: #8B4513; }
+.opp-mid { background: var(--navy); }
+.opp-strat { background: var(--olive); }
+.opp-teal { background: var(--teal); }
+.opp-amber { background: var(--amber); }
+.opp-dark { background: #2a2a2a; }
+
+/* ── CHANNEL MATRIX ── */
+.matrix-wrap { overflow-x: auto; margin-top: 8px; }
+.matrix { width: 100%; border-collapse: collapse; font-size: 12px; }
+.matrix th { font-family: 'DM Mono', monospace; font-size: 7px; letter-spacing: .15em; text-transform: uppercase; padding: 10px 12px; background: var(--charcoal); color: var(--gold); text-align: center; border-right: 1px solid rgba(255,255,255,.05); }
+.matrix th:first-child { text-align: left; min-width: 160px; }
+.matrix td { padding: 9px 12px; text-align: center; border-bottom: 1px solid rgba(43,43,43,.06); border-right: 1px solid rgba(43,43,43,.04); vertical-align: middle; }
+.matrix td:first-child { text-align: left; font-weight: 700; font-size: 12px; }
+.matrix tr:nth-child(odd) td { background: var(--linen); }
+.matrix tr:nth-child(even) td { background: var(--linen2); }
+.matrix tr:first-child td { background: var(--cream) !important; }
+.matrix tr:first-child td:first-child { color: var(--gold); }
+.check { color: var(--olive); font-size: 14px; font-weight: 700; }
+.cross { color: rgba(43,43,43,.2); font-size: 13px; }
+.partial { color: var(--amber); font-size: 11px; }
+
+/* ── PRIORITY MAP ── */
+.prio-map { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+.prio-group {}
+.prio-label { font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: .2em; text-transform: uppercase; color: var(--linen); padding: 8px 14px; display: flex; align-items: center; gap: 10px; }
+.prio-label::after { content: ''; flex: 1; height: 1px; background: rgba(245,240,232,.2); }
+.prio-label.p-urgent { background: var(--burgundy); }
+.prio-label.p-high { background: #8B4513; }
+.prio-label.p-mid { background: var(--navy); }
+.prio-rows { display: flex; flex-direction: column; gap: 0; }
+.prio-row { display: grid; grid-template-columns: 180px 80px 1fr; align-items: center; padding: 10px 14px; border-bottom: 1px solid rgba(43,43,43,.06); background: var(--linen); transition: background .2s; }
+.prio-row:nth-child(even) { background: var(--linen2); }
+.prio-row:hover { background: var(--cream); }
+.prio-agency { font-size: 13px; font-weight: 700; color: var(--text); }
+.prio-contacts { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--gold); text-align: center; }
+.prio-action { font-size: 12px; color: var(--muted); font-style: italic; }
+
+/* ── MORENO SECTION ── */
+.moreno-channels { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px,1fr)); gap: 2px; margin-top: 8px; }
+.channel-card { padding: 20px 18px; }
+.channel-card.yes { background: var(--green-soft); border-left: 3px solid var(--olive); }
+.channel-card.no { background: var(--red-soft); border-left: 3px solid var(--burgundy); }
+.channel-name { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.channel-status { font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 700; margin-bottom: 6px; }
+.channel-card.yes .channel-status { color: var(--olive); }
+.channel-card.no .channel-status { color: var(--burgundy); }
+.channel-note { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+/* ── CONCLUSION ── */
+.conclusion { background: var(--charcoal); padding: 80px 6vw; text-align: center; }
+.conclusion-quote { font-family: 'Cormorant Garamond', serif; font-size: clamp(18px, 2.8vw, 32px); font-weight: 300; font-style: italic; color: var(--linen); max-width: 820px; margin: 0 auto; line-height: 1.5; }
+.conclusion-quote em { color: var(--gold); font-style: normal; }
+
+/* ── FOOTER ── */
+footer { background: #111; padding: 56px 6vw; display: flex; justify-content: space-between; align-items: flex-end; }
+.footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 38px; font-weight: 300; color: var(--linen); }
+.footer-tag { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: .2em; color: var(--gold); margin-top: 6px; }
+.footer-meta { text-align: right; font-family: 'DM Mono', monospace; font-size: 9px; color: rgba(245,240,232,.2); line-height: 2; }
+
+/* ── REVEAL ── */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+@keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+
+@media(max-width:768px) {
+  .hero { grid-template-columns: 1fr; }
+  .hero-right { display: none; }
+  .nav-links { display: none; }
+  .agency-card { grid-template-columns: 1fr; }
+  .card-header { display: none; }
+  .prio-row { grid-template-columns: 1fr 60px; }
+  .prio-action { display: none; }
+  footer { flex-direction: column; gap: 20px; }
+  .footer-meta { text-align: left; }
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#" class="nav-logo">Glamping Soul</a>
+  <ul class="nav-links">
+    <li><a href="#venden">Venden GS</a></li>
+    <li><a href="#base">Sin listing</a></li>
+    <li><a href="#fuera">Fuera de base</a></li>
+    <li><a href="#competidores">Competidores</a></li>
+    <li><a href="#moreno">Moreno Camp</a></li>
+    <li><a href="#oportunidades">Oportunidades</a></li>
+    <li><a href="#prioridades">Prioridades</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <p class="eyebrow">Distribución Online · Agencias & DMCs · Mayo 2026</p>
+    <h1 class="hero-title">Red de<br>Distribución<br><em>Glamping Soul</em></h1>
+    <p class="hero-sub">Chalten Camp + Moreno Camp · 121 agencias · 45 sitios analizados</p>
+    <div class="hero-meta">
+      <div class="hero-meta-row"><span class="hero-meta-label">Fuente</span><span class="hero-meta-val">Base Mailchimp "AAVV Argentinas – DMCs"</span></div>
+      <div class="hero-meta-row"><span class="hero-meta-label">Metodología</span><span class="hero-meta-val">60+ búsquedas Google site: + visitas directas</span></div>
+      <div class="hero-meta-row"><span class="hero-meta-label">Dominios únicos</span><span class="hero-meta-val">121 analizados</span></div>
+      <div class="hero-meta-row"><span class="hero-meta-label">Período</span><span class="hero-meta-val">Mayo 2026</span></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-kpis">
+      <div class="kpi" style="--d:.6s"><div class="kpi-val">3</div><div class="kpi-lbl">Agencias de la base con listing público de GS</div></div>
+      <div class="kpi" style="--d:.75s"><div class="kpi-val">7</div><div class="kpi-lbl">Distribuidores activos fuera de la base de correos</div></div>
+      <div class="kpi" style="--d:.9s"><div class="kpi-val">0</div><div class="kpi-lbl">Agencias con Moreno Camp listado</div></div>
+      <div class="kpi" style="--d:1.05s"><div class="kpi-val">22</div><div class="kpi-lbl">Contactos A&K en base sin relación verificada</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ALERT -->
+<div class="alert-band">
+  <div class="alert-icon">!</div>
+  <div class="alert-content">
+    <p class="alert-tag">Hallazgos críticos · Resumen ejecutivo</p>
+    <p class="alert-text">
+      Solo <strong>3 agencias de la base</strong> tienen a Chalten Camp listado públicamente. 
+      <strong>7 distribuidores activos</strong> que venden GS no están en la base de correos. 
+      <strong>South America Travel</strong> (8 contactos) vende todos los competidores principales sin incluir a GS. 
+      <strong>Moreno Camp tiene cobertura cero</strong> en el canal agencias — la ventana para la temporada 2026/27 está abierta ahora.
+    </p>
+  </div>
+</div>
+
+<!-- SECC 1: VENDEN GS PÚBLICAMENTE -->
+<section class="section" id="venden">
+  <p class="section-label">01 — Distribuidores activos con listing público</p>
+  <h2 class="section-title reveal">Agencias de la base<br><em>que venden GS online.</em></h2>
+  <p class="intro-body reveal">Solo 3 de las 121 agencias de la base tienen a Chalten Camp listado públicamente en su sitio web. El 97% restante opera en B2B sin vitrina digital verificable.</p>
+
+  <div class="agency-cards reveal">
+    <div class="card-header">
+      <span>Agencia</span><span>Presencia de Glamping Soul</span><span>Evaluación</span>
+    </div>
+
+    <!-- LANDED -->
+    <div class="agency-card active">
+      <div class="card-identity">
+        <div class="card-name">LANDED Travel</div>
+        <div class="card-domain">landedtravel.com</div>
+        <div class="card-origin">EE.UU. · Lujo boutique LatAm</div>
+        <div class="card-contacts">3 contactos en base</div>
+      </div>
+      <div class="card-gs">
+        <div class="card-gs-label">Presencia de GS</div>
+        <div class="card-gs-content">
+          · Página dedicada a Chalten Camp con fotos e info de reserva<br>
+          · Podcast: "Nicolas Di Costanzo – Chalten Camp" en su sección de audio<br>
+          · Categoría propia "Hotels El Chaltén" en su blog
+        </div>
+      </div>
+      <div class="card-eval">
+        <div class="card-eval-label">Evaluación</div>
+        <div class="card-eval-content">Distribuidor activo y comprometido. El podcast con Nicolás es señal de relación editorial activa, no solo transaccional. Su portfolio incluye Awasi, Explora, EcoCamp — confirma que su audiencia es el segmento correcto.</div>
+      </div>
+    </div>
+
+    <!-- DESIGNER TRIPS -->
+    <div class="agency-card active">
+      <div class="card-identity">
+        <div class="card-name">Designer Trips South America DMC</div>
+        <div class="card-domain">designer-trips.com</div>
+        <div class="card-origin">EE.UU. / Internacional · DMC itinerarios de autor</div>
+        <div class="card-contacts">10 contactos en base</div>
+      </div>
+      <div class="card-gs">
+        <div class="card-gs-label">Presencia de GS</div>
+        <div class="card-gs-content">
+          · Chalten Camp en itinerario "Under the Stars of Patagonia" (11 días, AR + CL)<br>
+          · El camp aparece en días 3-4 como centro de la experiencia en El Chaltén<br>
+          · OVO Camp aparece en el mismo itinerario (día 4) — redundancia a trabajar
+        </div>
+      </div>
+      <div class="card-eval">
+        <div class="card-eval-label">Evaluación</div>
+        <div class="card-eval-content">GS convive con competidores en el mismo paquete. Posición favorable (GS como experiencia de entrada en El Chaltén). La inclusión de OVO en el mismo día es una redundancia a trabajar con el operador directamente.</div>
+      </div>
+    </div>
+
+    <!-- RIPIO -->
+    <div class="agency-card strategic">
+      <div class="card-identity">
+        <div class="card-name">RipioTurismo DMC</div>
+        <div class="card-domain">ripioturismo.com</div>
+        <div class="card-origin">Argentina · DMC receptivo grande</div>
+        <div class="card-contacts">1 contacto en base</div>
+      </div>
+      <div class="card-gs">
+        <div class="card-gs-label">Presencia de GS</div>
+        <div class="card-gs-content">
+          · Chalten Camp en peritomorenoglacier.com (micrositio propio de Ripio)<br>
+          · Paquete "Luxury Camp in El Chaltén – 3 noches"<br>
+          · "Glamping Lovers Program" (El Calafate + El Chaltén, 5 noches)<br>
+          · Nota: presencia solo en el micrositio, no en el dominio principal
+        </div>
+      </div>
+      <div class="card-eval">
+        <div class="card-eval-label">Evaluación</div>
+        <div class="card-eval-content">Presencia real pero mediada. Solo 1 contacto en la base es sub-representación crítica dentro de un operador de este tamaño. El micrositio glaciar puede ser la palanca para incluir Moreno Camp directamente.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="hline"></div>
+
+<!-- SECC 2: SIN LISTING PÚBLICO -->
+<section class="section section-linen2" id="base">
+  <p class="section-label">02 — Agencias de la base sin listing público</p>
+  <h2 class="section-title reveal">El 97% no tiene<br><em>a GS en su vitrina digital.</em></h2>
+  <p class="intro-body reveal">Esto no significa que no vendan GS — muchas son B2B sin portafolio público — pero sí que GS no aparece en su canal visible hacia el cliente final.</p>
+
+  <div class="reveal">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Agencia</th>
+          <th>Dominio</th>
+          <th style="text-align:center;">Contactos</th>
+          <th>Perfil</th>
+          <th>Estado / Nota</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="row-critical">
+          <td class="td-name">South America Travel</td>
+          <td class="td-domain">southamerica.travel</td>
+          <td class="td-num high">8</td>
+          <td>Operador digital portfolio curado</td>
+          <td><span class="badge badge-critical">CASO CRÍTICO</span> Vende Explora, Awasi, Pat. Camp, EcoCamp, Tierra — sin GS</td>
+        </tr>
+        <tr class="row-highlight">
+          <td class="td-name">Abercrombie & Kent Argentina</td>
+          <td class="td-domain">abercrombiekent.com.ar</td>
+          <td class="td-num high">22</td>
+          <td>Agencia de lujo global</td>
+          <td>Mayor agencia por contactos. Relación real con GS no verificable online</td>
+        </tr>
+        <tr class="row-highlight">
+          <td class="td-name">MAI10</td>
+          <td class="td-domain">mai10.com.ar</td>
+          <td class="td-num med">9</td>
+          <td>DMC de lujo · Virtuoso · Condé Nast · T+L</td>
+          <td><span class="badge badge-high">ALTA PRIORIDAD</span> Si vende GS en paquetes B2B, es la distribución más valiosa posible</td>
+        </tr>
+        <tr>
+          <td class="td-name">Glove Travel</td>
+          <td class="td-domain">glovetravel.com</td>
+          <td class="td-num med">17</td>
+          <td>DMC premium internacional</td>
+          <td>17 contactos sugiere relación activa. Sin listados públicos</td>
+        </tr>
+        <tr>
+          <td class="td-name">Kallpa Tour Operator</td>
+          <td class="td-domain">kallpatour.com</td>
+          <td class="td-num med">12</td>
+          <td>Operador activo/aventura · miembro ADOPTA</td>
+          <td>Perfil de cliente coincide con GS pero más aventurero que ultra-lujo</td>
+        </tr>
+        <tr>
+          <td class="td-name">GFT</td>
+          <td class="td-domain">gft.com.ar</td>
+          <td class="td-num med">8</td>
+          <td>DMC receptivo Argentina</td>
+          <td>Sin listing público verificable</td>
+        </tr>
+        <tr>
+          <td class="td-name">Swan Turismo</td>
+          <td class="td-domain">swanturismo.com.ar</td>
+          <td class="td-num med">8</td>
+          <td>Agencia de lujo · Virtuoso</td>
+          <td>Posicionamiento de lujo alineado con GS. Potencial alto</td>
+        </tr>
+        <tr>
+          <td class="td-name">Alchemy DMC</td>
+          <td class="td-domain">alchemydmc.com</td>
+          <td class="td-num">7</td>
+          <td>DMC premium internacional</td>
+          <td>Artículo editorial sobre El Chaltén entre top 20 destinos — señal de interés</td>
+        </tr>
+        <tr>
+          <td class="td-name">ILS Tours</td>
+          <td class="td-domain">ilstours.com</td>
+          <td class="td-num">7</td>
+          <td>Receptivo B2B Argentina/Chile</td>
+          <td>Paquete "Patagonian Impressions" activo</td>
+        </tr>
+        <tr>
+          <td class="td-name">Equinoxe</td>
+          <td class="td-domain">equinoxe.com.ar</td>
+          <td class="td-num">7</td>
+          <td>Agencia corporativa/MICE/leisure</td>
+          <td>Foco corporativo — bajo potencial para GS</td>
+        </tr>
+        <tr>
+          <td class="td-name">Cynsa</td>
+          <td class="td-domain">cynsa.com.ar</td>
+          <td class="td-num med">8</td>
+          <td>Agencia Buenos Aires</td>
+          <td>Menor relevancia para Patagonia</td>
+        </tr>
+        <tr>
+          <td class="td-name">Gaston-Sacaze</td>
+          <td class="td-domain">gaston-sacaze.com</td>
+          <td class="td-num">2</td>
+          <td>Francia · Especialista Sudamérica 30 años</td>
+          <td>Mercado francófono · alto potencial · viajero culto compatible con GS</td>
+        </tr>
+        <tr>
+          <td class="td-name">Zuiderhuis</td>
+          <td class="td-domain">zuiderhuis.be</td>
+          <td class="td-num">1</td>
+          <td>Bélgica · Senderismo Patagonia</td>
+          <td>Viajes 16-21 días a Patagonia · mercado europeo sin GS listado</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="hline"></div>
+
+<!-- SECC 3: FUERA DE BASE -->
+<section class="section" id="fuera">
+  <p class="section-label">03 — Distribuidores activos fuera de la base</p>
+  <h2 class="section-title reveal">Venden GS pero<br><em>no reciben nuestros emails.</em></h2>
+  <p class="intro-body reveal">Estos 7 distribuidores tienen a Chalten Camp listado en sus sitios pero no están en la base de Mailchimp. No saben de Moreno Camp, no reciben novedades de temporada, no conocen actualizaciones de producto.</p>
+
+  <div class="outside-grid reveal">
+    <div class="outside-card">
+      <div class="outside-name">Swoop Patagonia</div>
+      <div class="outside-domain">swoop-patagonia.com</div>
+      <div class="outside-gs">✓ Chalten Camp listado activamente</div>
+      <div class="outside-note">Especialista en Patagonia. Vende GS y TODOS los competidores (EcoCamp, Patagonia Camp, Awasi, Tierra, Explora). Mayor alcance en el segmento Patagonia especializado.</div>
+      <span class="outside-tag">AGREGAR A BASE URGENTE</span>
+    </div>
+    <div class="outside-card">
+      <div class="outside-name">LANDED Travel</div>
+      <div class="outside-domain">landedtravel.com</div>
+      <div class="outside-gs">✓ Chalten Camp — relación editorial activa</div>
+      <div class="outside-note">3 contactos en base — ya cubiertos. Prioridad: actualizar con Moreno Camp y mantener la relación editorial con Nicolás como palanca.</div>
+    </div>
+    <div class="outside-card">
+      <div class="outside-name">Adventure Life</div>
+      <div class="outside-domain">adventure-life.com</div>
+      <div class="outside-gs">✓ Chalten Camp — múltiples páginas</div>
+      <div class="outside-note">Fuerte presencia SEO sobre El Chaltén. Audiencia internacional amplia. Sin contacto en base — requiere outreach proactivo con factsheet de Moreno Camp.</div>
+      <span class="outside-tag">AGREGAR A BASE</span>
+    </div>
+    <div class="outside-card">
+      <div class="outside-name">Walk into Luxury</div>
+      <div class="outside-domain">walkintoluxury.com</div>
+      <div class="outside-gs">✓ Chalten Camp — página dedicada</div>
+      <div class="outside-note">Segmento lujo, contenido curado. También vende EcoCamp. Perfil muy alineado con el posicionamiento de GS.</div>
+      <span class="outside-tag">AGREGAR A BASE</span>
+    </div>
+    <div class="outside-card">
+      <div class="outside-name">Timbuktu Travel</div>
+      <div class="outside-domain">timbuktutravel.com</div>
+      <div class="outside-gs">✓ Chalten Camp — página dedicada</div>
+      <div class="outside-note">Agencia boutique internacional. Página dedicada activa. Sin contacto en base.</div>
+      <span class="outside-tag">AGREGAR A BASE</span>
+    </div>
+    <div class="outside-card">
+      <div class="outside-name">Patagonia Traveler</div>
+      <div class="outside-domain">patagoniatraveler.com</div>
+      <div class="outside-gs">✓ Chalten Camp — listing activo</div>
+      <div class="outside-note">Listing activo con descripción. Especializado en Patagonia. Sin contacto en base.</div>
+      <span class="outside-tag">AGREGAR A BASE</span>
+    </div>
+    <div class="outside-card">
+      <div class="outside-name">MiniTrekking</div>
+      <div class="outside-domain">minitrekking.com</div>
+      <div class="outside-gs">✓ Chalten Camp en paquete "Luxury Glamping Journey"</div>
+      <div class="outside-note">Paquete El Calafate + El Chaltén. También vende Pristine Camps. Sin contacto en base.</div>
+      <span class="outside-tag">AGREGAR A BASE</span>
+    </div>
+  </div>
+</section>
+
+<div class="hline"></div>
+
+<!-- SECC 4: COMPETIDORES -->
+<section class="section section-dark" id="competidores">
+  <p class="section-label linen">04 — Agencias que venden competidores sin GS</p>
+  <h2 class="section-title section-title-linen reveal">South America Travel:<br><em>el caso más urgente.</em></h2>
+
+  <!-- South America Travel highlight -->
+  <div class="reveal" style="margin-bottom:32px;">
+    <div style="background:rgba(107,45,45,.4);border-left:3px solid var(--burgundy);padding:28px 24px;margin-bottom:2px;">
+      <p style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.15em;color:rgba(245,240,232,.4);text-transform:uppercase;margin-bottom:8px;">CASO URGENTE — South America Travel · southamerica.travel · 8 contactos en base</p>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:400;color:var(--linen);line-height:1.5;margin-bottom:12px;">Tienen 8 contactos que reciben los emails de GS. No tienen a Chalten Camp ni Moreno Camp en su portfolio. En cambio venden con página dedicada a:</p>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;">
+        <span style="font-family:'DM Mono',monospace;font-size:8px;background:rgba(107,45,45,.5);color:var(--linen);padding:4px 10px;">Explora Patagonia</span>
+        <span style="font-family:'DM Mono',monospace;font-size:8px;background:rgba(107,45,45,.5);color:var(--linen);padding:4px 10px;">Awasi Patagonia</span>
+        <span style="font-family:'DM Mono',monospace;font-size:8px;background:rgba(107,45,45,.5);color:var(--linen);padding:4px 10px;">Patagonia Camp</span>
+        <span style="font-family:'DM Mono',monospace;font-size:8px;background:rgba(107,45,45,.5);color:var(--linen);padding:4px 10px;">EcoCamp Patagonia</span>
+        <span style="font-family:'DM Mono',monospace;font-size:8px;background:rgba(107,45,45,.5);color:var(--linen);padding:4px 10px;">Tierra Patagonia</span>
+      </div>
+      <p style="font-family:'DM Mono',monospace;font-size:9px;color:rgba(200,212,168,.7);">→ Oportunidad: su portfolio de glamping está centrado en Chile. Chalten Camp + Moreno Camp completan la oferta argentina. El argumento: "Patagonia Completa".</p>
+    </div>
+  </div>
+
+  <!-- Competitor distribution matrix -->
+  <p class="section-label linen" style="margin-top:40px;">Mapa de distribución por competidor</p>
+  <div class="matrix-wrap reveal">
+    <table class="matrix">
+      <thead>
+        <tr>
+          <th>Propiedad</th>
+          <th>LANDED</th>
+          <th>South Am. Travel</th>
+          <th>Swoop</th>
+          <th>Designer-Trips</th>
+          <th>Walk into Luxury</th>
+          <th>RipioTurismo</th>
+          <th>MiniTrekking</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong style="color:var(--gold);">Chalten Camp (GS)</strong></td>
+          <td class="check">✓</td><td class="cross">—</td><td class="check">✓</td>
+          <td class="check">✓</td><td class="check">✓</td><td class="partial">micrositio</td><td class="check">✓</td>
+        </tr>
+        <tr>
+          <td>Explora Patagonia</td>
+          <td class="check">✓</td><td class="check">✓</td><td class="check">✓</td>
+          <td class="cross">—</td><td class="cross">—</td><td class="cross">—</td><td class="cross">—</td>
+        </tr>
+        <tr>
+          <td>Awasi Patagonia</td>
+          <td class="check">✓</td><td class="check">✓</td><td class="check">✓</td>
+          <td class="check">✓</td><td class="cross">—</td><td class="cross">—</td><td class="cross">—</td>
+        </tr>
+        <tr>
+          <td>EcoCamp Patagonia</td>
+          <td class="check">✓</td><td class="check">✓</td><td class="check">✓</td>
+          <td class="check">✓</td><td class="check">✓</td><td class="cross">—</td><td class="cross">—</td>
+        </tr>
+        <tr>
+          <td>Patagonia Camp</td>
+          <td class="cross">—</td><td class="check">✓</td><td class="check">✓</td>
+          <td class="cross">—</td><td class="cross">—</td><td class="check">✓</td><td class="check">✓</td>
+        </tr>
+        <tr>
+          <td>Tierra Patagonia</td>
+          <td class="cross">—</td><td class="check">✓</td><td class="check">✓</td>
+          <td class="cross">—</td><td class="cross">—</td><td class="cross">—</td><td class="cross">—</td>
+        </tr>
+        <tr>
+          <td>Pristine Camps</td>
+          <td class="cross">—</td><td class="cross">—</td><td class="cross">—</td>
+          <td class="cross">—</td><td class="cross">—</td><td class="check">✓</td><td class="check">✓</td>
+        </tr>
+        <tr>
+          <td>OVO Camp</td>
+          <td class="cross">—</td><td class="cross">—</td><td class="cross">—</td>
+          <td class="check">✓</td><td class="cross">—</td><td class="cross">—</td><td class="cross">—</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="font-family:'DM Mono',monospace;font-size:9px;color:rgba(245,240,232,.25);margin-top:10px;">✓ = listing verificado · — = no encontrado · "micrositio" = presencia en subdominio temático</p>
+</section>
+
+<div class="hline"></div>
+
+<!-- SECC 5: MORENO CAMP -->
+<section class="section" id="moreno">
+  <p class="section-label">05 — Estado de Moreno Camp</p>
+  <h2 class="section-title reveal">Moreno Camp:<br><em>territorio virgen en agencias.</em></h2>
+  <p class="intro-body reveal">Moreno Camp abre en 2026. Su presencia online es exclusivamente en OTAs. Ninguna agencia lo tiene listado. La ventana para posicionarlo antes de la temporada 2026/27 está abierta ahora.</p>
+
+  <div class="moreno-channels reveal">
+    <div class="channel-card yes">
+      <div class="channel-name">Booking.com</div>
+      <div class="channel-status">✓ ACTIVO</div>
+      <div class="channel-note">Presencia confirmada y activa</div>
+    </div>
+    <div class="channel-card yes">
+      <div class="channel-name">Expedia</div>
+      <div class="channel-status">✓ ACTIVO</div>
+      <div class="channel-note">Presencia confirmada</div>
+    </div>
+    <div class="channel-card yes">
+      <div class="channel-name">Hotels.com</div>
+      <div class="channel-status">✓ ACTIVO</div>
+      <div class="channel-note">Presencia confirmada</div>
+    </div>
+    <div class="channel-card yes">
+      <div class="channel-name">Travelocity</div>
+      <div class="channel-status">✓ ACTIVO</div>
+      <div class="channel-note">Presencia confirmada</div>
+    </div>
+    <div class="channel-card yes">
+      <div class="channel-name">morenocamp.com</div>
+      <div class="channel-status">✓ ACTIVO</div>
+      <div class="channel-note">Sitio propio activo</div>
+    </div>
+    <div class="channel-card no">
+      <div class="channel-name">Agencias con listing</div>
+      <div class="channel-status">✗ NINGUNA</div>
+      <div class="channel-note">Cero presencia en portafolios de agencias</div>
+    </div>
+    <div class="channel-card no">
+      <div class="channel-name">Distribuidores en base</div>
+      <div class="channel-status">✗ NO IDENTIFICADOS</div>
+      <div class="channel-note">Las 10 agencias que venden Chalten Camp son el primer target de activación</div>
+    </div>
+  </div>
+
+  <div style="background:rgba(92,98,41,.12);border-left:3px solid var(--olive);padding:20px 24px;margin-top:16px;" class="reveal">
+    <p style="font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.15em;color:var(--olive);text-transform:uppercase;margin-bottom:8px;">Estrategia de activación prioritaria</p>
+    <p style="font-size:14px;color:var(--text);line-height:1.7;">Las 7 agencias fuera de la base que ya venden Chalten Camp son el canal más caliente para Moreno Camp. No conocen el producto todavía pero ya probaron que venden GS. <strong>Swoop Patagonia, LANDED Travel y Adventure Life</strong> son los candidatos más urgentes por su capacidad de publicar contenido rápidamente.</p>
+  </div>
+</section>
+
+<div class="hline"></div>
+
+<!-- SECC 6: OPORTUNIDADES -->
+<section class="section section-dark" id="oportunidades">
+  <p class="section-label linen">06 — Oportunidades de mercado</p>
+  <h2 class="section-title section-title-linen reveal">Qué hacer<br><em>y cuándo.</em></h2>
+
+  <div class="opp-list reveal">
+    <div class="opp-item">
+      <div class="opp-num opp-urgent">A</div>
+      <div class="opp-body opp-urgent">
+        <p class="opp-tag">Inmediato · 30-60 días</p>
+        <p class="opp-title">Incorporar Moreno Camp al portfolio de los distribuidores actuales de Chalten Camp</p>
+        <p class="opp-desc">Las 7 agencias fuera de la base que ya venden Chalten Camp son el canal más caliente. No conocen el producto aún pero ya probaron que venden GS. Prioridad: Swoop Patagonia (mayor alcance), LANDED Travel (relación editorial activa), Adventure Life (SEO internacional), Walk into Luxury (segmento lujo).</p>
+        <p class="opp-action">→ Acción: Contacto directo con factsheet de Moreno Camp + acceso a assets fotográficos. No están en la base — requiere outreach proactivo por fuera del flujo de email marketing.</p>
+      </div>
+    </div>
+    <div class="opp-item">
+      <div class="opp-num opp-high">B</div>
+      <div class="opp-body opp-high">
+        <p class="opp-tag">Inmediato · 30 días</p>
+        <p class="opp-title">Convertir a South America Travel</p>
+        <p class="opp-desc">8 contactos reciben los emails de GS y no tienen el producto listado. South America Travel tiene página dedicada a todos los competidores de Torres del Paine. Su portfolio de glamping está centrado en Chile — Chalten Camp y Moreno Camp completan la oferta argentina.</p>
+        <p class="opp-action">→ Acción: Propuesta comercial específica con itinerario "Patagonia Completa" que combine sus actuales productos chilenos con ambos camps de GS. El argumento: son el único operador digital de lujo sin el lado argentino cubierto.</p>
+      </div>
+    </div>
+    <div class="opp-item">
+      <div class="opp-num opp-mid">C</div>
+      <div class="opp-body opp-mid">
+        <p class="opp-tag">Inmediato · 30 días</p>
+        <p class="opp-title">Activar a Alchemy DMC</p>
+        <p class="opp-desc">Publicaron un artículo editorial sobre El Chaltén como destino top 20 que menciona glamping. 7 contactos en la base. Sin producto GS listado. El editorial es una señal clara de interés en el destino.</p>
+        <p class="opp-action">→ Acción: Proponer un fam trip o envío de materiales para que agreguen Chalten Camp y Moreno Camp a su portfolio. El artículo existente es la palanca conversacional.</p>
+      </div>
+    </div>
+    <div class="opp-item">
+      <div class="opp-num opp-strat">D</div>
+      <div class="opp-body opp-strat">
+        <p class="opp-tag">Estratégico · 60-180 días</p>
+        <p class="opp-title">A&K Argentina — 22 contactos, potencial máximo</p>
+        <p class="opp-desc">Con 22 contactos en la base, A&K Argentina es el distribuidor con mayor representación en emails pero su relación comercial real con GS no es verificable online. Si venden GS en sus itinerarios, es la distribución más poderosa del segmento. Si no lo hacen, es la brecha de mayor valor a cerrar.</p>
+        <p class="opp-action">→ Acción: Verificar internamente si A&K Argentina incluye GS en sus programs. Si no, iniciar proceso de in-selling formal con su equipo de product.</p>
+      </div>
+    </div>
+    <div class="opp-item">
+      <div class="opp-num opp-teal">E</div>
+      <div class="opp-body opp-teal">
+        <p class="opp-tag">Estratégico · 60-180 días</p>
+        <p class="opp-title">MAI10 — el Virtuoso de Argentina</p>
+        <p class="opp-desc">Con afiliaciones en Virtuoso, Condé Nast y National Geographic, MAI10 es el DMC de referencia para viajeros internacionales de ultra-lujo en Argentina. 9 contactos en la base. Sin listing público. Si MAI10 pone a GS en sus itinerarios, el tipo de viajero que llega a Chalten Camp cambiaría radicalmente hacia el ultra-lujo.</p>
+        <p class="opp-action">→ Acción: Propuesta de paquete GS exclusivo para el portafolio Virtuoso, incluyendo Moreno Camp desde apertura. El ángulo: "primer glamping con filosofía de marca en la Argentina patagónica" como posición editorial en el catálogo Virtuoso.</p>
+      </div>
+    </div>
+    <div class="opp-item">
+      <div class="opp-num opp-amber">F</div>
+      <div class="opp-body opp-amber">
+        <p class="opp-tag">Estratégico · 60-180 días</p>
+        <p class="opp-title">Gaston-Sacaze y el mercado francófono</p>
+        <p class="opp-desc">El mercado francés sobreindica históricamente en Patagonia. Gaston-Sacaze lleva 30 años en el mercado, tiene 9 operaciones en 6 países y personaliza para el viajero francófono culto. 2 contactos en la base. Sin GS listado.</p>
+        <p class="opp-action">→ Acción: Material en francés sobre Chalten Camp + Moreno Camp. El concepto "rareza auténtica" de GS tiene alto potencial en el mercado francés — es exactamente el tipo de viajero que buscan.</p>
+      </div>
+    </div>
+    <div class="opp-item">
+      <div class="opp-num opp-dark">G</div>
+      <div class="opp-body opp-dark">
+        <p class="opp-tag">Sin explorar</p>
+        <p class="opp-title">Distribución especializada en "slow travel" y lujo esencial</p>
+        <p class="opp-desc">Agencias como Timbuktu Travel, Walk into Luxury y varios operadores belgas/nórdicos que trabajan con el viajero de "slow luxury" son el segmento más alineado con el posicionamiento de GS. Ninguno está en la base. Zuiderhuis (Bélgica) hace viajes de senderismo 16-21 días a Patagonia — perfectamente complementario con GS.</p>
+        <p class="opp-action">→ Acción: Prospección nueva de operadores europeos especializados en lujo contemplativo. El mercado belga/nórdico está sin explorar y es el más afín al ADN de marca.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="hline"></div>
+
+<!-- SECC 7: PRIORIDADES -->
+<section class="section section-linen2" id="prioridades">
+  <p class="section-label">07 — Mapa de prioridades</p>
+  <h2 class="section-title reveal">Plan de acción<br><em>por horizonte.</em></h2>
+
+  <div class="prio-map reveal">
+    <div class="prio-group">
+      <div class="prio-label p-urgent">PRIORIDAD ALTA · Acción en menos de 30 días</div>
+      <div class="prio-rows">
+        <div class="prio-row">
+          <span class="prio-agency">Swoop Patagonia</span>
+          <span class="prio-contacts">fuera base</span>
+          <span class="prio-action">Agregar a base + brief inmediato de Moreno Camp. Vende GS y todos los competidores.</span>
+        </div>
+        <div class="prio-row">
+          <span class="prio-agency">South America Travel</span>
+          <span class="prio-contacts">8 contactos</span>
+          <span class="prio-action">Propuesta comercial "Patagonia Completa". Tiene todos los competidores sin GS.</span>
+        </div>
+        <div class="prio-row">
+          <span class="prio-agency">LANDED Travel</span>
+          <span class="prio-contacts">3 contactos</span>
+          <span class="prio-action">Actualizar con Moreno Camp. Relación editorial activa (podcast con Nicolás).</span>
+        </div>
+        <div class="prio-row">
+          <span class="prio-agency">A&K Argentina</span>
+          <span class="prio-contacts">22 contactos</span>
+          <span class="prio-action">Verificar relación comercial real. Mayor agencia por contactos en la base.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="prio-group" style="margin-top:8px;">
+      <div class="prio-label p-high">PRIORIDAD MEDIA · Acción en menos de 90 días</div>
+      <div class="prio-rows">
+        <div class="prio-row">
+          <span class="prio-agency">MAI10</span>
+          <span class="prio-contacts">9 contactos</span>
+          <span class="prio-action">Propuesta Virtuoso para ambos camps. Distribuidor de ultra-lujo más valioso de Argentina.</span>
+        </div>
+        <div class="prio-row">
+          <span class="prio-agency">Gaston-Sacaze</span>
+          <span class="prio-contacts">2 contactos</span>
+          <span class="prio-action">Material en francés. El mercado francófono sobreindica en Patagonia argentina.</span>
+        </div>
+        <div class="prio-row">
+          <span class="prio-agency">Alchemy DMC</span>
+          <span class="prio-contacts">7 contactos</span>
+          <span class="prio-action">Propuesta post-artículo El Chaltén. Señal de interés clara en el destino.</span>
+        </div>
+        <div class="prio-row">
+          <span class="prio-agency">Adventure Life</span>
+          <span class="prio-contacts">fuera base</span>
+          <span class="prio-action">Contacto + factsheet Moreno Camp. Fuerte SEO, audiencia internacional.</span>
+        </div>
+        <div class="prio-row">
+          <span class="prio-agency">Designer-Trips</span>
+          <span class="prio-contacts">10 contactos</span>
+          <span class="prio-action">Revisión de itinerario (reducir exposición a OVO). Ya vende GS activamente.</span>
+        </div>
+        <div class="prio-row">
+          <span class="prio-agency">Walk into Luxury · Timbuktu · AmazonAdventures</span>
+          <span class="prio-contacts">fuera base</span>
+          <span class="prio-action">Agregar a base + activar con Moreno Camp.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="prio-group" style="margin-top:8px;">
+      <div class="prio-label p-mid">LARGO PLAZO · Activación B2B directa</div>
+      <div class="prio-rows">
+        <div class="prio-row">
+          <span class="prio-agency">Glove Travel</span>
+          <span class="prio-contacts">17 contactos</span>
+          <span class="prio-action">Relación activa sugerida por volumen de contactos. Verificar y activar comercialmente.</span>
+        </div>
+        <div class="prio-row">
+          <span class="prio-agency">Swan / Kallpa / GFT / ILS / Oriunda</span>
+          <span class="prio-contacts">8–12 c/u</span>
+          <span class="prio-action">Activación B2B directa. No verificable online — gestión de cuentas individual.</span>
+        </div>
+        <div class="prio-row">
+          <span class="prio-agency">Mercado belga / nórdico</span>
+          <span class="prio-contacts">prospección nueva</span>
+          <span class="prio-action">Zuiderhuis + otros operadores europeos de slow travel. Segmento sin explorar muy afín a GS.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONCLUSION -->
+<div class="conclusion">
+  <p class="conclusion-quote reveal">
+    "10 distribuidores activos de Chalten Camp. Moreno Camp en cero agencias.
+    La temporada 2026/27 se define en los <em>próximos 60 días.</em>"
+  </p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <p class="footer-brand">Glamping Soul</p>
+    <p class="footer-tag">A Constellation of Rare Places · Patagonia, Argentina</p>
+  </div>
+  <div class="footer-meta">
+    <p>Distribución Online — Agencias & DMCs</p>
+    <p>121 dominios · 45 sitios visitados · Mayo 2026</p>
+    <p>hello@glampingsoul.com · glampingsoul.com</p>
+  </div>
+</footer>
+
+<script>
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 60));
+const reveals = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 60);
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.06 });
+reveals.forEach(r => obs.observe(r));
+</script>
+</body>
+</html>
