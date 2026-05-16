@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perón 1700 — Distribución en Plataformas</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f4f6fb;
+      color: #1a1a2e;
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #2d3561 100%);
+      color: #fff;
+      padding: 36px 40px 30px;
+    }
+    .header-tag {
+      display: inline-block;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 20px;
+      padding: 3px 12px;
+      font-size: 0.72rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    header h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+    }
+    header h1 span { color: #a5b4fc; }
+    header p {
+      margin-top: 8px;
+      opacity: 0.65;
+      font-size: 0.88rem;
+    }
+
+    /* ── Property card ── */
+    .prop-summary {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 20px 40px;
+      background: #fff;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .prop-chip {
+      display: flex;
+      flex-direction: column;
+      background: #f8fafd;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 10px 18px;
+    }
+    .prop-chip-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.6px; color: #9ca3af; }
+    .prop-chip-value { font-size: 1.1rem; font-weight: 700; color: #1a1a2e; margin-top: 2px; }
+    .prop-chip-value.green { color: #166534; }
+    .prop-chip-value.blue  { color: #1e40af; }
+
+    /* ── Section header ── */
+    .section {
+      padding: 28px 40px 0;
+    }
+    .section-title {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #6b7280;
+      font-weight: 600;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #e2e8f0;
+    }
+
+    /* ── Platform cards ── */
+    .platform-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 14px;
+      padding: 0 40px 28px;
+    }
+
+    .platform-card {
+      background: #fff;
+      border-radius: 14px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      overflow: hidden;
+      transition: box-shadow 0.15s, transform 0.15s;
+      display: flex;
+      flex-direction: column;
+    }
+    .platform-card:hover {
+      box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+      transform: translateY(-2px);
+    }
+    .platform-card.inactive {
+      opacity: 0.6;
+      filter: grayscale(0.4);
+    }
+    .platform-card.inactive:hover { transform: none; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+
+    .card-header {
+      padding: 16px 18px 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid #f0f2f7;
+    }
+    .platform-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      font-weight: 800;
+      flex-shrink: 0;
+      color: #fff;
+    }
+    .logo-tagliaferri { background: #1a1a2e; }
+    .logo-zonaprop    { background: #e31e35; }
+    .logo-icasas      { background: #0066cc; }
+    .logo-busca       { background: #f97316; }
+    .logo-argenprop   { background: #8b5cf6; }
+    .logo-remax       { background: #cc0000; }
+    .logo-ml          { background: #ffe600; color: #333; }
+    .logo-properati   { background: #00b4d8; }
+
+    .platform-name { font-weight: 700; font-size: 0.95rem; color: #1a1a2e; }
+    .platform-type { font-size: 0.74rem; color: #6b7280; margin-top: 1px; }
+
+    .status-badge {
+      margin-left: auto;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .badge-active   { background: #dcfce7; color: #166534; }
+    .badge-expired  { background: #fee2e2; color: #991b1b; }
+    .badge-missing  { background: #f3f4f6; color: #6b7280; }
+
+    .card-body {
+      padding: 14px 18px;
+      flex: 1;
+    }
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 4px 0;
+      font-size: 0.84rem;
+      border-bottom: 1px solid #f9fafb;
+    }
+    .detail-row:last-child { border-bottom: none; }
+    .detail-key { color: #9ca3af; }
+    .detail-val { font-weight: 600; color: #1a1a2e; text-align: right; max-width: 60%; }
+
+    .card-footer {
+      padding: 12px 18px;
+      border-top: 1px solid #f0f2f7;
+    }
+    .btn-visit {
+      display: block;
+      text-align: center;
+      padding: 9px 0;
+      background: #1a1a2e;
+      color: #fff;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 600;
+      transition: background 0.15s;
+    }
+    .btn-visit:hover { background: #2d3561; }
+    .btn-visit.disabled {
+      background: #f3f4f6;
+      color: #9ca3af;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .note-box {
+      background: #fefce8;
+      border: 1px solid #fde68a;
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 0.78rem;
+      color: #78350f;
+      margin-top: 8px;
+    }
+
+    /* ── Insight box ── */
+    .insights {
+      margin: 0 40px 40px;
+      background: #fff;
+      border-radius: 14px;
+      border: 1px solid #e2e8f0;
+      padding: 20px 24px;
+    }
+    .insights h3 {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #6b7280;
+      margin-bottom: 12px;
+    }
+    .insight-item {
+      display: flex;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid #f0f2f7;
+      font-size: 0.86rem;
+      line-height: 1.5;
+    }
+    .insight-item:last-child { border-bottom: none; }
+    .insight-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.75rem;
+      color: #9ca3af;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    @media (max-width: 768px) {
+      header, .prop-summary, .section, .platform-grid, .insights { padding-left: 16px; padding-right: 16px; }
+      .platform-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-tag">Análisis de distribución</div>
+  <h1>Perón al 1700 <span>·</span> San Nicolás</h1>
+  <p>3 ambientes &nbsp;·&nbsp; 48 m² &nbsp;·&nbsp; Reciclado &nbsp;·&nbsp; Ref. TAP7689217 &nbsp;·&nbsp; Mayo 2026</p>
+</header>
+
+<div class="prop-summary">
+  <div class="prop-chip">
+    <span class="prop-chip-label">Precio</span>
+    <span class="prop-chip-value green">USD 90.000</span>
+  </div>
+  <div class="prop-chip">
+    <span class="prop-chip-label">Superficie</span>
+    <span class="prop-chip-value">48,63 m²</span>
+  </div>
+  <div class="prop-chip">
+    <span class="prop-chip-label">USD / m²</span>
+    <span class="prop-chip-value">USD 1.850</span>
+  </div>
+  <div class="prop-chip">
+    <span class="prop-chip-label">Antigüedad</span>
+    <span class="prop-chip-value">51 años</span>
+  </div>
+  <div class="prop-chip">
+    <span class="prop-chip-label">Expensas</span>
+    <span class="prop-chip-value">$ 130.000</span>
+  </div>
+  <div class="prop-chip">
+    <span class="prop-chip-label">Condición</span>
+    <span class="prop-chip-value blue">Reciclado</span>
+  </div>
+  <div class="prop-chip">
+    <span class="prop-chip-label">Plataformas activas</span>
+    <span class="prop-chip-value green">4 de 8</span>
+  </div>
+</div>
+
+<!-- ACTIVE PLATFORMS -->
+<div class="section" style="padding-top:28px">
+  <div class="section-title">Activo en estas plataformas</div>
+</div>
+<div class="platform-grid">
+
+  <!-- Tagliaferri -->
+  <div class="platform-card">
+    <div class="card-header">
+      <div class="platform-logo logo-tagliaferri">T</div>
+      <div>
+        <div class="platform-name">Tagliaferri</div>
+        <div class="platform-type">Inmobiliaria · origen</div>
+      </div>
+      <span class="status-badge badge-active">Activo</span>
+    </div>
+    <div class="card-body">
+      <div class="detail-row"><span class="detail-key">Precio</span><span class="detail-val">USD 90.000</span></div>
+      <div class="detail-row"><span class="detail-key">Referencia</span><span class="detail-val">TAP7689217</span></div>
+      <div class="detail-row"><span class="detail-key">Contacto</span><span class="detail-val">Ayelen · +54 11 4071-9477</span></div>
+      <div class="detail-row"><span class="detail-key">Matrícula CUCICBA</span><span class="detail-val">3531</span></div>
+    </div>
+    <div class="card-footer">
+      <a class="btn-visit" href="https://www.tagliaferri.com.ar/p/7689217-prop" target="_blank" rel="noopener">Ver publicación →</a>
+    </div>
+  </div>
+
+  <!-- ZonaProp -->
+  <div class="platform-card">
+    <div class="card-header">
+      <div class="platform-logo logo-zonaprop">Z</div>
+      <div>
+        <div class="platform-name">ZonaProp</div>
+        <div class="platform-type">Portal inmobiliario</div>
+      </div>
+      <span class="status-badge badge-active">Activo</span>
+    </div>
+    <div class="card-body">
+      <div class="detail-row"><span class="detail-key">Precio</span><span class="detail-val">USD 90.000</span></div>
+      <div class="detail-row"><span class="detail-key">Código ZP</span><span class="detail-val">58460058</span></div>
+      <div class="detail-row"><span class="detail-key">Días publicado</span><span class="detail-val">78 días</span></div>
+      <div class="detail-row"><span class="detail-key">Visualizaciones</span><span class="detail-val">190</span></div>
+    </div>
+    <div class="card-footer">
+      <a class="btn-visit" href="https://www.zonaprop.com.ar/propiedades/clasificado/veclapin-muy-lindo-tres-ambientes-reciclado.-luminoso-58460058.html" target="_blank" rel="noopener">Ver publicación →</a>
+    </div>
+  </div>
+
+  <!-- iCasas -->
+  <div class="platform-card">
+    <div class="card-header">
+      <div class="platform-logo logo-icasas">iC</div>
+      <div>
+        <div class="platform-name">iCasas</div>
+        <div class="platform-type">Portal inmobiliario</div>
+      </div>
+      <span class="status-badge badge-active">Activo</span>
+    </div>
+    <div class="card-body">
+      <div class="detail-row"><span class="detail-key">Precio</span><span class="detail-val">USD 90.000</span></div>
+      <div class="detail-row"><span class="detail-key">Superficie</span><span class="detail-val">48,63 m²</span></div>
+      <div class="detail-row"><span class="detail-key">Dormitorios</span><span class="detail-val">2</span></div>
+      <div class="detail-row"><span class="detail-key">Anunciante</span><span class="detail-val">Tagliaferri Prop.</span></div>
+    </div>
+    <div class="card-footer">
+      <a class="btn-visit" href="https://www.icasas.com.ar/inmueble/ead5-9dfb-19d2076-938f633a7d71-7a99" target="_blank" rel="noopener">Ver publicación →</a>
+    </div>
+  </div>
+
+  <!-- Buscainmueble -->
+  <div class="platform-card">
+    <div class="card-header">
+      <div class="platform-logo logo-busca">B</div>
+      <div>
+        <div class="platform-name">Buscainmueble</div>
+        <div class="platform-type">Portal inmobiliario</div>
+      </div>
+      <span class="status-badge badge-active">Activo</span>
+    </div>
+    <div class="card-body">
+      <div class="detail-row"><span class="detail-key">Precio</span><span class="detail-val">USD 90.000</span></div>
+      <div class="detail-row"><span class="detail-key">Expensas</span><span class="detail-val">$ 130.000</span></div>
+      <div class="detail-row"><span class="detail-key">Anunciante</span><span class="detail-val">Tagliaferri Prop.</span></div>
+      <div class="detail-row"><span class="detail-key">Condición</span><span class="detail-val">Reciclado</span></div>
+    </div>
+    <div class="card-footer">
+      <a class="btn-visit" href="https://www.buscainmueble.com/departamento-en-venta-en-san-nicolas-3-ambientes--18886743" target="_blank" rel="noopener">Ver publicación →</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- INACTIVE PLATFORMS -->
+<div class="section">
+  <div class="section-title">Sin presencia activa</div>
+</div>
+<div class="platform-grid">
+
+  <!-- Argenprop -->
+  <div class="platform-card inactive">
+    <div class="card-header">
+      <div class="platform-logo logo-argenprop">A</div>
+      <div>
+        <div class="platform-name">Argenprop</div>
+        <div class="platform-type">Portal inmobiliario</div>
+      </div>
+      <span class="status-badge badge-expired">Expirado</span>
+    </div>
+    <div class="card-body">
+      <div class="detail-row"><span class="detail-key">Estado</span><span class="detail-val">Listados en 410 Gone</span></div>
+      <div class="detail-row"><span class="detail-key">Nota</span><span class="detail-val">Hubo listings en esta dirección — todos vencidos</span></div>
+      <div class="note-box">Otros departamentos del mismo edificio (Perón 1700) estuvieron publicados pero ya no están activos.</div>
+    </div>
+    <div class="card-footer">
+      <a class="btn-visit disabled" href="#" aria-disabled="true">Publicación no disponible</a>
+    </div>
+  </div>
+
+  <!-- RE/MAX -->
+  <div class="platform-card inactive">
+    <div class="card-header">
+      <div class="platform-logo logo-remax">R</div>
+      <div>
+        <div class="platform-name">RE/MAX</div>
+        <div class="platform-type">Red inmobiliaria</div>
+      </div>
+      <span class="status-badge badge-expired">Expirado</span>
+    </div>
+    <div class="card-body">
+      <div class="detail-row"><span class="detail-key">Listing ID</span><span class="detail-val">420011272-2</span></div>
+      <div class="detail-row"><span class="detail-key">Estado</span><span class="detail-val">Redirige a home</span></div>
+      <div class="note-box">El listing en RE/MAX fue dado de baja. La URL ya no resuelve a la propiedad.</div>
+    </div>
+    <div class="card-footer">
+      <a class="btn-visit disabled" href="#" aria-disabled="true">Publicación no disponible</a>
+    </div>
+  </div>
+
+  <!-- Mercado Libre -->
+  <div class="platform-card inactive">
+    <div class="card-header">
+      <div class="platform-logo logo-ml">ML</div>
+      <div>
+        <div class="platform-name">Mercado Libre</div>
+        <div class="platform-type">Marketplace</div>
+      </div>
+      <span class="status-badge badge-missing">No publicado</span>
+    </div>
+    <div class="card-body">
+      <div class="detail-row"><span class="detail-key">Estado</span><span class="detail-val">No encontrado</span></div>
+      <div class="note-box" style="background:#fff7ed;border-color:#fed7aa;color:#9a3412">
+        <strong>Oportunidad:</strong> ML tiene alto tráfico orgánico en CABA. Publicar aquí ampliaría la exposición sin costo adicional para el vendedor.
+      </div>
+    </div>
+    <div class="card-footer">
+      <a class="btn-visit" href="https://www.mercadolibre.com.ar/inmuebles" target="_blank" rel="noopener" style="background:#f59e0b;color:#fff">Publicar en ML →</a>
+    </div>
+  </div>
+
+  <!-- Properati -->
+  <div class="platform-card inactive">
+    <div class="card-header">
+      <div class="platform-logo logo-properati">P</div>
+      <div>
+        <div class="platform-name">Properati</div>
+        <div class="platform-type">Portal inmobiliario</div>
+      </div>
+      <span class="status-badge badge-missing">No publicado</span>
+    </div>
+    <div class="card-body">
+      <div class="detail-row"><span class="detail-key">Estado</span><span class="detail-val">Sin resultados</span></div>
+      <div class="detail-row"><span class="detail-key">Búsqueda</span><span class="detail-val">Dirección + precio verificados</span></div>
+    </div>
+    <div class="card-footer">
+      <a class="btn-visit disabled" href="#" aria-disabled="true">No publicado</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- INSIGHTS -->
+<div class="section" style="padding-bottom:14px">
+  <div class="section-title">Observaciones</div>
+</div>
+<div class="insights">
+  <h3>Análisis de distribución</h3>
+  <div class="insight-item">
+    <span class="insight-icon">📊</span>
+    <span><strong>ZonaProp es el portal con más tracción:</strong> 190 visualizaciones en 78 días, pero sin conversión visible. No hay marcas de reserva ni bajada de precio.</span>
+  </div>
+  <div class="insight-item">
+    <span class="insight-icon">⚠️</span>
+    <span><strong>Gap en Mercado Libre:</strong> es el marketplace inmobiliario con mayor tráfico orgánico en Argentina. La propiedad no está publicada allí, lo que representa una oportunidad concreta de ampliar la exposición.</span>
+  </div>
+  <div class="insight-item">
+    <span class="insight-icon">🔄</span>
+    <span><strong>Argenprop y RE/MAX expirados:</strong> listados anteriores en Perón 1700 ya no están activos. Podría valer la pena re-publicar en Argenprop, el segundo portal más consultado del país.</span>
+  </div>
+  <div class="insight-item">
+    <span class="insight-icon">🏢</span>
+    <span><strong>Competencia en el mismo edificio:</strong> ZonaProp muestra al menos 8 unidades en Perón 1700 activas. La de 48 m² / USD 90.000 es la más económica del edificio en tamaño equivalente.</span>
+  </div>
+  <div class="insight-item">
+    <span class="insight-icon">💡</span>
+    <span><strong>Precio/m² competitivo:</strong> USD 1.850/m² está por debajo del promedio del barrio San Nicolás para reciclados (USD 1.901/m² según relevamiento ZonaProp mayo 2026).</span>
+  </div>
+</div>
+
+<footer>Relevamiento realizado sobre plataformas públicas · Mayo 2026 · Ref. TAP7689217 · Tagliaferri Propiedades</footer>
+
+</body>
+</html>
