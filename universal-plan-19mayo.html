@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tu Plan · Universal Orlando · 19 Mayo 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700;800;900&family=Nunito+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* ─── BRAND TOKENS (extraídos del sitio oficial de Universal) ─── */
+    :root {
+      /* Palette oficial */
+      --u-navy:       #162B75;   /* --common-color-brand-secondary */
+      --u-dark:       #262541;   /* --common-color-scale-primary-minus-three */
+      --u-electric:   #036CE2;   /* computed: rgb(3,108,226) */
+      --u-bright:     #0070F0;   /* --common-color-scale-primary-plus-one */
+      --u-light:      #95C5FC;   /* --common-color-scale-primary-plus-two */
+      --u-pale:       #E5EFFB;   /* --common-color-scale-primary-plus-three */
+      --u-gray:       #757575;   /* --common-color-brand-primary */
+      --u-white:      #FFFFFF;
+
+      /* Epic Universe extensions */
+      --epic-bg:      #09091A;
+      --epic-surface: #0F1230;
+      --epic-card:    rgba(22, 43, 117, 0.18);
+      --epic-gold:    #FFB800;
+      --epic-gold-lt: #FFD966;
+      --epic-purple:  #3D1F8A;
+      --epic-glow-b:  rgba(3, 108, 226, 0.35);
+      --epic-glow-g:  rgba(255, 184, 0, 0.25);
+
+      /* Typography — Avenir Next (official) + Nunito Sans (web fallback) */
+      --font-display: 'Barlow Condensed', "Avenir Next Condensed", "Helvetica Neue", sans-serif;
+      --font-body:    'Nunito Sans', "Avenir Next", "Avenir Next W05", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+      /* Spacing */
+      --gap: 16px;
+      --radius: 14px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--epic-bg);
+      color: var(--u-white);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ─── STARFIELD ─── */
+    #stars-canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.6;
+    }
+
+    /* ─── LAYOUT ─── */
+    .page { position: relative; z-index: 1; }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      background: linear-gradient(175deg, #0C0F35 0%, #162B75 40%, #0A0A1E 100%);
+      padding: 56px 24px 64px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -40%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(ellipse, rgba(3,108,226,0.28) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 60px;
+      background: linear-gradient(to bottom, transparent, var(--epic-bg));
+    }
+
+    /* Globe logo SVG */
+    .globe-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .globe-svg { width: 68px; height: 68px; filter: drop-shadow(0 0 18px rgba(3,108,226,0.7)); }
+
+    .hero-eyebrow {
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--u-light);
+      margin-bottom: 10px;
+      opacity: 0.85;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 7vw, 5rem);
+      font-weight: 900;
+      line-height: 0.95;
+      letter-spacing: -1px;
+      text-transform: uppercase;
+      color: var(--u-white);
+      text-shadow: 0 0 40px rgba(3,108,226,0.6);
+      margin-bottom: 8px;
+    }
+    .hero-title em {
+      font-style: normal;
+      color: var(--epic-gold);
+    }
+    .hero-date {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--u-light);
+      opacity: 0.8;
+      margin-bottom: 28px;
+      letter-spacing: 0.5px;
+    }
+    .hero-badges {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .hero-badge {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(149,197,252,0.3);
+      border-radius: 99px;
+      padding: 6px 16px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: var(--u-light);
+      backdrop-filter: blur(4px);
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    a.hero-badge:hover {
+      background: rgba(255,255,255,0.18);
+      border-color: rgba(149,197,252,0.55);
+    }
+
+    /* ─── SECTION HEADERS ─── */
+    .section { padding: 44px 0 0; }
+    .section:last-of-type { padding-bottom: 60px; }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--u-light);
+      opacity: 0.7;
+      margin-bottom: 20px;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, rgba(149,197,252,0.3), transparent);
+    }
+    .section-label a {
+      color: inherit;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(149,197,252,0.35);
+      transition: opacity 0.15s, border-color 0.15s;
+    }
+    .section-label a:hover { opacity: 1; border-bottom-color: var(--u-light); }
+
+    /* ─── CROWD CARDS ─── */
+    .crowd-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--gap);
+      margin-bottom: 14px;
+    }
+    .crowd-card {
+      background: var(--epic-card);
+      border: 1px solid rgba(149,197,252,0.15);
+      border-radius: var(--radius);
+      padding: 20px 18px;
+      backdrop-filter: blur(6px);
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+      display: block;
+      transition: border-color 0.15s;
+    }
+    .crowd-card:hover { border-color: rgba(149,197,252,0.35); }
+    .crowd-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      border-radius: var(--radius) var(--radius) 0 0;
+    }
+    .crowd-card.epic::before   { background: linear-gradient(90deg, var(--epic-purple), var(--u-electric)); }
+    .crowd-card.ioa::before    { background: linear-gradient(90deg, #0B4D2E, #1A9B5F); }
+    .crowd-card.usf::before    { background: linear-gradient(90deg, var(--u-navy), var(--u-electric)); }
+
+    .crowd-park {
+      font-family: var(--font-display);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--u-light);
+      opacity: 0.7;
+      margin-bottom: 8px;
+    }
+    .crowd-name {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--u-white);
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+    .crowd-meter-bg {
+      height: 6px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 99px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+    .crowd-meter-fill {
+      height: 100%;
+      border-radius: 99px;
+    }
+    .fill-5 { width: 50%; background: linear-gradient(90deg, #F59E0B, #F97316); }
+    .fill-4 { width: 40%; background: linear-gradient(90deg, #10B981, #34D399); }
+    .fill-3 { width: 30%; background: linear-gradient(90deg, #10B981, #6EE7B7); }
+
+    .crowd-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .crowd-level {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--u-light);
+    }
+    .crowd-hours {
+      font-size: 0.7rem;
+      color: var(--u-gray);
+      font-weight: 600;
+    }
+
+    .day-summary {
+      background: linear-gradient(135deg, rgba(22,43,117,0.4), rgba(3,108,226,0.15));
+      border: 1px solid rgba(149,197,252,0.2);
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.84rem;
+      color: var(--u-light);
+      font-weight: 600;
+    }
+    .day-summary-icon { font-size: 1.3rem; flex-shrink: 0; }
+
+    /* ─── CLOSURES ─── */
+    .closure-group { margin-bottom: 18px; }
+    .closure-group-title {
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--u-gray);
+      margin-bottom: 10px;
+    }
+    .closure-list { display: flex; flex-direction: column; gap: 8px; }
+
+    .closure-item {
+      background: rgba(239,68,68,0.08);
+      border: 1px solid rgba(239,68,68,0.2);
+      border-radius: 10px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .closure-item.warn {
+      background: rgba(245,158,11,0.08);
+      border-color: rgba(245,158,11,0.3);
+    }
+    .closure-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+    .closure-name {
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--u-white);
+      margin-bottom: 2px;
+    }
+    .closure-detail {
+      font-size: 0.76rem;
+      color: rgba(255,255,255,0.5);
+    }
+    .closure-item.warn .closure-name { color: #FFD166; }
+    .closure-chip {
+      margin-left: auto;
+      font-size: 0.67rem;
+      font-weight: 800;
+      padding: 3px 9px;
+      border-radius: 99px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .chip-closed { background: rgba(239,68,68,0.2); color: #FCA5A5; }
+    .chip-warn   { background: rgba(245,158,11,0.2); color: #FCD34D; }
+
+    /* ─── PARK BLOCKS ─── */
+    .park-block {
+      border-radius: 18px;
+      overflow: hidden;
+      margin-bottom: 24px;
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .park-block-header {
+      padding: 22px 24px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .park-block.epic .park-block-header {
+      background: linear-gradient(135deg, #1A0A3C 0%, #2D1B7A 60%, #162B75 100%);
+    }
+    .park-block.ioa .park-block-header {
+      background: linear-gradient(135deg, #071C11 0%, #0B3D22 60%, #0A5932 100%);
+    }
+    .park-block.usf .park-block-header {
+      background: linear-gradient(135deg, #050D24 0%, #0D1F5A 60%, #162B75 100%);
+    }
+
+    .park-block-body {
+      background: rgba(9,9,26,0.95);
+      padding: 20px 24px 24px;
+    }
+
+    .park-block-num {
+      font-family: var(--font-display);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      opacity: 0.6;
+      color: var(--u-light);
+    }
+    .park-block-name {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 3.5vw, 2rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: -0.5px;
+      color: var(--u-white);
+      line-height: 1.1;
+    }
+    .park-block-name a { color: inherit; text-decoration: none; }
+    .park-block-name a:hover { text-decoration: underline; }
+    .park-block.epic .park-block-name em   { color: var(--epic-gold); font-style: normal; }
+    .park-block.ioa .park-block-name em    { color: #4ADE80; font-style: normal; }
+    .park-block.usf .park-block-name em    { color: var(--u-light); font-style: normal; }
+
+    .park-block-time {
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 99px;
+      padding: 6px 14px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--u-white);
+      white-space: nowrap;
+    }
+
+    .transition-bar {
+      background: rgba(255,255,255,0.04);
+      border-top: 1px dashed rgba(255,255,255,0.1);
+      border-bottom: 1px dashed rgba(255,255,255,0.1);
+      padding: 10px 24px;
+      font-size: 0.76rem;
+      color: var(--u-gray);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .transition-bar a {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .transition-bar a:hover { color: var(--u-light); border-bottom-color: var(--u-light); }
+
+    /* ─── RIDE CARDS ─── */
+    .rides-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .ride-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 11px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      transition: background 0.15s;
+    }
+    .ride-card:hover { background: rgba(149,197,252,0.06); }
+
+    .ride-num {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+    .park-block.epic  .ride-num { background: rgba(61,31,138,0.6); color: var(--epic-gold); border: 1px solid rgba(61,31,138,0.8); }
+    .park-block.ioa   .ride-num { background: rgba(11,77,46,0.6);  color: #4ADE80; border: 1px solid rgba(11,77,46,0.8); }
+    .park-block.usf   .ride-num { background: rgba(22,43,117,0.6); color: var(--u-light); border: 1px solid rgba(22,43,117,0.8); }
+
+    .ride-info { flex: 1; min-width: 0; }
+    .ride-name {
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--u-white);
+      margin-bottom: 2px;
+    }
+    .ride-name a {
+      color: inherit;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .ride-name a:hover { color: var(--u-light); border-bottom-color: var(--u-light); }
+    .ride-world {
+      font-size: 0.73rem;
+      color: var(--u-gray);
+    }
+    .ride-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+    .ride-tag {
+      font-size: 0.62rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 99px;
+      letter-spacing: 0.3px;
+      white-space: nowrap;
+    }
+    .tag-critical  { background: rgba(239,68,68,0.2);   color: #FCA5A5; border: 1px solid rgba(239,68,68,0.3); }
+    .tag-express   { background: rgba(3,108,226,0.2);   color: #93C5FD; border: 1px solid rgba(3,108,226,0.3); }
+    .tag-noexpress { background: rgba(245,158,11,0.2);  color: #FCD34D; border: 1px solid rgba(245,158,11,0.3); }
+    .tag-lowwait   { background: rgba(16,185,129,0.15); color: #6EE7B7; border: 1px solid rgba(16,185,129,0.2); }
+    .tag-last      { background: rgba(239,68,68,0.25);  color: #FCA5A5; border: 1px solid rgba(239,68,68,0.4); animation: pulse 2s infinite; }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.65; }
+    }
+
+    .ride-note {
+      background: rgba(255,184,0,0.07);
+      border-left: 3px solid rgba(255,184,0,0.5);
+      border-radius: 0 8px 8px 0;
+      padding: 8px 12px;
+      font-size: 0.76rem;
+      color: rgba(255,255,255,0.65);
+      margin-top: 10px;
+      line-height: 1.5;
+    }
+    .ride-note strong { color: var(--epic-gold); }
+    .ride-note a { color: var(--u-light); text-decoration: none; border-bottom: 1px solid rgba(149,197,252,0.3); }
+    .ride-note a:hover { border-bottom-color: var(--u-light); }
+
+    /* ─── HOURS TABLE ─── */
+    .hours-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--epic-card);
+      border: 1px solid rgba(149,197,252,0.12);
+      border-radius: var(--radius);
+      overflow: hidden;
+      font-size: 0.86rem;
+    }
+    .hours-table thead th {
+      background: var(--u-navy);
+      color: var(--u-white);
+      padding: 11px 16px;
+      text-align: left;
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+    .hours-table tbody td {
+      padding: 13px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      vertical-align: middle;
+    }
+    .hours-table tbody tr:last-child td { border-bottom: none; }
+    .hours-table tbody tr:hover { background: rgba(149,197,252,0.04); }
+    .hours-table a { color: var(--u-light); text-decoration: none; }
+    .hours-table a:hover { text-decoration: underline; }
+    .park-dot {
+      display: inline-block;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+    .dot-epic { background: var(--epic-gold); }
+    .dot-ioa  { background: #4ADE80; }
+    .dot-usf  { background: var(--u-light); }
+
+    .epa-badge {
+      font-size: 0.67rem;
+      font-weight: 700;
+      background: rgba(255,184,0,0.15);
+      color: var(--epic-gold);
+      border: 1px solid rgba(255,184,0,0.3);
+      border-radius: 99px;
+      padding: 2px 8px;
+      margin-left: 8px;
+    }
+    .epa-badge a { color: inherit; text-decoration: none; }
+    .epa-badge a:hover { text-decoration: underline; }
+
+    /* ─── DINING ─── */
+    .dining-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .dining-card {
+      background: var(--epic-card);
+      border: 1px solid rgba(149,197,252,0.12);
+      border-radius: var(--radius);
+      padding: 18px;
+    }
+    .dining-card-icon { font-size: 1.4rem; margin-bottom: 10px; display: block; }
+    .dining-card-title {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--u-white);
+      margin-bottom: 6px;
+    }
+    .dining-card-body {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.6;
+    }
+    .dining-card-body strong { color: var(--u-light); }
+    .dining-card-body a { color: var(--u-light); text-decoration: none; border-bottom: 1px solid rgba(149,197,252,0.3); }
+    .dining-card-body a:hover { border-bottom-color: var(--u-light); }
+
+    /* ─── TIPS ─── */
+    .tips-list { display: flex; flex-direction: column; gap: 12px; }
+    .tip-item {
+      background: var(--epic-card);
+      border: 1px solid rgba(149,197,252,0.1);
+      border-radius: var(--radius);
+      padding: 16px 18px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .tip-num {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: var(--u-navy);
+      border: 1px solid rgba(149,197,252,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 0.9rem;
+      color: var(--u-light);
+      flex-shrink: 0;
+    }
+    .tip-text {
+      font-size: 0.86rem;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.6;
+      flex: 1;
+    }
+    .tip-text strong { color: var(--u-white); }
+    .tip-text a { color: var(--u-light); text-decoration: none; border-bottom: 1px solid rgba(149,197,252,0.3); }
+    .tip-text a:hover { border-bottom-color: var(--u-light); }
+
+    /* ─── WEATHER ─── */
+    .weather-box {
+      background: rgba(245,158,11,0.08);
+      border: 1px solid rgba(245,158,11,0.25);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      margin-bottom: 24px;
+    }
+    .weather-icon { font-size: 1.5rem; flex-shrink: 0; }
+    .weather-title { font-weight: 700; font-size: 0.9rem; color: #FCD34D; margin-bottom: 4px; }
+    .weather-body { font-size: 0.82rem; color: rgba(255,255,255,0.6); line-height: 1.5; }
+    .weather-body strong { color: #FDE68A; }
+    .weather-body a { color: #FDE68A; text-decoration: none; border-bottom: 1px solid rgba(253,230,138,0.4); }
+    .weather-body a:hover { border-bottom-color: #FDE68A; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: rgba(22,43,117,0.15);
+      border-top: 1px solid rgba(149,197,252,0.1);
+      padding: 24px;
+      text-align: center;
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.35);
+      line-height: 1.7;
+    }
+    footer a { color: rgba(149,197,252,0.6); text-decoration: none; }
+    footer a:hover { color: var(--u-light); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 640px) {
+      .crowd-grid   { grid-template-columns: 1fr; }
+      .dining-grid  { grid-template-columns: 1fr; }
+      .park-block-body { padding: 16px; }
+      .park-block-header { padding: 18px 16px 14px; }
+      .container { padding: 0 16px; }
+    }
+
+    /* ─── PRINT ─── */
+    @media print {
+      body { background: #fff; color: #000; }
+      #stars-canvas { display: none; }
+      .park-block-header, .hero { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── STARFIELD ── -->
+<canvas id="stars-canvas"></canvas>
+<script>
+(function() {
+  const canvas = document.getElementById('stars-canvas');
+  const ctx = canvas.getContext('2d');
+  function resize() { canvas.width = window.innerWidth; canvas.height = document.body.scrollHeight; }
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const stars = 280;
+    for (let i = 0; i < stars; i++) {
+      const x = Math.random() * canvas.width;
+      const y = Math.random() * canvas.height;
+      const r = Math.random() * 1.2;
+      const op = 0.3 + Math.random() * 0.7;
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,255,255,${op})`;
+      ctx.fill();
+    }
+  }
+  window.addEventListener('resize', () => { resize(); draw(); });
+  resize(); draw();
+})();
+</script>
+
+<div class="page">
+
+<!-- ── HERO ── -->
+<header class="hero">
+  <!-- Universal Globe SVG (simplified) -->
+  <div class="globe-wrap">
+    <a href="https://www.universalorlando.com" target="_blank" aria-label="Universal Orlando Resort">
+      <svg class="globe-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="46" stroke="#95C5FC" stroke-width="2" opacity="0.4"/>
+        <circle cx="50" cy="50" r="46" fill="url(#globeGrad)" opacity="0.9"/>
+        <ellipse cx="50" cy="50" rx="20" ry="46" stroke="#95C5FC" stroke-width="1.5" opacity="0.5"/>
+        <line x1="8" y1="35" x2="92" y2="35" stroke="#95C5FC" stroke-width="1" opacity="0.4"/>
+        <line x1="4" y1="50" x2="96" y2="50" stroke="#95C5FC" stroke-width="1" opacity="0.4"/>
+        <line x1="8" y1="65" x2="92" y2="65" stroke="#95C5FC" stroke-width="1" opacity="0.4"/>
+        <text x="50" y="56" text-anchor="middle" font-family="Barlow Condensed, Arial" font-weight="900" font-size="18" fill="white" letter-spacing="1">U</text>
+        <defs>
+          <radialGradient id="globeGrad" cx="35%" cy="35%">
+            <stop offset="0%" stop-color="#2D5FBF"/>
+            <stop offset="100%" stop-color="#0A1840"/>
+          </radialGradient>
+        </defs>
+      </svg>
+    </a>
+  </div>
+
+  <p class="hero-eyebrow">Universal Orlando Resort</p>
+  <h1 class="hero-title">Tu Plan<br><em>19 Mayo</em></h1>
+  <p class="hero-date">Martes 19 de Mayo, 2026 · Park to Park</p>
+  <div class="hero-badges">
+    <a class="hero-badge" href="https://www.universalorlando.com/web/en/us/theme-parks/epic-universe" target="_blank">⚡ Epic Universe</a>
+    <a class="hero-badge" href="https://www.universalorlando.com/web/en/us/theme-parks/islands-of-adventure" target="_blank">🦕 Islands of Adventure</a>
+    <a class="hero-badge" href="https://www.universalorlando.com/web/en/us/theme-parks/universal-studios-florida" target="_blank">🎬 Universal Studios</a>
+    <span class="hero-badge">3 Parques</span>
+  </div>
+</header>
+
+<!-- ── CONTENIDO ── -->
+<div class="container">
+
+  <!-- ── CROWD LEVELS ── -->
+  <section class="section">
+    <div class="section-label">Nivel de asistencia · Fuente: <a href="https://touringplans.com/universal-orlando/crowd-calendar" target="_blank">TouringPlans</a> + <a href="https://www.thrill-data.com/trip-planning/crowd-calendar/resort/uor/2026" target="_blank">Thrill Data</a></div>
+
+    <div class="crowd-grid">
+      <a class="crowd-card epic" href="https://www.universalorlando.com/web/en/us/theme-parks/epic-universe" target="_blank">
+        <div class="crowd-park">Epic Universe</div>
+        <div class="crowd-name">Epic Universe</div>
+        <div class="crowd-meter-bg"><div class="crowd-meter-fill fill-5"></div></div>
+        <div class="crowd-meta">
+          <span class="crowd-level">Nivel 5 / 10</span>
+          <span class="crowd-hours">10am – 9pm</span>
+        </div>
+      </a>
+      <a class="crowd-card ioa" href="https://www.universalorlando.com/web/en/us/theme-parks/islands-of-adventure" target="_blank">
+        <div class="crowd-park">Islands of Adventure</div>
+        <div class="crowd-name">Islands of Adventure</div>
+        <div class="crowd-meter-bg"><div class="crowd-meter-fill fill-4"></div></div>
+        <div class="crowd-meta">
+          <span class="crowd-level">Nivel 4 / 10</span>
+          <span class="crowd-hours">9am – 8pm</span>
+        </div>
+      </a>
+      <a class="crowd-card usf" href="https://www.universalorlando.com/web/en/us/theme-parks/universal-studios-florida" target="_blank">
+        <div class="crowd-park">Universal Studios Florida</div>
+        <div class="crowd-name">Universal Studios Florida</div>
+        <div class="crowd-meter-bg"><div class="crowd-meter-fill fill-3"></div></div>
+        <div class="crowd-meta">
+          <span class="crowd-level">Nivel 3 / 10</span>
+          <span class="crowd-hours">10am – 9pm</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="day-summary">
+      <span class="day-summary-icon">🟢</span>
+      <span>Martes de mayo = uno de los días de <strong>menor asistencia del año</strong>. Promedio histórico: 22–25 min de espera en USF e IoA. Las multitudes suben notablemente desde el 22 de mayo. Elegiste bien.</span>
+    </div>
+  </section>
+
+  <!-- ── HORARIOS ── -->
+  <section class="section">
+    <div class="section-label"><a href="https://www.universalorlando.com/web/en/us/plan-your-visit/hours-information/park-hours" target="_blank">Horarios del 19 de mayo</a></div>
+    <table class="hours-table">
+      <thead>
+        <tr>
+          <th>Parque</th>
+          <th>Apertura regular</th>
+          <th>Early Park Admission</th>
+          <th>Cierre</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="park-dot dot-epic"></span><a href="https://www.universalorlando.com/web/en/us/theme-parks/epic-universe" target="_blank"><strong>Epic Universe</strong></a></td>
+          <td>10:00 am</td>
+          <td>9:00 am <span class="epa-badge"><a href="https://www.universalorlando.com/web/en/us/hotels/early-park-admission" target="_blank">Hotel Universal</a></span></td>
+          <td>9:00 pm</td>
+        </tr>
+        <tr>
+          <td><span class="park-dot dot-ioa"></span><a href="https://www.universalorlando.com/web/en/us/theme-parks/islands-of-adventure" target="_blank"><strong>Islands of Adventure</strong></a></td>
+          <td>9:00 am</td>
+          <td>8:00 am <span class="epa-badge"><a href="https://www.universalorlando.com/web/en/us/hotels/early-park-admission" target="_blank">Hotel Universal</a></span></td>
+          <td>8:00 pm</td>
+        </tr>
+        <tr>
+          <td><span class="park-dot dot-usf"></span><a href="https://www.universalorlando.com/web/en/us/theme-parks/universal-studios-florida" target="_blank"><strong>Universal Studios Florida</strong></a></td>
+          <td>10:00 am</td>
+          <td>9:00 am <span class="epa-badge"><a href="https://www.universalorlando.com/web/en/us/hotels/early-park-admission" target="_blank">Hotel Universal</a></span></td>
+          <td>9:00 pm</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ── CIERRES ── -->
+  <section class="section">
+    <div class="section-label">Cierres confirmados · Fuente: <a href="https://www.universalorlando.com/web/en/us/plan-your-visit/hours-information/park-hours" target="_blank">universalorlando.com oficial</a></div>
+
+    <div class="closure-group">
+      <div class="closure-group-title">⚡ Epic Universe</div>
+      <div class="closure-list">
+        <div class="closure-item">
+          <span class="closure-icon">🚫</span>
+          <div>
+            <div class="closure-name">Viking Training Camp</div>
+            <div class="closure-detail">Isle of Berk (<a href="https://www.universalorlando.com/web/en/us/theme-parks/epic-universe/isle-of-berk" target="_blank" style="color:rgba(255,255,255,0.5);text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.2)">How to Train Your Dragon</a>)</div>
+          </div>
+          <span class="closure-chip chip-closed">Cerrado hasta el 22 May</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="closure-group">
+      <div class="closure-group-title">🦕 Islands of Adventure</div>
+      <div class="closure-list">
+        <div class="closure-item">
+          <span class="closure-icon">🚫</span>
+          <div>
+            <div class="closure-name"><a href="https://www.universalorlando.com/web/en/us/rides-and-attractions/jurassic-park-river-adventure" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.2)">Jurassic Park River Adventure</a></div>
+            <div class="closure-detail">Cerrado desde enero — reabre 19 de noviembre 2026</div>
+          </div>
+          <span class="closure-chip chip-closed">Todo el año</span>
+        </div>
+        <div class="closure-item">
+          <span class="closure-icon">🚫</span>
+          <div>
+            <div class="closure-name"><a href="https://www.universalorlando.com/web/en/us/rides-and-attractions/pteranodon-flyers" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.2)">Pteranodon Flyers</a></div>
+            <div class="closure-detail">Reabre el 22 de mayo — un día después de tu visita</div>
+          </div>
+          <span class="closure-chip chip-closed">Cerrado el 19</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="closure-group">
+      <div class="closure-group-title">🎬 Universal Studios Florida</div>
+      <div class="closure-list">
+        <div class="closure-item">
+          <span class="closure-icon">🚫</span>
+          <div>
+            <div class="closure-name">Po's Kung Fu Training Camp &amp; Po Live!</div>
+            <div class="closure-detail">Cierra el 18 de mayo — ya no estará el 19</div>
+          </div>
+          <span class="closure-chip chip-closed">Cerrado</span>
+        </div>
+        <div class="closure-item">
+          <span class="closure-icon">🚫</span>
+          <div>
+            <div class="closure-name">Horror Make-Up Show</div>
+            <div class="closure-detail">Cerrado desde el 12 de mayo</div>
+          </div>
+          <span class="closure-chip chip-closed">Cerrado</span>
+        </div>
+        <div class="closure-item">
+          <span class="closure-icon">🚫</span>
+          <div>
+            <div class="closure-name">Finnegan's Bar &amp; Grill</div>
+            <div class="closure-detail">Cerrado desde enero 2026</div>
+          </div>
+          <span class="closure-chip chip-closed">Cerrado</span>
+        </div>
+        <div class="closure-item warn">
+          <span class="closure-icon">⚡</span>
+          <div>
+            <div class="closure-name"><a href="https://www.universalorlando.com/web/en/us/rides-and-attractions/men-in-black-alien-attack" target="_blank" style="color:inherit;text-decoration:none;border-bottom:1px solid rgba(255,184,0,0.3)">Men In Black Alien Attack</a></div>
+            <div class="closure-detail">Cierra el 1 de junio — el 19 de mayo es de las últimas veces</div>
+          </div>
+          <span class="closure-chip chip-warn">¡Última semana!</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CLIMA ── -->
+  <section class="section" style="padding-top:32px">
+    <div class="weather-box">
+      <span class="weather-icon">⛈️</span>
+      <div>
+        <div class="weather-title">Alerta clima — Temporada de tormentas</div>
+        <div class="weather-body">
+          Mayo en Orlando es temporada de tormentas vespertinas. En Epic Universe, solo <strong>4 atracciones operan durante alertas eléctricas</strong>: Mario Kart, Monsters Unchained, Battle at the Ministry y Constellation Carousel. <a href="https://forecast.weather.gov/MapClick.php?CityName=Orlando&state=FL&site=MLB&textField1=28.5383&textField2=-81.3792" target="_blank">Chequeá el pronóstico horario esa mañana</a>. Las tormentas suelen ser cortas pero intensas (1–2 hs).
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ITINERARIO ── -->
+  <section class="section">
+    <div class="section-label">Itinerario recomendado · <a href="https://periodicadventures.com/epic-universe-tips/" target="_blank">Park to Park</a></div>
+
+    <!-- BLOQUE 1: EPIC UNIVERSE -->
+    <div class="park-block epic">
+      <div class="park-block-header">
+        <div>
+          <div class="park-block-num">Bloque 1 · Mayor prioridad</div>
+          <div class="park-block-name"><a href="https://www.universalorlando.com/web/en/us/theme-parks/epic-universe" target="_blank">Epic <em>Universe</em></a></div>
+        </div>
+        <div class="park-block-time">9:30am → 3:00pm</div>
+      </div>
+      <div class="park-block-body">
+
+        <div class="ride-note" style="margin-bottom:14px">
+          <strong>Estrategia de entrada:</strong> Llegá al estacionamiento de <a href="https://www.universalorlando.com/web/en/us/theme-parks/epic-universe" target="_blank">Epic Universe</a> a las <strong>9:30am</strong>. Entrá a las <strong>10:00am exactas</strong> y andá directo a Harry Potter — Ministry of Magic sin detenerte a explorar. El tiempo de espera de Battle at the Ministry sube de 20 min a 60–90 min antes de las 11am.
+        </div>
+
+        <div class="rides-grid">
+          <div class="ride-card">
+            <div class="ride-num">1</div>
+            <div class="ride-info">
+              <div class="ride-name"><a href="https://www.universalorlando.com/web/en/us/rides-and-attractions/the-battle-at-the-ministry" target="_blank">Battle at the Ministry</a></div>
+              <div class="ride-world">Harry Potter — Ministry of Magic</div>
+            </div>
+            <div class="ride-tags">
+              <span class="ride-tag tag-critical">PRIMERO SIEMPRE</span>
+              <span class="ride-tag tag-noexpress">Sin Express Pass</span>
+            </div>
+          </div>
+          <div class="ride-card">
+            <div class="ride-num">2</div>
+            <div class="ride-info">
+              <div class="ride-name"><a href="https://www.universalorlando.com/web/en/us/rides-and-attractions/mine-cart-madness" target="_blank">Mine-Cart Madness</a></div>
+              <div class="ride-world">Super Nintendo World — Donkey Kong</div>
+            </div>
+            <div class="ride-tags">
+              <span class="ride-tag tag-express">Express ✓</span>
+            </div>
+          </div>
+          <div class="ride-card">
+            <div class="ride-num">3</div>
+            <div class="ride-info">
+              <div class="ride-name"><a href="https://www.universalorlando.com/web/en/us/rides-and-attractions/mario-kart-bowsers-challenge" target="_blank">Mario Kart: Bowser's Challenge</a></div>
+              <div class="ride-world">Super Nintendo World</div>
+            </div>
+            <div class="ride-tags">
+              <span class="ride-tag tag-express">Express ✓</span>
+            </div>
+          </div>
+          <div class="ride-card">
+            <div class="ride-num">4</div>
+            <div class="ride-info">
+              <div class="ride-name"><a href="https://www.universalorlando.com/web/en/us/rides-and-attractions/hiccups-wing-riders" target="_blank">Hiccup's Wing Riders</a></div>
+              <div class="ride-world">Isle of Berk — How to Train Your Dragon</div>
+            </div>
+            <div class="ride-tags">
+              <span class="ride-tag tag-express">Express ✓</span>
+            </div>
+          </div>
+          <div class="ride-card">
+            <div class="ride-num">5</div>
+            <div class="ride-info">
+              <div class="ride-name"><a href="https://www.universalorlando.com/web/en/us/rides-and-attractions/stardust-racers" target="_blank">Stardust Racers</a></div>
+              <div class="ride-world">Celestial Park</div>
+            </div>
+            <div class="ride-tags">
+              <span class="ride-tag tag-express">Express ✓</span>
+            </div>
+          </div>
+          <div class="ride-card">
+            <div class="ride-num">6</div>
+            <div class="ride-info">
+              <div class="ride-name"><a href="https://www.universalorlando.com/web/en/us/rides-and-attractions/monsters-unchained-the-frankenstein-experiment" target="_blank">Monsters Unchained: The Frankenstein Experiment</a></div>
+              <div class="ride-world">Dark Universe</div>
+            </div>
+            <div class="ride-tags">
+              <span class="ride-tag tag-express">Express ✓</span>
+              <span class="ride-tag tag-lowwait">Baja espera</span>
+            </div>
+          </div>
+          <div class="ride-card">
+            <div class="ride-num">7</div>
+            <div class="ride-info">
+              <div class="ride-name"><a href="https://www.universalorlando.com/web/en/us/rides-and-attractions/yoshis-adventure" target="_blank">Yoshi's Adventure</a></div>
+              <div class="ride-world">Super Nintendo World</div>
+            </div>
+            <div class="ride-tags">
+              <span class="ride-tag tag-lowwait">Baja espera · Familia</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ride-note" style="margin-top:14px">
+          <strong>⚠️ Viking Training Camp</strong> (<a href="https://www.universalorlando.com/web/en/us/theme-parks/epic-universe/isle-of-berk" target="_blank">Isle of Berk</a>) sigue cerrado el 19 de mayo. Reabre el <strong>22 de mayo</strong>. No lo busques.
+        </div>
+      </div>
+    </div>
+
+    <!-- TRANSICIÓN -->
+    <div class="transition-bar">
+      🚌 &nbsp;<strong style="color:rgba(255,255,255,0.7)">Transición a las 3:00pm</strong> — <a href="https://www.universalorlando.com/web/en/us/plan-your-visit/transportation/complimentary-transportation" target="_blank">Shuttle Universal</a> hacia el resort principal (~25–30 min). Tomarlo antes de las 3pm para llegar a IoA con tiempo.
+    </div>
+
+    <!-- BLOQUE 2: ISLANDS OF ADVENTURE -->
+    <div class="park-block ioa" style="margin-top:0">
+      <div class="park-block-header">
+        <div>
+          <div class="park-block-num">Bloque 2 · Tarde</div>
+          <div class="park-block-name"><a href="https://www.universalorlando.com/web/en/us/theme-parks/islands-of-adventure" target="_blank">Islands of <em>Adventure</em></a></div>
+        </div>
+        <div class="park-block-time">3:30pm → 6:00pm</div>
+      </div>
+      <div class="park-block-body">
+
+        <div class="ride-note" style="margin-bottom:14px;border-left-color:rgba(74,222,128,0.4)">
+          Nivel 4/10 — crowd manejable a esta hora. <strong><a href="https://www.universalorlando.com/web/en/us/rides-and-attractions/jurassic-park-river-adventure" target="_blank">Jurassic Park River Adventure</a> cerrado todo el año.</strong> Hagrid's es imprescindible, llegá directamente. Terminá con el Hogwarts Express para hacer la transición a USF.
+        </div>
+
+        <div class="rides-grid">
+          <div class="ride-card">
+            <div class="ride-num">1</div>
+            <div class="ride-info">
+              <div class="ride-name"><a href="https://www.universalorlando.com/web/en/us/rides-and-attractions/hagrids-magical-creatures-motorbike-adventure" target="_blank">Hagrid's Magical Creatures Motorbike Adventure</a></div>
+              <div class="ride-world">Hogsmeade — The Wizarding World</div>
+            </div>
+            <div class="ride-tags">
+              <span class="ride-tag tag-noexpress">Sin Express · Hacelo primero</span>
+            </div>
+          </div>
+          <div class="ride-card">
+            <div class="ride-num">2</div>
+            <div class="ride-info">
+              <div class="ride-name"><a href="https://www.universalorlando.com/web/en/us/rides-and-attractions/jurassic-world-velocicoaster" target="_blank">Velocicoaster</a></div>
+              <div class="ride-world">Jurassic World</div>
+            </div>
+            <div class="ride-tags">
+              <span class="ride-tag tag-express">Express ✓</span>
+            </div>
+          </div>
+          <div class="ride-card">
+            <div class="ride-num">3</div>
+            <div class="ride-info">
+              <div class="ride-name"><a href="https://www.universalorlando.com/web/en/us/rides-and-attractions/harry-potter-forbidden-journey" target="_blank">Harry Potter and the Forbidden Journey</a></div>
+              <div class="ride-world">Hogsmeade</div>
+            </div>
+            <div class="ride-tags">
+              <span class="ride-tag tag-express">Express ✓</span>
+            </div>
+          </div>
+          <div class="ride-card">
+            <div class="ride-num">4</div>
+            <div class="ride-info">
+              <div class="ride-name"><a href="https://www.universalorlando.com/web/en/us/rides-and-attractions/the-incredible-hulk-coaster" target="_blank">Incredible Hulk Coaster</a></div>
+              <div class="ride-world">Marvel Super Hero Island</div>
+            </div>
+            <div class="ride-tags">
+              <span class="ride-tag tag-express">Express ✓</span>
+              <span class="ride-tag tag-lowwait">Si queda tiempo</span>
+            </div>
+          </div>
+          <div class="ride-card">
+            <div class="ride-num">5</div>
+            <div class="ride-info">
+              <div class="ride-name"><a href="https://www.universalorlando.com/web/en/us/rides-and-attractions/hogwarts-express" target="_blank">Hogwarts Express → Diagon Alley (USF)</a></div>
+              <div class="ride-world">De Hogsmeade a Universal Studios Florida</div>
+            </div>
+            <div class="ride-tags">
+              <span class="ride-tag tag-express">Requiere P2P ticket</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TRANSICIÓN -->
+    <div class="transition-bar">
+      🚂 &nbsp;<strong style="color:rgba(255,255,255,0.7)"><a href="https://www.universalorlando.com/web/en/us/rides-and-attractions/hogwarts-express" target="_blank">Hogwarts Express</a></strong> — Te deposita directamente en Diagon Alley dentro de USF. Es una experiencia de ride en sí misma — distinta en cada dirección. No te la saltes.
+    </div>
+
+    <!-- BLOQUE 3: USF -->
+    <div class="park-block usf" style="margin-top:0">
+      <div class="park-block-header">
+        <div>
+          <div class="park-block-num">Bloque 3 · Noche</div>
+          <div class="park-block-name"><a href="https://www.universalorlando.com/web/en/us/theme-parks/universal-studios-florida" target="_blank">Universal Studios <em>Florida</em></a></div>
+        </div>
+        <div class="park-block-time">6:00pm → 9:00pm</div>
+      </div>
+      <div class="park-block-body">
+
+        <div class="ride-note" style="margin-bottom:14px;border-left-color:rgba(149,197,252,0.4)">
+          Nivel 3/10 — el parque más tranquilo del día. Los waits bajan notablemente después de las 6pm. Priorizá <a href="https://www.universalorlando.com/web/en/us/rides-and-attractions/men-in-black-alien-attack" target="_blank">MIB</a>, que <strong>cierra para siempre el 1 de junio</strong>.
+        </div>
+
+        <div class="rides-grid">
+          <div class="ride-card">
+            <div class="ride-num">1</div>
+            <div class="ride-info">
+              <div class="ride-name"><a href="https://www.universalorlando.com/web/en/us/rides-and-attractions/men-in-black-alien-attack" target="_blank">Men In Black Alien Attack</a></div>
+              <div class="ride-world">World Expo</div>
+            </div>
+            <div class="ride-tags">
+              <span class="ride-tag tag-last">⚡ Cierra 1 junio</span>
+              <span class="ride-tag tag-express">Express ✓</span>
+            </div>
+          </div>
+          <div class="ride-card">
+            <div class="ride-num">2</div>
+            <div class="ride-info">
+              <div class="ride-name"><a href="https://www.universalorlando.com/web/en/us/rides-and-attractions/hollywood-rip-ride-rockit" target="_blank">Hollywood Rip, Ride, Rockit</a></div>
+              <div class="ride-world">Hollywood</div>
+            </div>
+            <div class="ride-tags">
+              <span class="ride-tag tag-express">Express ✓</span>
+            </div>
+          </div>
+          <div class="ride-card">
+            <div class="ride-num">3</div>
+            <div class="ride-info">
+              <div class="ride-name"><a href="https://www.universalorlando.com/web/en/us/rides-and-attractions/revenge-of-the-mummy" target="_blank">Revenge of the Mummy</a></div>
+              <div class="ride-world">World Expo</div>
+            </div>
+            <div class="ride-tags">
+              <span class="ride-tag tag-express">Express ✓</span>
+              <span class="ride-tag tag-lowwait">Baja espera nocturna</span>
+            </div>
+          </div>
+          <div class="ride-card">
+            <div class="ride-num">4</div>
+            <div class="ride-info">
+              <div class="ride-name"><a href="https://www.universalorlando.com/web/en/us/rides-and-attractions/despicable-me-minion-mayhem" target="_blank">Despicable Me Minion Mayhem</a></div>
+              <div class="ride-world">Production Central</div>
+            </div>
+            <div class="ride-tags">
+              <span class="ride-tag tag-express">Express ✓</span>
+              <span class="ride-tag tag-lowwait">Familia</span>
+            </div>
+          </div>
+          <div class="ride-card">
+            <div class="ride-num">5</div>
+            <div class="ride-info">
+              <div class="ride-name"><a href="https://www.universalorlando.com/web/en/us/rides-and-attractions/et-adventure" target="_blank">E.T. Adventure</a></div>
+              <div class="ride-world">Woody Woodpecker's KidZone</div>
+            </div>
+            <div class="ride-tags">
+              <span class="ride-tag tag-lowwait">Clásico · Si queda tiempo</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── DINING ── -->
+  <section class="section">
+    <div class="section-label">Estrategia de comida</div>
+    <div class="dining-grid">
+      <div class="dining-card">
+        <span class="dining-card-icon">📱</span>
+        <div class="dining-card-title">Mobile Order — Obligatorio</div>
+        <div class="dining-card-body">
+          Hacé el pedido desde la <a href="https://www.universalorlando.com/web/en/us/plan-your-visit/resort-apps/universal-orlando-app" target="_blank">app oficial de Universal</a> <strong>antes de las 11am</strong> para el almuerzo. Podés ajustar el horario de pickup si cambiás de planes. Sin Mobile Order, la espera en Epic Universe puede ser de 45+ min.
+        </div>
+      </div>
+      <div class="dining-card">
+        <span class="dining-card-icon">🕐</span>
+        <div class="dining-card-title">Horarios de menor espera</div>
+        <div class="dining-card-body">
+          Comé antes de las <strong>11:30am</strong> o después de las <strong>4:30pm</strong>. Los picos son: <strong>12pm–1pm</strong> (almuerzo) y <strong>6pm–7pm</strong> (cena). Evitalos siempre.
+        </div>
+      </div>
+      <div class="dining-card">
+        <span class="dining-card-icon">🧙</span>
+        <div class="dining-card-title">Epic Universe — Dónde comer</div>
+        <div class="dining-card-body">
+          Los restaurantes de <a href="https://www.universalorlando.com/web/en/us/theme-parks/epic-universe/celestial-park" target="_blank"><strong>Celestial Park</strong></a> tienen menos demanda que los de Nintendo World y Ministry of Magic. Si llegás a las 11am, comé ahí antes de hacer las demás atracciones.
+        </div>
+      </div>
+      <div class="dining-card">
+        <span class="dining-card-icon">🍺</span>
+        <div class="dining-card-title">Finnegan's cerrado</div>
+        <div class="dining-card-body">
+          Finnegan's Bar &amp; Grill en USF sigue cerrado. Si buscás un snack tardío en USF, optá por <a href="https://www.universalorlando.com/web/en/us/food-and-drink/the-leaky-cauldron" target="_blank"><strong>Leaky Cauldron</strong></a> en Diagon Alley o los puestos en <a href="https://www.universalorlando.com/web/en/us/theme-parks/universal-studios-florida/springfield-home-of-the-simpsons" target="_blank">Springfield</a>.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TIPS ── -->
+  <section class="section">
+    <div class="section-label">6 puntos críticos del día</div>
+    <div class="tips-list">
+      <div class="tip-item">
+        <div class="tip-num">1</div>
+        <div class="tip-text"><strong><a href="https://www.universalorlando.com/web/en/us/rides-and-attractions/the-battle-at-the-ministry" target="_blank">Epic Universe</a> a las 10am exactas.</strong> Battle at the Ministry sin Express Pass es la prioridad número uno del día. Si llegás 10 minutos tarde, podés encontrar 40+ min de fila para las 10:15am.</div>
+      </div>
+      <div class="tip-item">
+        <div class="tip-num">2</div>
+        <div class="tip-text"><strong>Viking Training Camp está cerrado el 19.</strong> Reabre el 22 de mayo. No te frustres buscándolo en <a href="https://www.universalorlando.com/web/en/us/theme-parks/epic-universe/isle-of-berk" target="_blank">Isle of Berk</a> — hay otras atracciones en esa tierra disponibles.</div>
+      </div>
+      <div class="tip-item">
+        <div class="tip-num">3</div>
+        <div class="tip-text"><strong><a href="https://www.universalorlando.com/web/en/us/rides-and-attractions/jurassic-park-river-adventure" target="_blank">Jurassic Park River Adventure</a> cerrado todo el año</strong> (reabre noviembre 2026). No planifiques tiempo ahí. Usá eso para <a href="https://www.universalorlando.com/web/en/us/rides-and-attractions/jurassic-world-velocicoaster" target="_blank">Velocicoaster</a> o una segunda vez en <a href="https://www.universalorlando.com/web/en/us/rides-and-attractions/hagrids-magical-creatures-motorbike-adventure" target="_blank">Hagrid's</a>.</div>
+      </div>
+      <div class="tip-item">
+        <div class="tip-num">4</div>
+        <div class="tip-text"><strong><a href="https://www.universalorlando.com/web/en/us/rides-and-attractions/men-in-black-alien-attack" target="_blank">MIB cierra el 1 de junio.</a></strong> El 19 de mayo es de las últimas visitas posibles. Si te importa hacerlo, priorizalo en USF. Es el primer ride de la noche.</div>
+      </div>
+      <div class="tip-item">
+        <div class="tip-num">5</div>
+        <div class="tip-text"><strong>May 19 = día de baja asistencia.</strong> El promedio histórico de espera es 22–25 min (vs. 31 min de media anual). Verificá en <a href="https://touringplans.com/universal-orlando/crowd-calendar" target="_blank">TouringPlans</a> o <a href="https://www.thrill-data.com/trip-planning/crowd-calendar/resort/uor/2026" target="_blank">Thrill Data</a> el día anterior — incluso si algo no sale según el plan, el crowd te da margen para recuperar.</div>
+      </div>
+      <div class="tip-item">
+        <div class="tip-num">6</div>
+        <div class="tip-text"><strong>Tormentas de tarde.</strong> En Epic Universe, solo 4 rides operan durante alertas eléctricas: <a href="https://www.universalorlando.com/web/en/us/rides-and-attractions/mario-kart-bowsers-challenge" target="_blank">Mario Kart</a>, <a href="https://www.universalorlando.com/web/en/us/rides-and-attractions/monsters-unchained-the-frankenstein-experiment" target="_blank">Monsters Unchained</a>, <a href="https://www.universalorlando.com/web/en/us/rides-and-attractions/the-battle-at-the-ministry" target="_blank">Battle at Ministry</a> y Constellation Carousel. <a href="https://forecast.weather.gov/MapClick.php?CityName=Orlando&state=FL&site=MLB&textField1=28.5383&textField2=-81.3792" target="_blank">Chequeá el pronóstico</a> a las 8am del 19. Llevá ropa que seque rápido o un poncho liviano.</div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /container -->
+
+<!-- ── FOOTER ── -->
+<footer>
+  <p style="margin-bottom:6px;opacity:0.5;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:2px;font-size:0.8rem">UNIVERSAL ORLANDO RESORT · PLAN PERSONALIZADO · 19 MAYO 2026</p>
+  Fuentes verificadas:
+  <a href="https://www.universalorlando.com/web/en/us/plan-your-visit/hours-information/park-hours" target="_blank">universalorlando.com (cierres oficiales)</a> ·
+  <a href="https://touringplans.com/universal-orlando/crowd-calendar" target="_blank">TouringPlans Crowd Calendar</a> ·
+  <a href="https://www.thrill-data.com/trip-planning/crowd-calendar/resort/uor/2026" target="_blank">Thrill Data 2026</a> ·
+  <a href="https://periodicadventures.com/epic-universe-tips/" target="_blank">Periodic Adventures</a>
+  <br>
+  Horarios sujetos a cambio. Verificar en la <a href="https://www.universalorlando.com/web/en/us/plan-your-visit/resort-apps/universal-orlando-app" target="_blank">app de Universal</a> el día anterior.
+</footer>
+
+</div><!-- /page -->
+</body>
+</html>
