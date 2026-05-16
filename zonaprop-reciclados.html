@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Departamentos Reciclados — Congreso & San Nicolás</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f4f6fb;
+      color: #1a1a2e;
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    header {
+      background: linear-gradient(135deg, #1F3864 0%, #2d5a9e 100%);
+      color: #fff;
+      padding: 36px 40px 28px;
+    }
+    header h1 {
+      font-size: 1.7rem;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+    header p {
+      margin-top: 6px;
+      opacity: 0.75;
+      font-size: 0.92rem;
+    }
+
+    /* ── Stats bar ── */
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 20px 40px;
+      background: #fff;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .stat {
+      background: #f4f6fb;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 12px 20px;
+      min-width: 130px;
+    }
+    .stat-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.6px; color: #6b7280; }
+    .stat-value { font-size: 1.25rem; font-weight: 700; color: #1F3864; margin-top: 2px; }
+
+    /* ── Controls ── */
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      padding: 16px 40px;
+      background: #fff;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .controls label { font-size: 0.85rem; color: #6b7280; }
+    select, input[type="text"] {
+      border: 1px solid #d1d5db;
+      border-radius: 7px;
+      padding: 7px 12px;
+      font-size: 0.88rem;
+      background: #fff;
+      color: #1a1a2e;
+      outline: none;
+    }
+    select:focus, input:focus { border-color: #2d5a9e; box-shadow: 0 0 0 2px rgba(45,90,158,0.12); }
+    #counter { margin-left: auto; font-size: 0.82rem; color: #9ca3af; }
+
+    /* ── Table ── */
+    .table-wrap {
+      padding: 24px 40px 40px;
+      overflow-x: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+      font-size: 0.88rem;
+    }
+    thead th {
+      background: #1F3864;
+      color: #fff;
+      padding: 13px 14px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      white-space: nowrap;
+      user-select: none;
+    }
+    thead th:hover { background: #254a80; }
+    thead th .sort-icon { opacity: 0.4; margin-left: 4px; }
+    thead th.sorted .sort-icon { opacity: 1; }
+
+    tbody tr { border-bottom: 1px solid #f0f2f7; transition: background 0.1s; }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: #f0f5ff; }
+    tbody tr.alt { background: #f8fafd; }
+    tbody tr.alt:hover { background: #f0f5ff; }
+
+    td { padding: 11px 14px; vertical-align: middle; }
+
+    td.num { text-align: right; font-variant-numeric: tabular-nums; }
+
+    .badge-barrio {
+      display: inline-block;
+      padding: 2px 9px;
+      border-radius: 20px;
+      font-size: 0.74rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .badge-congreso  { background: #dbeafe; color: #1e40af; }
+    .badge-nicolas   { background: #ede9fe; color: #5b21b6; }
+
+    .precio-cell { font-weight: 700; color: #1F3864; }
+
+    .ppm2-low  { background: #dcfce7; color: #166534; font-weight: 700; border-radius: 6px; padding: 3px 7px; }
+    .ppm2-mid  { background: #fef9c3; color: #854d0e; font-weight: 600; border-radius: 6px; padding: 3px 7px; }
+    .ppm2-high { background: #fee2e2; color: #991b1b; font-weight: 700; border-radius: 6px; padding: 3px 7px; }
+
+    .btn-link {
+      display: inline-block;
+      padding: 5px 13px;
+      background: #1F3864;
+      color: #fff;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+    .btn-link:hover { background: #2d5a9e; }
+
+    .ant-tag {
+      font-size: 0.75rem;
+      color: #6b7280;
+    }
+
+    .hidden { display: none; }
+
+    /* ── Legend ── */
+    .legend {
+      display: flex; gap: 16px; flex-wrap: wrap;
+      padding: 0 40px 24px;
+      font-size: 0.78rem; color: #6b7280;
+      align-items: center;
+    }
+    .legend-item { display: flex; align-items: center; gap: 6px; }
+    .legend-dot { width: 10px; height: 10px; border-radius: 3px; }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.75rem;
+      color: #9ca3af;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    @media (max-width: 768px) {
+      header, .stats, .controls, .table-wrap, .legend { padding-left: 16px; padding-right: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Departamentos Reciclados en Venta</h1>
+  <p>3 ambientes · 40–80 m² · Congreso &amp; San Nicolás, CABA &nbsp;·&nbsp; Mayo 2026</p>
+</header>
+
+<div class="stats">
+  <div class="stat"><div class="stat-label">Publicaciones</div><div class="stat-value">34</div></div>
+  <div class="stat"><div class="stat-label">Precio mínimo</div><div class="stat-value">USD 64.000</div></div>
+  <div class="stat"><div class="stat-label">Precio máximo</div><div class="stat-value">USD 160.000</div></div>
+  <div class="stat"><div class="stat-label">Precio promedio</div><div class="stat-value">USD 115.006</div></div>
+  <div class="stat"><div class="stat-label">USD/m² promedio</div><div class="stat-value">USD 1.901</div></div>
+</div>
+
+<div class="controls">
+  <label for="filterBarrio">Barrio:</label>
+  <select id="filterBarrio">
+    <option value="">Todos</option>
+    <option value="Congreso">Congreso</option>
+    <option value="San Nicolás">San Nicolás</option>
+  </select>
+
+  <label for="filterPrecio" style="margin-left:8px">Precio máx (USD):</label>
+  <select id="filterPrecio">
+    <option value="">Sin límite</option>
+    <option value="90000">Hasta 90.000</option>
+    <option value="110000">Hasta 110.000</option>
+    <option value="130000">Hasta 130.000</option>
+    <option value="150000">Hasta 150.000</option>
+  </select>
+
+  <label for="filterText" style="margin-left:8px">Buscar dirección:</label>
+  <input type="text" id="filterText" placeholder="ej: Tucumán, Uruguay…" style="width:180px">
+
+  <span id="counter"></span>
+</div>
+
+<div class="legend">
+  <span>USD/m²:</span>
+  <span class="legend-item"><span class="legend-dot" style="background:#dcfce7;border:1px solid #86efac"></span> &lt; 1.400 (bajo)</span>
+  <span class="legend-item"><span class="legend-dot" style="background:#fef9c3;border:1px solid #fde047"></span> 1.400–2.300 (medio)</span>
+  <span class="legend-item"><span class="legend-dot" style="background:#fee2e2;border:1px solid #fca5a5"></span> &gt; 2.300 (alto)</span>
+</div>
+
+<div class="table-wrap">
+  <table id="mainTable">
+    <thead>
+      <tr>
+        <th data-col="0">#<span class="sort-icon">↕</span></th>
+        <th data-col="1">Dirección<span class="sort-icon">↕</span></th>
+        <th data-col="2">Barrio<span class="sort-icon">↕</span></th>
+        <th data-col="3" style="text-align:right">m²<span class="sort-icon">↕</span></th>
+        <th data-col="4" style="text-align:right">Precio USD<span class="sort-icon">↕</span></th>
+        <th data-col="5" style="text-align:right">USD/m²<span class="sort-icon">↕</span></th>
+        <th data-col="6">Antigüedad<span class="sort-icon">↕</span></th>
+        <th>Link</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody">
+    </tbody>
+  </table>
+</div>
+
+<footer>Datos extraídos de ZonaProp Argentina · Mayo 2026 · Solo departamentos marcados como "reciclados"</footer>
+
+<script>
+const DATA = [
+  [1,  "Uruguay 265",                    "San Nicolás",  46,  64000,  1391, "",       "https://www.zonaprop.com.ar/propiedades/clasificado/veclapin-semipiso-con-vista-privilegiada-mucha-luz-y-57044772.html"],
+  [2,  "Sarmiento 1500",                 "San Nicolás",  58,  76900,  1326, "70 años","https://www.zonaprop.com.ar/propiedades/clasificado/veclapin-venta-depto.-3-ambientes-en-tribunales-reciclado-59077112.html"],
+  [3,  "Av. Corrientes 2000",            "San Nicolás",  59,  78000,  1322, "",       "https://www.zonaprop.com.ar/propiedades/clasificado/veclapin-venta-ph-departamento-3-ambientes-reciclado-luz-59080292.html"],
+  [4,  "Tucumán 1581",                   "San Nicolás",  45,  90000,  2000, "",       "https://www.zonaprop.com.ar/propiedades/clasificado/veclapin-venta-departamento-3-amb-tribunales-reciclado-58869912.html"],
+  [5,  "Viamonte 800",                   "San Nicolás",  73,  90000,  1233, "",       "https://www.zonaprop.com.ar/propiedades/clasificado/veclapin-reservado-reservado-3-amb-venta-apto-prof.-pxmo.-50902059.html"],
+  [6,  "Rodriguez Peña 34",              "San Nicolás",  78,  93000,  1192, "",       "https://www.zonaprop.com.ar/propiedades/clasificado/veclapin-venta-departamento-3-ambientes-plaza-del-congreso-58898525.html"],
+  [7,  "San Martín 600",                 "San Nicolás",  57,  95000,  1667, "",       "https://www.zonaprop.com.ar/propiedades/clasificado/veclapin-depto-3-amb-reciclado-a-nuevo-y-amoblado-58975299.html"],
+  [8,  "Av. L. N. Alem 661",             "San Nicolás",  58,  96000,  1655, "",       "https://www.zonaprop.com.ar/propiedades/clasificado/veclapin-departamento-en-san-nicolas-57597643.html"],
+  [9,  "Luis Dellepiane 600",            "San Nicolás",  64,  97000,  1516, "",       "https://www.zonaprop.com.ar/propiedades/clasificado/veclapin-reciclado-a-nuevo-real-oportunidad-inversion-o-58741922.html"],
+  [10, "Solis 148",                      "Congreso",     60, 100000,  1667, "",       "https://www.zonaprop.com.ar/propiedades/clasificado/veclapin-3-ambientes-frente-con-balcon-super-luminoso-real-58423233.html"],
+  [11, "Tucumán al 1500",                "San Nicolás",  43, 105000,  2442, "80 años","https://www.zonaprop.com.ar/propiedades/clasificado/veclapin-departamento-tres-ambientes-reciclado-con-cochera-en-58739848.html"],
+  [12, "Paraná 400",                     "San Nicolás",  48, 105000,  2188, "",       "https://www.zonaprop.com.ar/propiedades/clasificado/veclapin-venta-depto-3-amb.-reciclado-y-muy-luminoso-58586031.html"],
+  [13, "Paraná al 400",                  "San Nicolás",  50, 105000,  2100, "",       "https://www.zonaprop.com.ar/propiedades/clasificado/veclapin-reciclado-luminoso-departamento-de-3-ambientes-58084540.html"],
+  [14, "Uruguay al 300",                 "San Nicolás",  63, 105000,  1667, "",       "https://www.zonaprop.com.ar/propiedades/clasificado/veclapin-departamento-en-san-nicolas-59054007.html"],
+  [15, "Tucumán (s/n)",                  "San Nicolás",  43, 110000,  2558, "",       "https://www.zonaprop.com.ar/propiedades/clasificado/veclapin-3-amb.-reciclado-c-estilo-unico-ubicado-en-el-55376325.html"],
+  [16, "Tucumán al 800",                 "San Nicolás",  57, 110000,  1930, "",       "https://www.zonaprop.com.ar/propiedades/clasificado/veclapin-venta-departamento-3-ambientes-reciclado-c-balcon-en-58757991.html"],
+  [17, "Teniente General Perón 1700",    "San Nicolás",  59, 110000,  1864, "",       "https://www.zonaprop.com.ar/propiedades/clasificado/veclapin-peron-1700.-piso-16.-vista-espectac.-3-amb.-2-dorm.-59-58084027.html"],
+  [18, "Entre Rios 600",                 "Congreso",     70, 110000,  1571, "",       "https://www.zonaprop.com.ar/propiedades/clasificado/veclapin-amplio-3-amb-67-m-sup2--vista-abierta-muy-luminoso-58654920.html"],
+  [19, "Rodriguez Peña al 100",          "Congreso",     50, 114000,  2280, "",       "https://www.zonaprop.com.ar/propiedades/clasificado/veclapin-venta-3-ambientes-balcon-cochera-apto-credito-congreso-57664836.html"],
+  [20, "25 de Mayo al 500",              "San Nicolás",  61, 120000,  1967, "",       "https://www.zonaprop.com.ar/propiedades/clasificado/veclapin-venta-departamento-3-amb-reciclado-a-nuevo-en-san-57600981.html"],
+  [21, "25 de Mayo 500",                 "San Nicolás",  61, 120000,  1967, "",       "https://www.zonaprop.com.ar/propiedades/clasificado/veclapin-departamento-en-venta-en-san-nicolas-capital-federal-58546361.html"],
+  [22, "Viamonte al 800",                "San Nicolás",  75, 120000,  1600, "70 años","https://www.zonaprop.com.ar/propiedades/clasificado/veclapin-venta-depto-3-ambientes-en-san-nicolas-super-luminoso!-59063173.html"],
+  [23, "Perón al 1500",                  "San Nicolás",  73, 125000,  1712, "",       "https://www.zonaprop.com.ar/propiedades/clasificado/veclapin-alquiler-departamento-totalmente-reciclado-san-59131337.html"],
+  [24, "Rodríguez Peña 110",             "Congreso",     51, 129000,  2529, "",       "https://www.zonaprop.com.ar/propiedades/clasificado/veclapin-venta-departamento-reciclado-con-cochera-congreso-57545971.html"],
+  [25, "Cerrito 100",                    "San Nicolás",  65, 130000,  2000, "",       "https://www.zonaprop.com.ar/propiedades/clasificado/veclapin-tres-ambientes-con-dependencia-vista-abierta-57858374.html"],
+  [26, "Bartolomé Mitre 1131",           "San Nicolás",  72, 133000,  1847, "",       "https://www.zonaprop.com.ar/propiedades/clasificado/veclapin-vta-c-renta-abril-2027-3-amb-72-m-sup2--alto-coch-55754551.html"],
+  [27, "Teniente General Perón 1600",    "Congreso",     72, 138500,  1924, "",       "https://www.zonaprop.com.ar/propiedades/clasificado/veclapin-departamento-en-venta-3-ambientes-en-congreso-59003212.html"],
+  [28, "Tucumán al 1500 (francés)",      "San Nicolás",  78, 139800,  1792, "",       "https://www.zonaprop.com.ar/propiedades/clasificado/veclapin-departamento-frances-de-tres-ambientes-reciclado-58941024.html"],
+  [29, "Uruguay 700",                    "San Nicolás",  65, 142000,  2185, "",       "https://www.zonaprop.com.ar/propiedades/clasificado/veclapin-departamento-3-amb-venta-san-nicolas-con-balcon-58948571.html"],
+  [30, "25 de Mayo al 700",              "San Nicolás",  68, 145000,  2132, "",       "https://www.zonaprop.com.ar/propiedades/clasificado/veclapin-departamento-en-san-nicolas-venta-con-renta-55948100.html"],
+  [31, "Bartolomé Mitre 1500",           "San Nicolás",  75, 145000,  1933, "",       "https://www.zonaprop.com.ar/propiedades/clasificado/veclapin-3-amb-al-frente-con-balcon-y-cochera-fija-56630884.html"],
+  [32, "Dirección no informada",         "San Nicolás",  70, 149000,  2129, "",       "https://www.zonaprop.com.ar/propiedades/clasificado/veclapin-r.-pena-y-cordoba-3amb-c-dep-70-m-cfte-abierto-56748832.html"],
+  [33, "Sarmiento al 1700",              "Congreso",     60, 160000,  2667, "",       "https://www.zonaprop.com.ar/propiedades/clasificado/veclapin-departamento-de-4-ambientes-a-la-venta-en-congreso-53212601.html"],
+  [34, "Av. Independencia al 1800",      "Congreso",     60, 160000,  2667, "",       "https://www.zonaprop.com.ar/propiedades/clasificado/veclapin-venta-de-departamento-3-ambientes-congreso-57908052.html"],
+];
+
+let sortCol = 4, sortAsc = true;
+
+function ppm2Class(v) {
+  if (v < 1400) return "ppm2-low";
+  if (v > 2300) return "ppm2-high";
+  return "ppm2-mid";
+}
+
+function fmt(n) { return n.toLocaleString("es-AR"); }
+
+function render() {
+  const barrio = document.getElementById("filterBarrio").value;
+  const maxP   = parseInt(document.getElementById("filterPrecio").value) || Infinity;
+  const text   = document.getElementById("filterText").value.toLowerCase().trim();
+
+  let rows = DATA.filter(r =>
+    (!barrio || r[2] === barrio) &&
+    (r[4] <= maxP) &&
+    (!text || r[1].toLowerCase().includes(text))
+  );
+
+  rows.sort((a, b) => {
+    let va = a[sortCol], vb = b[sortCol];
+    if (typeof va === "string") va = va.toLowerCase();
+    if (typeof vb === "string") vb = vb.toLowerCase();
+    return sortAsc ? (va > vb ? 1 : -1) : (va < vb ? 1 : -1);
+  });
+
+  const tbody = document.getElementById("tableBody");
+  tbody.innerHTML = rows.map((r, i) => `
+    <tr class="${i % 2 === 1 ? 'alt' : ''}">
+      <td style="color:#9ca3af;font-size:0.78rem">${r[0]}</td>
+      <td><strong>${r[1]}</strong></td>
+      <td><span class="badge-barrio ${r[2] === 'Congreso' ? 'badge-congreso' : 'badge-nicolas'}">${r[2]}</span></td>
+      <td class="num">${r[3]}</td>
+      <td class="num precio-cell">USD ${fmt(r[4])}</td>
+      <td class="num"><span class="${ppm2Class(r[5])}">USD ${fmt(r[5])}</span></td>
+      <td class="ant-tag">${r[6] || "—"}</td>
+      <td><a class="btn-link" href="${r[7]}" target="_blank" rel="noopener">Ver →</a></td>
+    </tr>
+  `).join("");
+
+  document.getElementById("counter").textContent = `${rows.length} resultado${rows.length !== 1 ? "s" : ""}`;
+}
+
+// Sort on header click
+document.querySelectorAll("thead th[data-col]").forEach(th => {
+  th.addEventListener("click", () => {
+    const col = parseInt(th.dataset.col);
+    if (sortCol === col) sortAsc = !sortAsc;
+    else { sortCol = col; sortAsc = true; }
+    document.querySelectorAll("thead th").forEach(t => t.classList.remove("sorted"));
+    th.classList.add("sorted");
+    th.querySelector(".sort-icon").textContent = sortAsc ? " ↑" : " ↓";
+    render();
+  });
+});
+
+// Filters
+["filterBarrio","filterPrecio","filterText"].forEach(id =>
+  document.getElementById(id).addEventListener("input", render)
+);
+
+render();
+</script>
+</body>
+</html>
