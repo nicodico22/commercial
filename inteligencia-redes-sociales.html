@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inteligencia de Redes Sociales — Glamping Soul 2026</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+  --linen:    #F5F0E8;
+  --charcoal: #2B2B2B;
+  --olive:    #5C6229;
+  --navy:     #2C3E50;
+  --burgundy: #6B2D2D;
+  --muted:    #7A7A6E;
+  --border:   #DDD8CE;
+  --white:    #FFFFFF;
+  --bg-light: #FAFAF7;
+  /* competitor palette */
+  --pristine: #B07D3A;
+  --ecocamp:  #3A6B3A;
+  --explora:  #1A3A5C;
+  --tierra:   #4A5568;
+  --patagcamp:#2C6E6E;
+  --awasi:    #4A2C6E;
+  --eolo:     #8B5E2A;
+  --aguas:    #2A5E3A;
+  --ecodomes: #5E6B2A;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--linen);
+  color: var(--charcoal);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── COVER ── */
+.cover {
+  background: var(--charcoal);
+  color: var(--linen);
+  padding: 72px 64px 64px;
+  position: relative;
+  overflow: hidden;
+}
+.cover::before {
+  content: '';
+  position: absolute;
+  top: -80px; right: -80px;
+  width: 400px; height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(44,62,80,.7) 0%, transparent 70%);
+  pointer-events: none;
+}
+.cover-inner { position: relative; z-index: 1; max-width: 800px; }
+.cover-eyebrow {
+  font-size: 10px; font-weight: 600;
+  letter-spacing: .2em; text-transform: uppercase;
+  color: rgba(245,240,232,.45); margin-bottom: 24px;
+}
+.cover h1 {
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: clamp(34px, 5vw, 56px);
+  font-weight: 400; line-height: 1.15;
+  color: var(--linen); margin-bottom: 20px;
+}
+.cover-sub {
+  font-size: 16px; font-weight: 300;
+  color: rgba(245,240,232,.65);
+  max-width: 560px; line-height: 1.6; margin-bottom: 48px;
+}
+.cover-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.chip {
+  background: rgba(245,240,232,.1);
+  border: 1px solid rgba(245,240,232,.2);
+  border-radius: 20px; padding: 5px 14px;
+  font-size: 12px; color: rgba(245,240,232,.7);
+}
+.chip strong { color: var(--linen); }
+
+/* ── LAYOUT ── */
+.wrap { max-width: 900px; margin: 0 auto; padding: 0 40px; }
+.section { padding: 64px 0; border-bottom: 1px solid var(--border); }
+.section:last-child { border-bottom: none; }
+.section-eye { font-size: 10px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+.section-title { font-family: 'EB Garamond', Georgia, serif; font-size: clamp(26px, 4vw, 40px); font-weight: 400; line-height: 1.2; margin-bottom: 14px; }
+.section-desc { font-size: 15px; color: var(--muted); max-width: 640px; line-height: 1.65; margin-bottom: 40px; }
+
+/* ── BIG NUMBER ── */
+.big-stat-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; margin-bottom: 40px; }
+.big-stat { background: var(--white); border: 1px solid var(--border); border-radius: 8px; padding: 20px; text-align: center; }
+.big-stat .num { font-family: 'EB Garamond', serif; font-size: 32px; font-weight: 400; color: var(--charcoal); line-height: 1; margin-bottom: 6px; }
+.big-stat .lbl { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; }
+
+/* ── COMPETITOR MAP TABLE ── */
+.comp-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.comp-table th { background: var(--charcoal); color: var(--linen); padding: 12px 14px; text-align: left; font-size: 10px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
+.comp-table td { padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: middle; background: var(--white); }
+.comp-table tr:nth-child(even) td { background: var(--bg-light); }
+.comp-table tr.gs-row td { background: #EEF1F5; font-weight: 500; border-left: 3px solid var(--navy); }
+.handle-tag { font-family: monospace; font-size: 12px; color: var(--navy); }
+.seg-bar { display: flex; align-items: center; gap: 8px; }
+.seg-bar .bar { height: 6px; border-radius: 3px; background: var(--charcoal); }
+.seg-bar .val { font-size: 12px; font-weight: 600; white-space: nowrap; }
+.stars { color: #B07D3A; font-size: 13px; }
+.platform-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 3px; }
+.dot-ig { background: #C13584; }
+.dot-tk { background: #000; }
+.dot-li { background: #0077B5; }
+.dot-no { background: var(--border); }
+.badge-sm { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 3px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; }
+.badge-ar { background: #E8F0E2; color: #3A5C2C; }
+.badge-cl { background: #DEE6EF; color: var(--navy); }
+.badge-am { background: #F0EAE0; color: #7A5328; }
+
+/* ── DIAGNOSIS CARDS ── */
+.diag-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.diag-card { background: var(--white); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.diag-card.good { border-top: 3px solid var(--olive); }
+.diag-card.bad  { border-top: 3px solid var(--burgundy); }
+.diag-header { padding: 18px 22px 14px; border-bottom: 1px solid var(--border); }
+.diag-label { font-size: 10px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; margin-bottom: 4px; }
+.good .diag-label { color: var(--olive); }
+.bad  .diag-label { color: var(--burgundy); }
+.diag-title { font-family: 'EB Garamond', serif; font-size: 20px; font-weight: 400; }
+.diag-list { list-style: none; padding: 0; }
+.diag-list li { padding: 11px 22px; border-bottom: 1px solid var(--border); font-size: 13.5px; line-height: 1.55; display: flex; gap: 10px; align-items: flex-start; }
+.diag-list li:last-child { border-bottom: none; }
+.diag-list li .icon { flex-shrink: 0; font-size: 11px; margin-top: 2px; }
+.good .diag-list li .icon { color: var(--olive); }
+.bad  .diag-list li .icon { color: var(--burgundy); }
+
+/* ── POST EXAMPLE BOX ── */
+.post-example {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  max-width: 360px;
+  font-size: 13px;
+}
+.post-header {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 14px; border-bottom: 1px solid var(--border);
+}
+.post-avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; color: var(--linen);
+  flex-shrink: 0;
+}
+.post-handle { font-size: 12px; font-weight: 600; }
+.post-sub { font-size: 11px; color: var(--muted); }
+.post-image-area {
+  padding: 18px 14px;
+  min-height: 80px;
+  font-size: 11px; color: var(--muted); font-style: italic;
+  border-bottom: 1px solid var(--border);
+  line-height: 1.5;
+  background: var(--bg-light);
+}
+.post-caption {
+  padding: 12px 14px;
+  font-size: 12.5px; line-height: 1.6; color: var(--charcoal);
+}
+.post-caption .cap-handle { font-weight: 600; }
+.post-tags { color: var(--navy); font-size: 11.5px; margin-top: 6px; }
+
+/* ── COMPETITOR PROFILE CARDS ── */
+.comp-profiles { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.comp-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 8px; overflow: hidden;
+}
+.comp-card-header {
+  padding: 18px 20px;
+  color: var(--linen);
+  display: flex; justify-content: space-between; align-items: flex-start;
+}
+.comp-card-name { font-family: 'EB Garamond', serif; font-size: 20px; font-weight: 400; line-height: 1.2; }
+.comp-card-handle { font-size: 11px; opacity: .7; margin-top: 2px; font-family: monospace; }
+.comp-card-seg { font-size: 24px; font-weight: 300; font-family: 'EB Garamond', serif; text-align: right; }
+.comp-card-seg-lbl { font-size: 10px; opacity: .65; text-align: right; text-transform: uppercase; letter-spacing: .1em; }
+.comp-card-body { padding: 16px 20px; }
+.comp-card-row { display: flex; gap: 8px; align-items: flex-start; margin-bottom: 10px; font-size: 13px; }
+.comp-card-row .lbl { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); width: 60px; flex-shrink: 0; padding-top: 2px; }
+.comp-card-row .val { flex: 1; color: var(--charcoal); line-height: 1.5; }
+.comp-card-divider { border: none; border-top: 1px solid var(--border); margin: 12px 0; }
+.comp-card-weak { background: #FBF0F0; border-left: 3px solid var(--burgundy); border-radius: 4px; padding: 8px 12px; font-size: 12px; color: var(--charcoal); line-height: 1.5; margin-top: 2px; }
+.comp-card-strong { background: #F0F5EC; border-left: 3px solid var(--olive); border-radius: 4px; padding: 8px 12px; font-size: 12px; color: var(--charcoal); line-height: 1.5; margin-top: 2px; }
+
+/* ── INSIGHT CARDS ── */
+.insights-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin-bottom: 0; }
+.insight-card { background: var(--white); border: 1px solid var(--border); border-radius: 8px; padding: 28px; }
+.insight-num { font-family: 'EB Garamond', serif; font-size: 48px; font-weight: 400; color: var(--border); line-height: 1; margin-bottom: 12px; }
+.insight-title { font-family: 'EB Garamond', serif; font-size: 20px; font-weight: 400; margin-bottom: 10px; line-height: 1.25; }
+.insight-body { font-size: 13.5px; color: var(--muted); line-height: 1.6; }
+
+/* ── TERRITORY CALLOUT ── */
+.territory {
+  background: var(--charcoal); color: var(--linen);
+  border-radius: 10px; padding: 48px;
+  margin: 40px 0;
+  text-align: center;
+}
+.territory-label { font-size: 10px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: rgba(245,240,232,.45); margin-bottom: 16px; }
+.territory-title { font-family: 'EB Garamond', serif; font-size: clamp(22px, 3.5vw, 36px); font-weight: 400; line-height: 1.3; color: var(--linen); margin-bottom: 20px; max-width: 640px; margin-left: auto; margin-right: auto; }
+.territory-coords { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.coord { background: rgba(245,240,232,.1); border: 1px solid rgba(245,240,232,.2); border-radius: 20px; padding: 6px 16px; font-size: 13px; color: rgba(245,240,232,.8); }
+
+/* ── STRATEGY BLOCKS ── */
+.strategy { background: var(--white); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 32px; overflow: hidden; }
+.strategy-header { padding: 24px 32px; border-bottom: 1px solid var(--border); display: flex; align-items: flex-start; gap: 20px; }
+.strategy-num { font-family: 'EB Garamond', serif; font-size: 40px; font-weight: 400; color: var(--border); line-height: 1; flex-shrink: 0; width: 50px; }
+.strategy-meta { flex: 1; }
+.strategy-tag { font-size: 10px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+.strategy-title { font-family: 'EB Garamond', serif; font-size: 24px; font-weight: 400; line-height: 1.2; }
+.strategy-subtitle { font-size: 13.5px; color: var(--muted); margin-top: 6px; line-height: 1.5; }
+.strategy-comp-badge { flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+.strategy-body { padding: 28px 32px; }
+.two-col-strat { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+.strat-col-label { font-size: 10px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+.strat-insight { font-size: 14px; color: var(--charcoal); line-height: 1.65; margin-bottom: 16px; }
+.strat-action { background: var(--linen); border: 1px solid var(--border); border-radius: 6px; padding: 14px 16px; font-size: 13px; color: var(--charcoal); line-height: 1.55; }
+.strat-action strong { display: block; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin-bottom: 4px; }
+
+/* ── POST COMPARISON ── */
+.post-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px; }
+.post-compare-label { font-size: 10px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 10px; }
+.comp-post-label { color: var(--burgundy); }
+.gs-post-label { color: var(--olive); }
+
+/* GS post example with olive accent */
+.post-example.gs-style { border-color: var(--navy); }
+.post-example.gs-style .post-avatar { background: var(--navy); }
+.post-example.gs-style .post-caption { background: #F8F9FB; }
+
+/* ── ACTION PLAN ── */
+.action-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.action-item { background: var(--white); border: 1px solid var(--border); border-radius: 8px; padding: 22px; }
+.action-timing { font-size: 10px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.action-title { font-family: 'EB Garamond', serif; font-size: 18px; font-weight: 400; margin-bottom: 8px; line-height: 1.25; }
+.action-desc { font-size: 13px; color: var(--muted); line-height: 1.55; }
+.action-item.p1 { border-left: 3px solid var(--charcoal); }
+.action-item.p2 { border-left: 3px solid var(--navy); }
+.action-item.p3 { border-left: 3px solid var(--olive); }
+
+/* ── FOOTER ── */
+.doc-footer {
+  background: var(--charcoal); color: rgba(245,240,232,.5);
+  padding: 32px 64px; font-size: 12px;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 12px;
+}
+.doc-footer strong { color: var(--linen); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 700px) {
+  .cover { padding: 48px 24px; }
+  .wrap { padding: 0 20px; }
+  .section { padding: 48px 0; }
+  .diag-grid, .comp-profiles, .insights-grid, .action-grid, .two-col-strat, .post-compare { grid-template-columns: 1fr; }
+  .big-stat-row { grid-template-columns: repeat(2,1fr); }
+  .comp-table { font-size: 12px; }
+  .doc-footer { padding: 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ COVER ═══════════════════════════════════════════════════ -->
+<div class="cover">
+  <div class="cover-inner">
+    <div class="cover-eyebrow">Glamping Soul · Comunicaciones &amp; Marketing · Uso interno</div>
+    <h1>Inteligencia de<br>Redes Sociales 2026</h1>
+    <p class="cover-sub">Diagnóstico propio, mapa competitivo completo, hallazgos estratégicos y oportunidades de comunicación concretas con ejemplos de contenido.</p>
+    <div class="cover-chips">
+      <span class="chip"><strong>9</strong> competidores analizados</span>
+      <span class="chip"><strong>10</strong> canales auditados</span>
+      <span class="chip"><strong>5</strong> estrategias de diferenciación</span>
+      <span class="chip"><strong>Mayo 2026</strong></span>
+    </div>
+  </div>
+</div>
+
+
+<div class="wrap">
+
+<!-- ══ 01. EL MAPA COMPLETO ════════════════════════════════════ -->
+<section class="section">
+  <div class="section-eye">01 · Panorama General</div>
+  <h2 class="section-title">El ecosistema en números</h2>
+  <p class="section-desc">Todos los actores del segmento, su peso digital y su posición relativa. Los datos de Instagram son el indicador primario de visibilidad ante el viajero final.</p>
+
+  <div class="big-stat-row">
+    <div class="big-stat">
+      <div class="num">212K</div>
+      <div class="lbl">Mayor competidor en IG<br>(Pristine Camps)</div>
+    </div>
+    <div class="big-stat">
+      <div class="num">26.2K</div>
+      <div class="lbl">Glamping Soul en IG<br>(verificado)</div>
+    </div>
+    <div class="big-stat">
+      <div class="num">8×</div>
+      <div class="lbl">Distancia al líder<br>en volumen</div>
+    </div>
+    <div class="big-stat">
+      <div class="num">⭐⭐⭐⭐⭐</div>
+      <div class="lbl">Coherencia de marca GS<br>(la más alta del segmento)</div>
+    </div>
+  </div>
+
+  <table class="comp-table">
+    <thead>
+      <tr>
+        <th>Competidor</th>
+        <th>Handle</th>
+        <th>IG Seguidores</th>
+        <th>LinkedIn</th>
+        <th>TikTok</th>
+        <th>Destino</th>
+        <th>Coherencia</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Pristine Camps</strong></td>
+        <td><span class="handle-tag">@pristinecamps</span></td>
+        <td>
+          <div class="seg-bar"><div class="bar" style="width:100%; background:#B07D3A;"></div><span class="val">212K</span></div>
+        </td>
+        <td>4K</td>
+        <td><span class="platform-dot dot-no"></span> —</td>
+        <td><span class="badge-sm badge-ar">Argentina</span></td>
+        <td><span class="stars">★★</span><span style="color:var(--border)">★★★</span></td>
+      </tr>
+      <tr>
+        <td><strong>EcoCamp</strong></td>
+        <td><span class="handle-tag">@ecocamp</span></td>
+        <td>
+          <div class="seg-bar"><div class="bar" style="width:84%; background:var(--ecocamp);"></div><span class="val">178K</span></div>
+        </td>
+        <td>12K</td>
+        <td><span class="platform-dot dot-no"></span> —</td>
+        <td><span class="badge-sm badge-cl">Chile</span></td>
+        <td><span class="stars">★★★★</span><span style="color:var(--border)">★</span></td>
+      </tr>
+      <tr>
+        <td><strong>Explora</strong></td>
+        <td><span class="handle-tag">@exploratravel</span></td>
+        <td>
+          <div class="seg-bar"><div class="bar" style="width:73%; background:var(--explora);"></div><span class="val">156K</span></div>
+        </td>
+        <td>34K</td>
+        <td><span class="platform-dot dot-no"></span> —</td>
+        <td><span class="badge-sm badge-am">LatAm · Chaltén AR</span></td>
+        <td><span class="stars">★★★★★</span></td>
+      </tr>
+      <tr>
+        <td><strong>Tierra Hotels</strong></td>
+        <td><span class="handle-tag">@tierrahotels</span></td>
+        <td>
+          <div class="seg-bar"><div class="bar" style="width:70%; background:var(--tierra);"></div><span class="val">149K</span></div>
+        </td>
+        <td>12K</td>
+        <td><span class="platform-dot dot-no"></span> —</td>
+        <td><span class="badge-sm badge-cl">Chile</span></td>
+        <td><span class="stars">★★★★</span><span style="color:var(--border)">★</span></td>
+      </tr>
+      <tr>
+        <td><strong>Patagonia Camp</strong></td>
+        <td><span class="handle-tag">@patagoniacamp</span></td>
+        <td>
+          <div class="seg-bar"><div class="bar" style="width:34%; background:var(--patagcamp);"></div><span class="val">72K</span></div>
+        </td>
+        <td>7K</td>
+        <td><span class="platform-dot dot-no"></span> —</td>
+        <td><span class="badge-sm badge-cl">Chile</span></td>
+        <td><span class="stars">★★★</span><span style="color:var(--border)">★★</span></td>
+      </tr>
+      <tr>
+        <td><strong>Awasi</strong></td>
+        <td><span class="handle-tag">@awasiexperience</span></td>
+        <td>
+          <div class="seg-bar"><div class="bar" style="width:29%; background:var(--awasi);"></div><span class="val">62K</span></div>
+        </td>
+        <td>12K</td>
+        <td><span class="platform-dot dot-no"></span> —</td>
+        <td><span class="badge-sm badge-cl">Chile · LatAm</span></td>
+        <td><span class="stars">★★★★</span><span style="color:var(--border)">★</span></td>
+      </tr>
+      <tr>
+        <td><strong>Eolo</strong></td>
+        <td><span class="handle-tag">@eolo_patagonia</span></td>
+        <td>
+          <div class="seg-bar"><div class="bar" style="width:17%; background:var(--eolo);"></div><span class="val">36K</span></div>
+        </td>
+        <td>Baja</td>
+        <td><span class="platform-dot dot-tk"></span> <strong style="font-size:11px">@eolopatagonia ✓</strong></td>
+        <td><span class="badge-sm badge-ar">Argentina · Calafate</span></td>
+        <td><span class="stars">★★★</span><span style="color:var(--border)">★★</span></td>
+      </tr>
+      <tr>
+        <td><strong>Patagonia Eco Domes</strong></td>
+        <td><span class="handle-tag">@patagoniaecodomes</span></td>
+        <td>
+          <div class="seg-bar"><div class="bar" style="width:14%; background:var(--ecodomes);"></div><span class="val">30K</span></div>
+        </td>
+        <td>—</td>
+        <td><span class="platform-dot dot-no"></span> —</td>
+        <td><span class="badge-sm badge-ar">Argentina · Chaltén</span></td>
+        <td><span class="stars">★★</span><span style="color:var(--border)">★★★</span></td>
+      </tr>
+      <tr class="gs-row">
+        <td><strong>Glamping Soul ←</strong></td>
+        <td><span class="handle-tag">@glampingsoul</span></td>
+        <td>
+          <div class="seg-bar"><div class="bar" style="width:12%; background:var(--navy);"></div><span class="val">26.2K ✓ verificado</span></div>
+        </td>
+        <td>Baja</td>
+        <td><span class="platform-dot dot-no" style="background:#888;"></span> <span style="font-size:11px;color:var(--burgundy)">Ausente</span></td>
+        <td><span class="badge-sm badge-ar">Argentina · Chaltén + Calafate</span></td>
+        <td><span class="stars">★★★★★</span></td>
+      </tr>
+      <tr>
+        <td><strong>Aguas Arriba</strong></td>
+        <td><span class="handle-tag">@aguasarribalodge</span></td>
+        <td>
+          <div class="seg-bar"><div class="bar" style="width:5%; background:var(--aguas);"></div><span class="val">11K</span></div>
+        </td>
+        <td>—</td>
+        <td><span class="platform-dot dot-no"></span> —</td>
+        <td><span class="badge-sm badge-ar">Argentina · Chaltén</span></td>
+        <td><span class="stars">★★★★★</span></td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="font-size:12px;color:var(--muted);margin-top:12px;">★ Coherencia: alineación entre filosofía de marca (PENSAR), comunicación (DECIR) y operación verificable (HACER). Fuente: perfiles individuales de inteligencia competitiva · Mayo 2026.</p>
+</section>
+
+
+<!-- ══ 02. DIAGNÓSTICO GLAMPING SOUL ══════════════════════════ -->
+<section class="section">
+  <div class="section-eye">02 · Diagnóstico Propio</div>
+  <h2 class="section-title">Glamping Soul en redes: lo que funciona y lo que no</h2>
+  <p class="section-desc">Un diagnóstico honesto con ejemplos específicos de posts actuales. Los problemas son concretos y tienen solución concreta.</p>
+
+  <div class="diag-grid">
+    <div class="diag-card good">
+      <div class="diag-header">
+        <div class="diag-label">Funciona bien</div>
+        <div class="diag-title">Las bases están bien puestas</div>
+      </div>
+      <ul class="diag-list">
+        <li><span class="icon">✓</span><span>Cuenta verificada en Instagram — un activo de credibilidad que menos del 20% de los competidores tienen en este segmento.</span></li>
+        <li><span class="icon">✓</span><span>3 posts pinneados estratégicos: uno por propiedad (Chalten Camp, Moreno Camp) y uno por la marca paraguas. El visitante nuevo entiende la constelación en segundos.</span></li>
+        <li><span class="icon">✓</span><span>Formato de títulos <code style="font-size:12px;background:var(--linen);padding:1px 5px;border-radius:3px;">[ CAMP NAME ]</code> consistente — firma visual reconocible que ningún competidor replicó.</span></li>
+        <li><span class="icon">✓</span><span>Copy del website perfectamente alineado con los tres pilares filosóficos. El texto de glampingsoul.com está entre los más sólidos del segmento en Sudamérica.</span></li>
+        <li><span class="icon">✓</span><span>TripAdvisor #1 en El Chaltén (108 reseñas). Google Maps 4.8/5 (115 reseñas). La reputación real de los huéspedes está en el nivel más alto del segmento.</span></li>
+        <li><span class="icon">✓</span><span>Uso activo de Reels — el formato de mayor alcance orgánico en Instagram. El reel "[ MORENO CAMP ] At the World's Quiet Edge" ya establece presencia futura.</span></li>
+        <li><span class="icon">✓</span><span>Glamping Soul está <em>por delante</em> de su competidor directo en El Chaltén: Aguas Arriba (11K) y Patagonia Eco Domes (30K vs. 26.2K verificado).</span></li>
+      </ul>
+    </div>
+    <div class="diag-card bad">
+      <div class="diag-header">
+        <div class="diag-label">Requiere acción</div>
+        <div class="diag-title">Los problemas son específicos</div>
+      </div>
+      <ul class="diag-list">
+        <li><span class="icon">✗</span><span><strong>Identidad fragmentada:</strong> @glampingsoul en Instagram vs. "Chalten Camp" en Facebook. El handle @chalten_camp existe pero está inactivo — confusión de marca activa.</span></li>
+        <li><span class="icon">✗</span><span><strong>Vocabulario fuera de manual:</strong> Post reciente usa "Magia en un solo lugar" — palabra explícitamente prohibida por el Manual de Tono y Estilo (Sección 5.2).</span></li>
+        <li><span class="icon">✗</span><span><strong>Sin links de RRSS en los websites:</strong> chaltencamp.com no linkea Instagram. glampingsoul.com tiene "Follow Us" pero el DOM no devuelve links funcionales — el visitante no puede encontrar el canal.</span></li>
+        <li><span class="icon">✗</span><span><strong>Bio de Instagram incompleta:</strong> La segunda 📍 (Moreno Camp) aparece cortada. No hay link al motor de reservas ni a un Linktree que unifique destinos.</span></li>
+        <li><span class="icon">✗</span><span><strong>Mix de idiomas sin estrategia:</strong> Posts en inglés y español sin criterio visible. El algoritmo no sabe a quién distribuir el contenido.</span></li>
+        <li><span class="icon">✗</span><span><strong>Facebook moribundo:</strong> 1.4K seguidores, "5 personas hablando de esto", sin actualización relevante. Bajo el nombre "Chalten Camp", no "Glamping Soul".</span></li>
+        <li><span class="icon">✗</span><span><strong>TikTok ausente:</strong> El canal de mayor alcance orgánico para destinos de viaje en 2026. Los reels producidos para Instagram son directamente reutilizables sin producción adicional.</span></li>
+        <li><span class="icon">✗</span><span><strong>Sin UGC sistematizado:</strong> Un solo fotógrafo taggeado (@cotyleon22). No hay hashtag propio activo ni protocolo de repost de contenido de huéspedes.</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- EJEMPLOS DE POSTS CON PROBLEMA -->
+  <div style="margin-top:36px;">
+    <div style="font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;">Ejemplos concretos de posts a corregir</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+      <!-- POST CON PROBLEMA -->
+      <div>
+        <div class="post-compare-label comp-post-label" style="margin-bottom:8px;">❌ Post actual — fuera de manual</div>
+        <div class="post-example" style="border-color:var(--burgundy);">
+          <div class="post-header">
+            <div class="post-avatar" style="background:var(--navy);">GS</div>
+            <div><div class="post-handle">@glampingsoul</div><div class="post-sub">Instagram Feed · Carousel</div></div>
+          </div>
+          <div class="post-image-area">📷 Domos con vista, pasarelas, paisaje de glaciar. Carousel de 4 imágenes.</div>
+          <div class="post-caption">
+            <span class="cap-handle">glampingsoul</span> Domos, pasarelas y glaciares 🇦🇷 <span style="background:#FEE;color:var(--burgundy);padding:1px 4px;border-radius:3px;font-size:12px;">Magia</span> en un solo lugar @glampingsoul<br>
+            <div class="post-tags">#glamping #patagonia #argentina</div>
+          </div>
+        </div>
+        <div style="font-size:12px;color:var(--burgundy);margin-top:8px;line-height:1.5;">⚠ "Magia" está prohibida por el manual. El emoji 🇦🇷 es decorativo y ajeno al tono. Auto-mención (@glampingsoul) en el caption es ruido.</div>
+      </div>
+      <!-- POST CORREGIDO -->
+      <div>
+        <div class="post-compare-label gs-post-label" style="margin-bottom:8px;">✓ Versión corregida — en manual</div>
+        <div class="post-example gs-style">
+          <div class="post-header">
+            <div class="post-avatar" style="background:var(--navy);">GS</div>
+            <div><div class="post-handle">@glampingsoul</div><div class="post-sub">Instagram Feed · Carousel</div></div>
+          </div>
+          <div class="post-image-area">📷 Mismo contenido visual. El hielo, los domos, las pasarelas. El paisaje como protagonista.</div>
+          <div class="post-caption">
+            <span class="cap-handle">glampingsoul</span> Domes, walkways, and ice. Two properties. One thousand kilometers of Patagonia in between.<br><br>
+            Chalten Camp · El Chaltén 🏔️<br>
+            Moreno Camp · El Calafate 🧊<br>
+            <div class="post-tags">#GlampingSoul #PatagoniaArgentina #ChaltenCamp #MorenoCamp #SlowTravel</div>
+          </div>
+        </div>
+        <div style="font-size:12px;color:var(--olive);margin-top:8px;line-height:1.5;">✓ Concreto, bilingüe resuelto, sin palabras prohibidas. Los dos camps como constelación. Hashtags específicos y de marca.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ 03. PERFILES DE LA COMPETENCIA ═════════════════════════ -->
+<section class="section">
+  <div class="section-eye">03 · La Competencia</div>
+  <h2 class="section-title">Cómo comunica cada competidor</h2>
+  <p class="section-desc">Voz, claim, fortaleza narrativa y punto débil de cada actor. La misma información que el equipo de contenido necesita para tomar decisiones de diferenciación.</p>
+
+  <div class="comp-profiles">
+
+    <div class="comp-card">
+      <div class="comp-card-header" style="background:var(--pristine);">
+        <div><div class="comp-card-name">Pristine Camps</div><div class="comp-card-handle">@pristinecamps</div></div>
+        <div><div class="comp-card-seg">212K</div><div class="comp-card-seg-lbl">seguidores IG</div></div>
+      </div>
+      <div class="comp-card-body">
+        <div class="comp-card-row"><span class="lbl">Claim</span><span class="val"><em>#BeyondBeauty</em> — exclusividad máxima en 3 íconos argentinos (Salar + Iguazú + Calafate)</span></div>
+        <div class="comp-card-row"><span class="lbl">Tono</span><span class="val">Moderno, aspiracional, visualmente potente. Storytelling ambicioso. Énfasis en la exclusividad numérica ("6 suites").</span></div>
+        <div class="comp-card-row"><span class="lbl">Precio</span><span class="val">~$2.294/2 noches (Calafate, nov)</span></div>
+        <hr class="comp-card-divider">
+        <div class="comp-card-strong">💪 Construyó el mercado de glamping argentino de lujo con 212K seguidores. Le explicó al mundo que ese producto existe.</div>
+        <div style="height:8px;"></div>
+        <div class="comp-card-weak">⚠ Coherencia ★★: brecha detectada entre la promesa visual y la entrega real. Reviews muestran inconsistencias entre lo que se muestra y lo que se vive.</div>
+      </div>
+    </div>
+
+    <div class="comp-card">
+      <div class="comp-card-header" style="background:var(--ecocamp);">
+        <div><div class="comp-card-name">EcoCamp Patagonia</div><div class="comp-card-handle">@ecocamp</div></div>
+        <div><div class="comp-card-seg">178K</div><div class="comp-card-seg-lbl">seguidores IG</div></div>
+      </div>
+      <div class="comp-card-body">
+        <div class="comp-card-row"><span class="lbl">Claim</span><span class="val"><em>"The world's 1st geodesic dome hotel"</em> — pionero del glamping en domos desde 2001</span></div>
+        <div class="comp-card-row"><span class="lbl">Tono</span><span class="val">Aventurero, eco-consciente, accesible con calidez comunitaria. "Eco-living". Orientado a la experiencia del visitante.</span></div>
+        <div class="comp-card-row"><span class="lbl">Precio</span><span class="val">~$5.622/2 noches · Torres del Paine, Chile</span></div>
+        <hr class="comp-card-divider">
+        <div class="comp-card-strong">💪 178K personas ya entienden qué es un domo en Patagonia. EcoCamp educó al mercado global sobre el concepto. Esa audiencia ya está lista para Glamping Soul.</div>
+        <div style="height:8px;"></div>
+        <div class="comp-card-weak">⚠ Está en Chile. No compite directamente en el destino Argentina. Sus seguidores que también visitan Argentina no tienen a quién seguir — ese espacio está disponible.</div>
+      </div>
+    </div>
+
+    <div class="comp-card">
+      <div class="comp-card-header" style="background:var(--explora);">
+        <div><div class="comp-card-name">Explora</div><div class="comp-card-handle">@exploratravel</div></div>
+        <div><div class="comp-card-seg">156K</div><div class="comp-card-seg-lbl">seguidores IG</div></div>
+      </div>
+      <div class="comp-card-body">
+        <div class="comp-card-row"><span class="lbl">Claim</span><span class="val"><em>"Go Deeper"</em> — el claim más potente del segmento. B-Corp. "World's Leading Expedition Company" 6 años.</span></div>
+        <div class="comp-card-row"><span class="lbl">Tono</span><span class="val">Austero, expedicionario, inteligente. Coherencia impecable PENSAR/DECIR/HACER. Sin concesiones al turismo masivo.</span></div>
+        <div class="comp-card-row"><span class="lbl">Precio</span><span class="val">~$6.080/2 noches · Opera en El Chaltén AR</span></div>
+        <hr class="comp-card-divider">
+        <div class="comp-card-strong">💪 "Go Deeper" + 30 años de historia + B-Corp + 156K seguidores. Su audiencia es exactamente el viajero raro de Glamping Soul. Muchos no pueden pagar $6K.</div>
+        <div style="height:8px;"></div>
+        <div class="comp-card-weak">⚠ ALERTA CRÍTICA: abrió lodge en El Chaltén. Precio 3,5x mayor que Glamping Soul. La coexistencia es estratégica si Glamping Soul está en la red de distribución de Explora.</div>
+      </div>
+    </div>
+
+    <div class="comp-card">
+      <div class="comp-card-header" style="background:var(--tierra);">
+        <div><div class="comp-card-name">Tierra Hotels</div><div class="comp-card-handle">@tierrahotels</div></div>
+        <div><div class="comp-card-seg">149K</div><div class="comp-card-seg-lbl">seguidores IG</div></div>
+      </div>
+      <div class="comp-card-body">
+        <div class="comp-card-row"><span class="lbl">Claim</span><span class="val"><em>"Inspired by the landscape"</em> · ahora bajo paraguas <em>Beckons</em> (Baillie Lodges, ~USD 100M, mar 2026)</span></div>
+        <div class="comp-card-row"><span class="lbl">Tono</span><span class="val">Austero, elegante, visual. Confía en premios y arquitectura. 3 Llaves Michelin + CNT #2 Best Resort Mundo.</span></div>
+        <div class="comp-card-row"><span class="lbl">Precio</span><span class="val">~$8.340/2 noches · Torres del Paine, Chile</span></div>
+        <hr class="comp-card-divider">
+        <div class="comp-card-strong">💪 149K seguidores que aspiran a Patagonia de lujo. La fusión Beckons genera confusión de marca durante 2026-27 — ventana de atención para GS.</div>
+        <div style="height:8px;"></div>
+        <div class="comp-card-weak">⚠ Solo en Chile. Precio 5x de Glamping Soul. Sus seguidores que quieren Argentina no tienen alternativa de calidad equivalente. GS puede capturar ese overflow.</div>
+      </div>
+    </div>
+
+    <div class="comp-card">
+      <div class="comp-card-header" style="background:var(--eolo);">
+        <div><div class="comp-card-name">Eolo Patagonia</div><div class="comp-card-handle">@eolo_patagonia</div></div>
+        <div><div class="comp-card-seg">36K</div><div class="comp-card-seg-lbl">seguidores IG · TikTok activo ✓</div></div>
+      </div>
+      <div class="comp-card-body">
+        <div class="comp-card-row"><span class="lbl">Claim</span><span class="val"><em>"Patagonia's Spirit" · "No excesses, no stridencies"</em> — R&amp;C, arquitectura Bustillo, 2 Llaves Michelin</span></div>
+        <div class="comp-card-row"><span class="lbl">Tono</span><span class="val">El más contemplativo de todos. Literario, evocador, quietud. Vende silencio, no adrenalina. Similar en espíritu a Glamping Soul.</span></div>
+        <div class="comp-card-row"><span class="lbl">Precio</span><span class="val">~$4.430/2 noches · El Calafate, Argentina</span></div>
+        <hr class="comp-card-divider">
+        <div class="comp-card-strong">💪 Ya está en TikTok (@eolopatagonia) y cubre la zona del Perito Moreno. Ha construido audiencia en #ElCalafate y #PeritoMoreno — territorio que Moreno Camp va a habitar.</div>
+        <div style="height:8px;"></div>
+        <div class="comp-card-weak">⚠ Precio 2x de Glamping Soul. Sin la profundidad filosófica de GS. Competidor directo de Moreno Camp en zona glaciar — la diferenciación es narrativa y de precio.</div>
+      </div>
+    </div>
+
+    <div class="comp-card">
+      <div class="comp-card-header" style="background:var(--ecodomes);">
+        <div><div class="comp-card-name">Patagonia Eco Domes</div><div class="comp-card-handle">@patagoniaecodomes</div></div>
+        <div><div class="comp-card-seg">30K</div><div class="comp-card-seg-lbl">seguidores IG</div></div>
+      </div>
+      <div class="comp-card-body">
+        <div class="comp-card-row"><span class="lbl">Claim</span><span class="val"><em>"La mejor manera de disfrutar el Fitz Roy"</em> — sin manifiesto de marca. Orientado al trekker.</span></div>
+        <div class="comp-card-row"><span class="lbl">Tono</span><span class="val">Directo, funcional, descriptivo. Sin pretensión filosófica. El copy habla del entorno, no de una identidad. Tono de guía de trekking.</span></div>
+        <div class="comp-card-row"><span class="lbl">Precio</span><span class="val">~$1.161–1.653/2 noches · El Chaltén, Argentina</span></div>
+        <hr class="comp-card-divider">
+        <div class="comp-card-strong">💪 30K seguidores en El Chaltén con el mismo producto base. Su audiencia es la audiencia directa de Glamping Soul. Tiene acceso privado al sendero Laguna de los Tres — diferencial concreto.</div>
+        <div style="height:8px;"></div>
+        <div class="comp-card-weak">⚠ Coherencia ★★: ejecutan pero no comunican con profundidad. El viajero que compara los dos Instagrams elige Glamping Soul por calidad narrativa — si el contenido de GS hace su trabajo.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══ 04. HALLAZGOS ESTRATÉGICOS ═════════════════════════════ -->
+<section class="section">
+  <div class="section-eye">04 · Hallazgos</div>
+  <h2 class="section-title">Los tres hallazgos que cambian la perspectiva</h2>
+  <p class="section-desc">No son observaciones — son las premisas estratégicas sobre las que se construye todo el plan de comunicación.</p>
+
+  <div class="insights-grid">
+    <div class="insight-card">
+      <div class="insight-num">01</div>
+      <div class="insight-title">Glamping Soul tiene la mejor marca del segmento argentino. Y casi nadie lo sabe.</div>
+      <div class="insight-body">En el corredor Chaltén–Calafate, Glamping Soul es el único operador con coherencia ★★★★★. Patagonia Eco Domes tiene más seguidores pero sin filosofía. Eolo tiene más seguidores pero el doble de precio y menos profundidad narrativa. El activo existe. Lo que falta es distribución de ese activo.</div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-num">02</div>
+      <div class="insight-title">Pristine (212K) construyó el mercado. Ese mercado ahora busca la marca que lo cumpla.</div>
+      <div class="insight-body">Pristine invirtió años y producción en crear awareness del glamping argentino de lujo con 212K personas. Sus brechas de ejecución (★★) dejan insatisfecha a parte de esa audiencia. Hay 212K personas que entienden el concepto y buscan la versión honesta. No hay que educar ese mercado — solo presentarse con autenticidad.</div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-num">03</div>
+      <div class="insight-title">El territorio Argentina patagónica + domos + filosofía no tiene dueño real.</div>
+      <div class="insight-body">EcoCamp (domos + filosofía) está en Chile. Explora (filosofía) llega a Argentina pero a $6K. Tierra y Awasi son Chile. Pristine tiene Argentina pero sin filosofía. Aguas Arriba tiene filosofía pero sin domos. Glamping Soul es el único que tiene todo — y puede dominarlo si construye la visibilidad.</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══ 05. LA OPORTUNIDAD ══════════════════════════════════════ -->
+<section class="section" style="border-bottom:none; padding-bottom:0;">
+  <div class="section-eye">05 · Oportunidad</div>
+  <h2 class="section-title">El territorio disponible</h2>
+  <p class="section-desc">El espacio de comunicación que ningún competidor ocupa simultáneamente.</p>
+
+  <div class="territory">
+    <div class="territory-label">El territorio exclusivo de Glamping Soul</div>
+    <div class="territory-title">Argentina patagónica · doble destino icónico · filosofía de marca con coherencia total · precio de acceso al lujo</div>
+    <div class="territory-coords">
+      <span class="coord">Fitz Roy + Perito Moreno (ningún competidor tiene los dos)</span>
+      <span class="coord">Argentina, no Chile (donde están todos los grandes)</span>
+      <span class="coord">Filosofía ★★★★★ (la más alta del segmento)</span>
+      <span class="coord">$2.000–2.500 / 2 noches (accesible al lujo)</span>
+      <span class="coord">Verified · 26.2K · Creciendo</span>
+    </div>
+  </div>
+</section>
+
+</div><!-- /wrap -->
+
+<!-- ══ 06. LAS 5 ESTRATEGIAS (full bleed) ═════════════════════ -->
+<div style="background:var(--bg-light); padding: 64px 0; border-top: 1px solid var(--border);">
+<div class="wrap">
+  <div class="section-eye">06 · Estrategias</div>
+  <h2 class="section-title">Cómo usar su fuerza para impulsar la marca</h2>
+  <p class="section-desc">Cada estrategia convierte una fortaleza de un competidor en un activo de comunicación para Glamping Soul. Con ejemplos de contenido reales.</p>
+
+<!-- ── ESTRATEGIA 1 ── -->
+<div class="strategy">
+  <div class="strategy-header">
+    <div class="strategy-num">01</div>
+    <div class="strategy-meta">
+      <div class="strategy-tag">vs. Pristine Camps · 212K seguidores</div>
+      <div class="strategy-title">Pristine educó al mercado. Vos sos la respuesta honesta.</div>
+      <div class="strategy-subtitle">212K personas ya entienden qué es el glamping argentino de lujo. No hay que explicar el concepto. Hay que presentarse como la versión que cumple lo que prometieron.</div>
+    </div>
+    <div class="strategy-comp-badge">
+      <div style="background:var(--pristine);color:white;padding:4px 10px;border-radius:4px;font-size:11px;font-weight:600;">212K</div>
+      <div style="font-size:10px;color:var(--muted);">Coherencia ★★</div>
+    </div>
+  </div>
+  <div class="strategy-body">
+    <div class="two-col-strat">
+      <div>
+        <div class="strat-col-label">Su fuerza · El movimiento de Glamping Soul</div>
+        <div class="strat-insight">Pristine construyó el mercado con producción visual de alto impacto y el hashtag <strong>#BeyondBeauty</strong>. Pero sus reviews documentan una brecha entre la promesa aspiracional y la experiencia real. Hay una audiencia de 212K pre-educada que busca algo más auténtico.</div>
+        <div class="strat-action">
+          <strong>Acción concreta</strong>
+          Usar en todos los posts de Glamping Soul los hashtags <code>#ArgentinaGlamping</code> <code>#LuxuryGlamping</code> <code>#PatagoniaArgentina</code> — los mismos donde vive la audiencia de Pristine. El contenido de GS aparece en el mismo feed, pero habla desde otro lugar: autenticidad vs. espectáculo. Sin mencionar a Pristine nunca.
+        </div>
+      </div>
+      <div>
+        <div class="strat-col-label">Comparación de contenido</div>
+        <div class="post-compare-label comp-post-label" style="margin-bottom:8px;">Pristine — típico post de campaña</div>
+        <div class="post-example" style="border-color:var(--pristine);margin-bottom:14px;">
+          <div class="post-header">
+            <div class="post-avatar" style="background:var(--pristine);">PC</div>
+            <div><div class="post-handle">@pristinecamps</div><div class="post-sub">Instagram · Reel · 212K</div></div>
+          </div>
+          <div class="post-image-area">📷 Infinity pool con vista al lago azul turquesa. Puesta de sol. Producción de alta calidad.</div>
+          <div class="post-caption">
+            <span class="cap-handle">pristinecamps</span> Argentina's most exclusive glamping experience. Only 6 suites. Pure nature, pure luxury. Book your spot.<br>
+            <div class="post-tags">#BeyondBeauty #PristineCamps #ArgentinaGlamping #LuxuryGlamping</div>
+          </div>
+        </div>
+        <div class="post-compare-label gs-post-label" style="margin-bottom:8px;">Glamping Soul — la respuesta (mismo hashtag territory)</div>
+        <div class="post-example gs-style">
+          <div class="post-header">
+            <div class="post-avatar" style="background:var(--navy);">GS</div>
+            <div><div class="post-handle">@glampingsoul</div><div class="post-sub">Instagram · Reel · Verified</div></div>
+          </div>
+          <div class="post-image-area">📷 Vista del glaciar desde el domo al amanecer. Sin piscina. Sin producción artificial. El hielo y el cielo.</div>
+          <div class="post-caption">
+            <span class="cap-handle">glampingsoul</span> Not all glamping is the same. Some is designed to impress you. Ours is designed to quiet you.<br><br>There's a difference. The glacier knows it.<br>
+            <div class="post-tags">#GlampingSoul #ArgentinaGlamping #LuxuryGlamping #PatagoniaArgentina #EnoughIsLuxury</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── ESTRATEGIA 2 ── -->
+<div class="strategy">
+  <div class="strategy-header">
+    <div class="strategy-num">02</div>
+    <div class="strategy-meta">
+      <div class="strategy-tag">vs. EcoCamp · 178K seguidores</div>
+      <div class="strategy-title">EcoCamp legitimó el domo. Vos tenés los domos en Argentina.</div>
+      <div class="strategy-subtitle">178K personas ya saben qué es un domo geodésico en Patagonia. Esa audiencia existe, busca experiencias similares, y muchos visitan Argentina Y Chile. El hashtag territorio del domo está disponible para GS.</div>
+    </div>
+    <div class="strategy-comp-badge">
+      <div style="background:var(--ecocamp);color:white;padding:4px 10px;border-radius:4px;font-size:11px;font-weight:600;">178K</div>
+      <div style="font-size:10px;color:var(--muted);">Chile · Torres del Paine</div>
+    </div>
+  </div>
+  <div class="strategy-body">
+    <div class="two-col-strat">
+      <div>
+        <div class="strat-col-label">Su fuerza · El movimiento de Glamping Soul</div>
+        <div class="strat-insight">EcoCamp lleva 25 años construyendo el concepto "domo geodésico en Patagonia" — son el primer hotel geodésico del mundo (2001). Esa historia le dio 178K seguidores. Glamping Soul no necesita construir ese concepto desde cero: puede entrar en el mismo territorio de hashtags y capturar la audiencia que va a Argentina.</div>
+        <div class="strat-action">
+          <strong>Acción concreta</strong>
+          Incorporar al set de hashtags: <code>#EcoDome</code> <code>#GeodesicDome</code> <code>#PatagoniaGlamping</code> <code>#DomeHotel</code>. Son hashtags de categoría donde la audiencia de EcoCamp vive — y donde Glamping Soul no está presente todavía. El contenido no compite con EcoCamp: ofrece la versión argentina.
+        </div>
+      </div>
+      <div>
+        <div class="strat-col-label">Comparación de contenido</div>
+        <div class="post-compare-label comp-post-label" style="margin-bottom:8px;">EcoCamp — el pionero del domo</div>
+        <div class="post-example" style="border-color:var(--ecocamp);margin-bottom:14px;">
+          <div class="post-header">
+            <div class="post-avatar" style="background:var(--ecocamp);">EC</div>
+            <div><div class="post-handle">@ecocamp</div><div class="post-sub">Instagram · Foto · 178K</div></div>
+          </div>
+          <div class="post-image-area">📷 Vista aérea de los domos geodésicos de EcoCamp con Torres del Paine al fondo.</div>
+          <div class="post-caption">
+            <span class="cap-handle">ecocamp</span> Life-changing adventures in the world's first geodesic dome hotel. Torres del Paine, Chile 🌿<br>
+            <div class="post-tags">#EcoCamp #GeodesicDome #TorresdePaine #Patagonia #EcoTravel</div>
+          </div>
+        </div>
+        <div class="post-compare-label gs-post-label" style="margin-bottom:8px;">Glamping Soul — la versión argentina del domo</div>
+        <div class="post-example gs-style">
+          <div class="post-header">
+            <div class="post-avatar" style="background:var(--navy);">GS</div>
+            <div><div class="post-handle">@glampingsoul</div><div class="post-sub">Instagram · Foto · Verified</div></div>
+          </div>
+          <div class="post-image-area">📷 Interior del domo en Chalten Camp. La ventana panorámica, el Fitz Roy al fondo. Luz natural de la mañana.</div>
+          <div class="post-caption">
+            <span class="cap-handle">glampingsoul</span> The dome is not the destination. It's the threshold.<br><br>Outside, the lenga forest decides whether Fitz Roy shows itself today.<br>
+            <div class="post-tags">#GlampingSoul #EcoDome #GeodesicDome #ChaltenCamp #PatagoniaArgentina #FitzRoy</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── ESTRATEGIA 3 ── -->
+<div class="strategy">
+  <div class="strategy-header">
+    <div class="strategy-num">03</div>
+    <div class="strategy-meta">
+      <div class="strategy-tag">vs. Tierra Hotels (149K) + Explora (156K) = 305K audiencia combinada</div>
+      <div class="strategy-title">Tierra y Explora tienen la audiencia de sueño. Vos tenés el precio de entrada.</div>
+      <div class="strategy-subtitle">305K seguidores combinados que aspiran a Patagonia de lujo. Muchos no pueden pagar $6.000–$8.300/2 noches. Glamping Soul a $2.000–2.500 es el "cómo llegar" para esa audiencia — sin bajar la calidad narrativa.</div>
+    </div>
+    <div class="strategy-comp-badge">
+      <div style="background:var(--tierra);color:white;padding:4px 10px;border-radius:4px;font-size:11px;font-weight:600;">305K</div>
+      <div style="font-size:10px;color:var(--muted);">Combinado · Chile · $6K–8K</div>
+    </div>
+  </div>
+  <div class="strategy-body">
+    <div class="two-col-strat">
+      <div>
+        <div class="strat-col-label">Su fuerza · El movimiento de Glamping Soul</div>
+        <div class="strat-insight">Tierra Hotels (3 Llaves Michelin, CNT #2 Best Resort del Mundo) y Explora ("Go Deeper", B-Corp, 6x World's Leading Expedition) generaron la audiencia aspiracional del segmento. A $6K–8K/noche, gran parte de esa audiencia sueña pero no reserva. Glamping Soul puede habitar los mismos hashtags con la misma calidad narrativa — y convertir ese overflow aspiracional.</div>
+        <div class="strat-action">
+          <strong>Acción concreta</strong>
+          Entrar en los hashtags <code>#LuxuryTravel</code> <code>#LuxuryLodge</code> <code>#PatagoniaTravel</code> <code>#DiscoverPatagonia</code> con contenido de la misma calidad visual y narrativa que Tierra y Explora. El mensaje implícito: "la profundidad de Patagonia no cuesta $8.000. Cuesta atención."
+        </div>
+        <div style="margin-top:12px;">
+        <div class="strat-action">
+          <strong>Caption de referencia para este posicionamiento</strong>
+          <em>"The rarest thing about Patagonia is not its price. It's the quality of silence you find there. That doesn't cost $8,000. It costs attention."</em>
+        </div>
+        </div>
+      </div>
+      <div>
+        <div class="strat-col-label">El contraste de precio como argumento</div>
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:8px;overflow:hidden;">
+          <div style="padding:14px;border-bottom:1px solid var(--border);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);">Mapa de precio · mismo viajero, distintos accesos</div>
+          <div style="padding:12px 14px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;">
+              <span style="color:var(--muted);">Tierra Hotels</span><span style="font-weight:600;">$8.340 / 2n</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;">
+              <span style="color:var(--muted);">Explora Patagonia</span><span style="font-weight:600;">$6.080 / 2n</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;">
+              <span style="color:var(--muted);">Eolo Patagonia</span><span style="font-weight:600;">$4.430 / 2n</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:2px solid var(--navy);font-size:14px;background:#EEF1F5;margin:0 -14px;padding:10px 14px;">
+              <span style="font-weight:700;color:var(--navy);">Glamping Soul ← punto de entrada</span><span style="font-weight:700;color:var(--navy);">$2.000–2.500 / 2n</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;font-size:13px;">
+              <span style="color:var(--muted);">Patagonia Eco Domes</span><span style="font-weight:600;">$1.161–1.653 / 2n</span>
+            </div>
+          </div>
+        </div>
+        <div style="font-size:12px;color:var(--muted);margin-top:10px;line-height:1.5;">El viajero que sigue a Tierra (149K) y quiere Argentina, con menor presupuesto, llega a Glamping Soul. La calidad narrativa de GS debe justificar ese puente.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── ESTRATEGIA 4 ── -->
+<div class="strategy">
+  <div class="strategy-header">
+    <div class="strategy-num">04</div>
+    <div class="strategy-meta">
+      <div class="strategy-tag">vs. Eolo · 36K IG · TikTok activo @eolopatagonia</div>
+      <div class="strategy-title">Eolo abrió TikTok en el glaciar. Moreno Camp llega con mejor historia.</div>
+      <div class="strategy-subtitle">Eolo ya construyó audiencia en TikTok alrededor del Perito Moreno y El Calafate. Ese tráfico existe. Glamping Soul puede entrar al canal en el momento exacto del lanzamiento de Moreno Camp y capturar esa corriente.</div>
+    </div>
+    <div class="strategy-comp-badge">
+      <div style="background:var(--eolo);color:white;padding:4px 10px;border-radius:4px;font-size:11px;font-weight:600;">TikTok ✓</div>
+      <div style="font-size:10px;color:var(--muted);">R&amp;C · $4.430/2n</div>
+    </div>
+  </div>
+  <div class="strategy-body">
+    <div class="two-col-strat">
+      <div>
+        <div class="strat-col-label">Su fuerza · El movimiento de Glamping Soul</div>
+        <div class="strat-insight">Eolo (@eolopatagonia en TikTok) opera frente al Perito Moreno con precio 2x de Glamping Soul. Ha estado construyendo audiencia en <strong>#PeritoMoreno</strong> y <strong>#ElCalafate</strong> en TikTok. Eso significa que el hashtag territory ya tiene tráfico de viajeros interesados en el glaciar. Glamping Soul no necesita construir ese tráfico — necesita aparecer en él en el momento del lanzamiento de Moreno Camp.</div>
+        <div class="strat-action">
+          <strong>Acción concreta · TikTok Day 1</strong>
+          Abrir @glampingsoul en TikTok el mismo día que abre Moreno Camp. El primer video: el glaciar al amanecer desde el camp. Sin producción adicional — reutilizar el reel del lanzamiento de Instagram. Hashtags: <code>#PeritoMoreno</code> <code>#ElCalafate</code> <code>#Patagonia</code> <code>#Glamping</code> <code>#MorenoCamp</code>. La audiencia que Eolo construyó encuentra una alternativa con mejor narrativa y la mitad del precio.
+        </div>
+      </div>
+      <div>
+        <div class="strat-col-label">TikTok — entrada al canal con contenido existente</div>
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:8px;padding:18px;">
+          <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:12px;">Reels de Instagram → TikTok (sin producción adicional)</div>
+          <div style="border-bottom:1px solid var(--border);padding:10px 0;font-size:13px;"><strong>Reel existente:</strong> "[ MORENO CAMP ] At the World's Quiet Edge"<br><span style="color:var(--muted);font-size:12px;">→ TikTok caption: <em>"700 years of ice. 45 minutes from our camp. This is the view from our door. #PeritoMoreno #MorenoCamp"</em></span></div>
+          <div style="border-bottom:1px solid var(--border);padding:10px 0;font-size:13px;"><strong>Reel existente:</strong> "[ CHALTEN CAMP ] Following Pioneers Dreams"<br><span style="color:var(--muted);font-size:12px;">→ TikTok caption: <em>"We've been in El Chaltén for years. This is what Fitz Roy looks like from inside the dome at 7am. #FitzRoy #ElChalten"</em></span></div>
+          <div style="padding:10px 0;font-size:13px;"><strong>Reel existente:</strong> La cocina de Chaltén Camp<br><span style="color:var(--muted);font-size:12px;">→ TikTok caption: <em>"A Patagonian kitchen, 3km from Fitz Roy. Lamb, trout, lenga wood. This is what dinner looks like here. #PatagoniaFood"</em></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── ESTRATEGIA 5 ── -->
+<div class="strategy">
+  <div class="strategy-header">
+    <div class="strategy-num">05</div>
+    <div class="strategy-meta">
+      <div class="strategy-tag">vs. Patagonia Eco Domes · 30K · El Chaltén directo</div>
+      <div class="strategy-title">Mismo destino, mismo producto. La diferencia es la marca.</div>
+      <div class="strategy-subtitle">Patagonia Eco Domes tiene 30K seguidores en el mismo destino con el mismo producto base. La diferencia no puede ser de precio ni de ubicación — es exclusivamente de calidad narrativa y profundidad de marca.</div>
+    </div>
+    <div class="strategy-comp-badge">
+      <div style="background:var(--ecodomes);color:white;padding:4px 10px;border-radius:4px;font-size:11px;font-weight:600;">30K</div>
+      <div style="font-size:10px;color:var(--muted);">Chaltén · Coherencia ★★</div>
+    </div>
+  </div>
+  <div class="strategy-body">
+    <div class="two-col-strat">
+      <div>
+        <div class="strat-col-label">Su fuerza · El movimiento de Glamping Soul</div>
+        <div class="strat-insight">Patagonia Eco Domes tiene 30K seguidores (más que GS) en El Chaltén con el mismo producto base (domos con vista al Fitz Roy, ~mismo rango de precio). Su tono es funcional y descriptivo — "la mejor manera de disfrutar el Fitz Roy". No tiene manifiesto de marca, no tiene filosofía. Su audiencia de 30K es exactamente la audiencia de Glamping Soul.</div>
+        <div class="strat-action">
+          <strong>La pregunta de revisión de contenido</strong>
+          Ante cada post, el equipo debe preguntarse: <em>"Si alguien ve esto justo después de ver el Instagram de Patagonia Eco Domes, ¿queda claro que son marcas completamente distintas?"</em> Si la respuesta es "no", el post no está haciendo su trabajo de diferenciación.
+        </div>
+      </div>
+      <div>
+        <div class="strat-col-label">Comparación directa de contenido · mismo lugar, otra voz</div>
+        <div class="post-compare-label comp-post-label" style="margin-bottom:8px;">Patagonia Eco Domes — funcional y descriptivo</div>
+        <div class="post-example" style="border-color:var(--ecodomes);margin-bottom:14px;">
+          <div class="post-header">
+            <div class="post-avatar" style="background:var(--ecodomes);">PD</div>
+            <div><div class="post-handle">@patagoniaecodomes</div><div class="post-sub">Instagram · 30K</div></div>
+          </div>
+          <div class="post-image-area">📷 Domo con vista al Fitz Roy. Imagen estándar de producto.</div>
+          <div class="post-caption">
+            <span class="cap-handle">patagoniaecodomes</span> 🌄✨ Sumergite en la magia de El Chaltén desde nuestros domos con vista directa al Fitz Roy. Acceso privado al sendero Laguna de los Tres.<br>
+            <div class="post-tags">#ElChalten #FitzRoy #Glamping #PatagoniaArgentina</div>
+          </div>
+        </div>
+        <div class="post-compare-label gs-post-label" style="margin-bottom:8px;">Glamping Soul — mismo lugar, voz filosófica</div>
+        <div class="post-example gs-style">
+          <div class="post-header">
+            <div class="post-avatar" style="background:var(--navy);">GS</div>
+            <div><div class="post-handle">@glampingsoul</div><div class="post-sub">Instagram · Verified · En manual</div></div>
+          </div>
+          <div class="post-image-area">📷 El domo en el bosque de lengas. Encuadre que pone el domo pequeño y el paisaje enorme.</div>
+          <div class="post-caption">
+            <span class="cap-handle">glampingsoul</span> Twelve domes in the native forest. Each one oriented toward the mountain.<br><br>
+            The dome is not the destination. It's the threshold. Outside, Fitz Roy decides if it shows itself today.<br>
+            <div class="post-tags">#GlampingSoul #ChaltenCamp #FitzRoy #ElChalten #TheUnusualPath #SlowTravel</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /wrap -->
+</div><!-- /full bleed section -->
+
+
+<!-- ══ 07. PLAN DE ACCIÓN PRIORIZADO ══════════════════════════ -->
+<div class="wrap">
+<section class="section">
+  <div class="section-eye">07 · Plan de Acción</div>
+  <h2 class="section-title">Qué hacer primero</h2>
+  <p class="section-desc">Las acciones ordenadas por impacto inmediato. Las de Prioridad 1 desbloquean todo lo demás — sin ellas, el resto pierde efectividad.</p>
+
+  <div class="action-grid">
+
+    <div class="action-item p1">
+      <div class="action-timing">Prioridad 1 · Días 1–14</div>
+      <div class="action-title">Reparar los links de RRSS en ambos websites</div>
+      <div class="action-desc">chaltencamp.com no linkea Instagram. glampingsoul.com tiene "Follow Us" sin href funcional. El visitante que llega por Google no puede encontrar el canal social. Corrección técnica de 15 minutos.</div>
+    </div>
+
+    <div class="action-item p1">
+      <div class="action-timing">Prioridad 1 · Días 1–14</div>
+      <div class="action-title">Optimizar la bio de Instagram</div>
+      <div class="action-desc">Incluir ambos camps, link al motor de reservas, la segunda 📍 completa. La bio es la primera pantalla que ven los 26.2K seguidores y cualquier nuevo visitante.</div>
+    </div>
+
+    <div class="action-item p1">
+      <div class="action-timing">Prioridad 1 · Días 1–14</div>
+      <div class="action-title">Auditar y corregir vocabulario fuera de manual</div>
+      <div class="action-desc">Revisar los últimos 20 posts. Corregir usos de "Magia", exclamaciones, emojis no aprobados. Referencia: Manual de Tono y Estilo · Sección 5.2. La diferenciación de marca empieza en el lenguaje.</div>
+    </div>
+
+    <div class="action-item p2">
+      <div class="action-timing">Prioridad 2 · Semanas 3–6</div>
+      <div class="action-title">Establecer la estrategia de idioma y hashtags</div>
+      <div class="action-desc">Inglés como idioma primario (viajero internacional). Español secundario en el mismo caption. Adoptar los 5 sets de hashtags del plan — incluyendo #EcoDome, #GeodesicDome, #ArgentinaGlamping para capturar audiencias competidoras.</div>
+    </div>
+
+    <div class="action-item p2">
+      <div class="action-timing">Prioridad 2 · Semanas 3–6</div>
+      <div class="action-title">Unificar la identidad en Facebook</div>
+      <div class="action-desc">Cambiar "Chalten Camp" a "Glamping Soul" como nombre de página. Actualizar activos visuales con los del Instagram principal. Si no hay plan de contenido semanal, la bio debe redirigir a @glampingsoul.</div>
+    </div>
+
+    <div class="action-item p2">
+      <div class="action-timing">Prioridad 2 · Semanas 6–8</div>
+      <div class="action-title">Activar UGC con hashtag propio</div>
+      <div class="action-desc">Lanzar #GlampingSoul como hashtag oficial de campaña. Incorporar al proceso de check-in la invitación a compartir. Protocolo de repost con permiso explícito. Los 115 reseñas positivas de Google son contenido disponible.</div>
+    </div>
+
+    <div class="action-item p3">
+      <div class="action-timing">Prioridad 3 · Lanzamiento Moreno Camp</div>
+      <div class="action-title">Abrir TikTok @glampingsoul</div>
+      <div class="action-desc">El primer video: el glaciar al amanecer del día de apertura de Moreno Camp. Sin producción adicional — reutilizar el reel del lanzamiento de Instagram. Capturar la audiencia que Eolo construyó en #PeritoMoreno y #ElCalafate.</div>
+    </div>
+
+    <div class="action-item p3">
+      <div class="action-timing">Prioridad 3 · Mes 2–3</div>
+      <div class="action-title">Crear presencia en Pinterest</div>
+      <div class="action-desc">Tableros: Patagonia Travel · Glamping Interiors · El Chaltén &amp; Fitz Roy · Moreno Glacier. El archivo fotográfico existente es suficiente. Pinterest genera tráfico orgánico constante desde el segmento viajero de lujo.</div>
+    </div>
+
+    <div class="action-item p3">
+      <div class="action-timing">Prioridad 3 · Mediano plazo</div>
+      <div class="action-title">Construir LinkedIn para el travel trade</div>
+      <div class="action-desc">El benchmark competitivo es 12K–34K seguidores. GS está por debajo del mínimo competitivo para ser visible ante las agencias que distribuyen a Explora, Tierra y Awasi. El lanzamiento de Moreno Camp es el evento de LinkedIn del año.</div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══ 08. LO QUE ESTE ANÁLISIS NO DICE ══════════════════════ -->
+<section class="section" style="border-bottom:none;">
+  <div class="section-eye">08 · Límites del análisis</div>
+  <h2 class="section-title">Lo que estos números no miden</h2>
+  <p class="section-desc">El volumen de seguidores es un indicador de visibilidad, no de marca. Tres cosas que los datos no capturan y que son activos reales de Glamping Soul.</p>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+    <div style="background:var(--white);border:1px solid var(--border);border-left:3px solid var(--navy);border-radius:6px;padding:22px;">
+      <div style="font-family:'EB Garamond',serif;font-size:18px;margin-bottom:8px;">La calidad de los 26.2K</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.6;">Un seguidor que guarda un post, pregunta por reservas o recomienda el camp vale más que 10 seguidores pasivos. La coherencia ★★★★★ de GS genera la primera categoría. No existe métrica pública para eso.</div>
+    </div>
+    <div style="background:var(--white);border:1px solid var(--border);border-left:3px solid var(--navy);border-radius:6px;padding:22px;">
+      <div style="font-family:'EB Garamond',serif;font-size:18px;margin-bottom:8px;">Las 223 reseñas</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.6;">TripAdvisor #1 en El Chaltén y Google 4.8/5. Pristine, con 212K seguidores, no tiene ese nivel de reputación verificada. El viajero serio investiga las dos cosas — y ahí GS gana.</div>
+    </div>
+    <div style="background:var(--white);border:1px solid var(--border);border-left:3px solid var(--navy);border-radius:6px;padding:22px;">
+      <div style="font-family:'EB Garamond',serif;font-size:18px;margin-bottom:8px;">El doble destino</div>
+      <div style="font-size:13px;color:var(--muted);line-height:1.6;">Chalten Camp + Moreno Camp es el único itinerario de glamping filosófico en ambos íconos argentinos (Fitz Roy + Perito Moreno). Ningún competidor puede construirlo en el corto plazo. No aparece en follower counts — pero determina el producto.</div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /wrap -->
+
+<div class="doc-footer">
+  <div><strong>Glamping Soul</strong> · A Constellation of Rare Places · Patagonia, Argentina</div>
+  <div>Inteligencia de Redes Sociales · Diagnóstico + Competencia · Versión 1.0 · Mayo 2026 · <strong>Uso interno</strong></div>
+</div>
+
+</body>
+</html>
