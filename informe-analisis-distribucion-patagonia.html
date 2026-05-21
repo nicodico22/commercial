@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glamping Soul — Análisis Estratégico: Distribución Internacional de Lujo</title>
+<style>
+:root {
+  --olive: #5C6229;
+  --olive-l: #8a9140;
+  --linen: #F5F0E8;
+  --linen-d: #EDE5D6;
+  --charcoal: #2B2B2B;
+  --burgundy: #6B2D2D;
+  --navy: #2C3E50;
+  --gold: #C9A84C;
+  --brown: #6B5229;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:-apple-system,'Helvetica Neue',Arial,sans-serif;background:var(--linen);color:var(--charcoal);line-height:1.7;font-size:15px;}
+
+/* HEADER */
+.hdr{background:var(--charcoal);color:var(--linen);padding:52px 64px;border-bottom:4px solid var(--olive);}
+.hdr-brand{font-size:11px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+.hdr h1{font-size:30px;font-weight:300;letter-spacing:.5px;margin-bottom:6px;}
+.hdr-meta{font-size:11px;color:#999;letter-spacing:3px;text-transform:uppercase;}
+
+/* NAV */
+nav{background:var(--olive);padding:0 64px;display:flex;flex-wrap:wrap;}
+nav a{color:rgba(245,240,232,.85);text-decoration:none;padding:14px 22px;font-size:11px;letter-spacing:2px;text-transform:uppercase;transition:background .2s;}
+nav a:hover{background:var(--olive-l);color:#fff;}
+
+/* LAYOUT */
+.wrap{max-width:1120px;margin:0 auto;padding:0 64px;}
+section{padding:56px 0;border-bottom:1px solid var(--linen-d);}
+.sec-label{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--olive);margin-bottom:6px;}
+h2{font-size:24px;font-weight:400;margin-bottom:18px;}
+h3{font-size:16px;font-weight:600;margin-bottom:12px;}
+p{margin-bottom:14px;}
+p:last-child{margin-bottom:0;}
+
+/* TABLE */
+.tbl-wrap{overflow-x:auto;border-radius:8px;box-shadow:0 2px 16px rgba(0,0,0,.08);margin-top:24px;}
+table{width:100%;border-collapse:collapse;font-size:13px;background:#fff;}
+table th{background:var(--charcoal);color:var(--linen);padding:11px 14px;text-align:left;font-weight:400;letter-spacing:.5px;white-space:nowrap;font-size:12px;}
+table td{padding:9px 14px;border-bottom:1px solid #f0ebe0;white-space:nowrap;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:#faf7f2;}
+.hi{color:var(--burgundy);font-weight:700;}
+.lo{color:#bbb;}
+.med{color:var(--navy);}
+
+/* CALLOUT */
+.callout{background:var(--charcoal);color:var(--linen);padding:28px 32px;border-left:5px solid var(--gold);margin:28px 0;border-radius:0 8px 8px 0;}
+.callout p{font-size:15.5px;line-height:1.65;}
+.callout strong{color:var(--gold);}
+
+/* INSIGHTS */
+.insight-row{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px;}
+.ic{background:#fff;padding:22px;border-radius:10px;border-left:4px solid var(--gold);box-shadow:0 2px 8px rgba(0,0,0,.06);}
+.ic-num{font-size:34px;font-weight:700;color:var(--burgundy);}
+.ic-lbl{font-size:12px;color:#777;margin-top:2px;}
+.ic-txt{font-size:12px;color:#999;margin-top:8px;line-height:1.4;}
+
+/* DIALECTICAL */
+.dial-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:24px 0;}
+.dial-card{background:#fff;padding:28px;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.06);border-top:4px solid;}
+.pos-a{border-color:var(--navy);}
+.pos-b{border-color:var(--burgundy);}
+.pos-lbl{font-size:10px;letter-spacing:3px;text-transform:uppercase;margin-bottom:5px;}
+.pos-a .pos-lbl{color:var(--navy);}
+.pos-b .pos-lbl{color:var(--burgundy);}
+.ev-list{list-style:none;padding:0;margin-top:14px;}
+.ev-list li{padding:8px 0 8px 20px;border-bottom:1px solid #f5f0e8;font-size:13.5px;position:relative;}
+.ev-list li::before{content:'→';position:absolute;left:0;color:var(--gold);}
+.ev-list li:last-child{border-bottom:none;}
+.synth{background:linear-gradient(135deg,var(--olive),#3d4219);color:var(--linen);padding:36px;border-radius:12px;margin-top:24px;}
+.synth h3{color:var(--gold);margin-bottom:16px;font-size:18px;}
+
+/* SEGMENTS */
+.seg-card{background:#fff;border-radius:16px;margin-bottom:44px;box-shadow:0 4px 20px rgba(0,0,0,.07);overflow:hidden;}
+.seg-hdr{padding:28px 36px;display:flex;align-items:flex-start;gap:20px;border-bottom:1px solid #f0ebe0;}
+.seg-num{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:#fff;flex-shrink:0;}
+.s1 .seg-num{background:var(--navy);}
+.s2 .seg-num{background:var(--burgundy);}
+.s3 .seg-num{background:var(--olive);}
+.s4 .seg-num{background:var(--brown);}
+.seg-title{font-size:20px;font-weight:600;margin-bottom:3px;}
+.seg-sub{font-size:13px;color:#777;}
+.seg-body{padding:28px 36px;}
+.seg-desc{font-size:14px;line-height:1.7;margin-bottom:22px;padding:16px 20px;background:var(--linen);border-radius:8px;}
+
+/* AGENCY LIST */
+.ag-list{border:1px solid #e8e0d0;border-radius:8px;overflow:hidden;margin-bottom:24px;}
+.ag-list-hdr{background:var(--linen-d);padding:9px 16px;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#888;display:grid;grid-template-columns:200px 1fr auto;gap:8px;}
+.ag-row{display:grid;grid-template-columns:200px 1fr auto;gap:8px;padding:11px 16px;border-top:1px solid #f0ebe0;align-items:center;}
+.ag-name{font-weight:600;font-size:13px;}
+.ag-contact{font-size:11.5px;color:#888;}
+.ag-email{font-size:12px;color:var(--navy);font-family:'Courier New',monospace;}
+.no-email{font-size:11px;color:#ccc;font-style:italic;}
+
+/* BUTTONS */
+.btn-g{display:flex;gap:8px;flex-wrap:wrap;}
+.btn{padding:7px 16px;border-radius:6px;border:none;cursor:pointer;font-size:12px;letter-spacing:.3px;transition:all .2s;font-family:inherit;font-weight:500;}
+.btn-copy{background:var(--linen-d);color:var(--charcoal);}
+.btn-copy:hover{background:#ddd;}
+.btn-gmail-1{background:var(--navy);color:#fff;}
+.btn-gmail-1:hover{background:#3d556e;}
+.btn-gmail-2{background:var(--burgundy);color:#fff;}
+.btn-gmail-2:hover{background:#8a3a3a;}
+.btn-gmail-3{background:var(--olive);color:#fff;}
+.btn-gmail-3:hover{background:var(--olive-l);}
+.btn-gmail-4{background:var(--brown);color:#fff;}
+.btn-gmail-4:hover{background:#8a6a3a;}
+
+/* EMAIL TEMPLATE */
+.email-section{margin-top:20px;}
+.email-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px;}
+.email-lbl{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--olive);font-weight:700;}
+.email-subj{background:#f8f5ef;border-left:3px solid var(--gold);padding:10px 16px;font-size:13px;color:#555;margin-bottom:4px;border-radius:0 4px 4px 0;}
+.email-subj strong{color:var(--charcoal);font-size:14px;}
+.email-body{background:#f8f5ef;border:1px solid #e8e0d0;border-radius:8px;padding:24px;font-size:13.5px;line-height:1.85;white-space:pre-wrap;color:var(--charcoal);font-family:-apple-system,'Helvetica Neue',Arial,sans-serif;}
+.lang-badge{display:inline-block;background:#f0e8d0;color:#8B6914;font-size:10px;letter-spacing:1px;padding:2px 8px;border-radius:4px;text-transform:uppercase;margin-left:8px;vertical-align:middle;}
+.note-box{background:#fff8e8;border:1px solid #e8d8a0;border-radius:8px;padding:14px 18px;font-size:13px;margin-bottom:16px;line-height:1.6;}
+.note-box strong{color:#8B6914;}
+.per-agency{margin-top:20px;border-top:1px dashed #ddd;padding-top:16px;}
+.per-agency-lbl{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#999;margin-bottom:10px;}
+
+/* MATRIX */
+.matrix-tbl th{font-size:11px;}
+.tag-seg{display:inline-block;padding:3px 11px;border-radius:20px;font-size:11px;font-weight:500;}
+.t1{background:#e8ecf5;color:var(--navy);}
+.t2{background:#f5e8e8;color:var(--burgundy);}
+.t3{background:#f0f4e8;color:var(--olive);}
+.t4{background:#f5ede8;color:var(--brown);}
+.p5-dot::before{content:'●';color:var(--burgundy);margin-right:5px;}
+.p4-dot::before{content:'●';color:var(--navy);margin-right:5px;}
+.p3-dot::before{content:'●';color:var(--olive);margin-right:5px;}
+
+/* FOOTER */
+footer{background:var(--charcoal);color:#888;padding:36px 64px;font-size:12px;text-align:center;letter-spacing:1px;}
+footer strong{color:var(--gold);}
+
+@media(max-width:768px){
+  .wrap,.hdr,nav,footer{padding-left:24px;padding-right:24px;}
+  .dial-grid,.insight-row{grid-template-columns:1fr;}
+  .ag-list-hdr,.ag-row{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-brand">Glamping Soul · Informe Estratégico Interno</div>
+  <h1>Distribución Internacional de Lujo<br>Patagonia Argentina vs. Chilena</h1>
+  <div class="hdr-meta">Análisis Dialéctico · Datos Empíricos · Outreach por Segmento &nbsp;|&nbsp; Mayo 2026</div>
+</div>
+
+<nav>
+  <a href="#datos">Datos Empíricos</a>
+  <a href="#analisis">Análisis Dialéctico</a>
+  <a href="#seg1">Segmento 1</a>
+  <a href="#seg2">Segmento 2</a>
+  <a href="#seg3">Segmento 3</a>
+  <a href="#seg4">Segmento 4</a>
+  <a href="#matriz">Matriz de Contactos</a>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SECTION 1: DATOS EMPÍRICOS                                 -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="datos">
+<div class="wrap">
+  <div class="sec-label">Sección 01</div>
+  <h2>Datos Empíricos: Auditoría de 12 Webs</h2>
+  <p>Se navegaron las páginas de Patagonia o Argentina de 12 agencias de lujo y se contabilizaron las menciones de destinos clave mediante extracción directa de DOM. Los datos revelan un patrón sistemático y consistente.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Agencia</th>
+        <th>Página analizada</th>
+        <th>Torres del Paine</th>
+        <th>El Calafate</th>
+        <th>El Chaltén</th>
+        <th>Perito Moreno</th>
+        <th>Los Glaciares</th>
+        <th>Chile (total)</th>
+        <th>Argentina (total)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Abercrombie &amp; Kent</strong></td><td>/argentina/patagonia</td><td class="hi">1</td><td class="lo">0</td><td class="lo">0</td><td class="lo">0</td><td class="lo">0</td><td class="med">4</td><td>8</td></tr>
+      <tr><td><strong>Artisans of Leisure</strong></td><td>/Patagonia_Argentina_Chile</td><td class="hi">13</td><td class="hi">18</td><td class="lo">1</td><td class="med">3</td><td class="med">2</td><td class="hi">15</td><td>39</td></tr>
+      <tr><td><strong>Ker &amp; Downey</strong></td><td>/argentina-chile-adventure</td><td class="med">3</td><td class="med">3</td><td class="med">3</td><td class="lo">0</td><td class="lo">0</td><td class="med">6</td><td>7</td></tr>
+      <tr><td><strong>Butterfield &amp; Robinson</strong></td><td>/patagonia-bespoke</td><td class="hi">7</td><td class="lo">2</td><td class="lo">1</td><td class="med">3</td><td class="lo">0</td><td class="med">7</td><td>7</td></tr>
+      <tr><td><strong>Jacada Travel</strong></td><td>/luxury-patagonia-tours</td><td class="hi">10</td><td class="med">5</td><td class="med">5</td><td class="med">3</td><td class="lo">1</td><td class="hi">15</td><td>13</td></tr>
+      <tr><td><strong>Cazenove + Loyd</strong></td><td>/patagonia</td><td class="hi">6</td><td class="lo">2</td><td class="lo">1</td><td class="lo">1</td><td class="lo">0</td><td class="hi">15</td><td>11</td></tr>
+      <tr><td><strong>Journey Latin America</strong></td><td>/destinations/patagonia</td><td class="hi">6</td><td class="lo">0</td><td class="lo">1</td><td class="med">3</td><td class="med">4</td><td class="hi">21</td><td>14</td></tr>
+      <tr><td><strong>Audley Travel</strong></td><td>/us/argentina</td><td class="lo">0</td><td class="lo">0</td><td class="med">4</td><td class="med">3</td><td class="lo">0</td><td class="med">8</td><td>89</td></tr>
+      <tr><td><strong>Lightfoot Travel</strong></td><td>/argentina/patagonia</td><td class="lo">0</td><td class="lo">1</td><td class="lo">0</td><td class="lo">1</td><td class="lo">0</td><td class="lo">2</td><td>5</td></tr>
+      <tr><td><strong>Swoop Patagonia</strong></td><td>/argentina</td><td class="lo">1</td><td class="med">5</td><td class="lo">2</td><td class="med">5</td><td class="med">5</td><td class="med">4</td><td>9</td></tr>
+      <tr><td><strong>Wayfairer Travel</strong></td><td>/destinations/argentina</td><td class="lo">0</td><td class="lo">1</td><td class="lo">0</td><td class="lo">1</td><td class="lo">1</td><td class="lo">0</td><td>38</td></tr>
+      <tr><td><strong>Scott Dunn</strong></td><td>/us/argentina</td><td class="lo">0</td><td class="med">4</td><td class="med">3</td><td class="lo">2</td><td class="med">4</td><td class="lo">0</td><td>56</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="insight-row">
+    <div class="ic">
+      <div class="ic-num">10:1</div>
+      <div class="ic-lbl">Ratio Torres del Paine vs. El Chaltén</div>
+      <div class="ic-txt">En páginas genéricas de "Patagonia" (Jacada, Butterfield, Cazenove). El destino argentino de montaña está 10 veces subrepresentado.</div>
+    </div>
+    <div class="ic">
+      <div class="ic-num">8/12</div>
+      <div class="ic-lbl">Agencias sin mención de El Chaltén</div>
+      <div class="ic-txt">Dos tercios de las webs analizadas no mencionan El Chaltén ni una vez en sus páginas de Patagonia o Argentina.</div>
+    </div>
+    <div class="ic">
+      <div class="ic-num">0</div>
+      <div class="ic-lbl">Menciones de Chalten Camp en 12 webs</div>
+      <div class="ic-txt">Ninguna de las 12 agencias analizadas menciona Glamping Soul. El espacio en distribución está completamente vacante.</div>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top:28px;">
+    <p>El dato más revelador: <strong>A&amp;K tiene su página categorizada bajo "Argentina/Patagonia" pero no menciona Calafate, Chaltén ni Perito Moreno ni una sola vez.</strong> Su primer itinerario en esa página lleva al cliente directo a Torres del Paine. Esto no es estrategia de ventas activa — es una página construida con un template genérico que nadie revisó en años.</p>
+  </div>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SECTION 2: ANÁLISIS DIALÉCTICO                             -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="analisis">
+<div class="wrap">
+  <div class="sec-label">Sección 02</div>
+  <h2>Análisis Dialéctico: ¿Estrategia o Ignorancia?</h2>
+  <p>Para llegar a una conclusión objetiva, se presentan dos posiciones antagónicas con su evidencia de soporte. La síntesis emerge de la tensión entre ambas.</p>
+
+  <div class="dial-grid">
+    <div class="dial-card pos-a">
+      <div class="pos-lbl">Posición A — Tesis</div>
+      <h3>"Es una estrategia deliberada de comercialización"</h3>
+      <p style="font-size:13.5px;color:#666;">Las agencias saben lo que hacen. Venden lo que genera demanda con menor fricción de conversión, y Torres del Paine tiene 30 años de ventaja en reconocimiento de marca global.</p>
+      <ul class="ev-list">
+        <li><strong>Explora como máquina de PR durante tres décadas.</strong> Explora Patagonia construyó relaciones sistemáticas con agentes de lujo internacionales desde los 90. Ninguna propiedad argentina equivalente hizo lo mismo a esa escala.</li>
+        <li><strong>La marca "Patagonia" (ropa) graficó Los Cuernos del Paine.</strong> Décadas de exposición global asociaron "Patagonia" visualmente con el lado chileno. El cliente pide lo que conoce.</li>
+        <li><strong>Los itinerarios cross-border maximizan ticket promedio.</strong> Buenos Aires → Calafate (1 noche) → Torres del Paine (4 noches) → fly out. El Calafate es transición logística. El Chaltén directamente no cabe en ese circuit establecido.</li>
+        <li><strong>Butterfield &amp; Robinson: 4 featured stays, 3 chilenos.</strong> Awasi TdP + Tierra Patagonia + The Singular (Chile) vs. EOLO (Argentina). La curaduría no es accidental.</li>
+        <li><strong>Chile tuvo estabilidad macroeconómica</strong> que facilitó contratos de largo plazo con agencias. La inestabilidad del peso argentino complicó históricamente esos acuerdos.</li>
+        <li><strong>Jacada publica "Argentina or Chile: Where Should I Go?"</strong> — tratándolos como alternativas competidoras. Eso es posicionamiento estratégico, no ignorancia.</li>
+      </ul>
+    </div>
+    <div class="dial-card pos-b">
+      <div class="pos-lbl">Posición B — Antítesis</div>
+      <h3>"Es ignorancia estructural de la industria, no estrategia consciente"</h3>
+      <p style="font-size:13.5px;color:#666;">La mayoría de los agentes individuales que diseñan itinerarios no conocen El Chaltén en profundidad. Su desconocimiento produce contenido que subestima involuntariamente la Patagonia argentina.</p>
+      <ul class="ev-list">
+        <li><strong>A&amp;K tiene su página en Argentina/Patagonia con 0 menciones argentinas específicas.</strong> Si fuera estrategia de vender Chile, la habrían puesto en Chile. Es una página mal construida que nadie revisó.</li>
+        <li><strong>Los especialistas cubren toda Latinoamérica.</strong> Audley tiene a "Yasmin B." cubriendo Argentina Y Brasil. Con ese alcance, el conocimiento profundo de El Chaltén es imposible.</li>
+        <li><strong>El Chaltén es difícil de "packagizar" en texto estándar.</strong> Torres del Paine tiene el W Trek: 5 días, estructura perfecta. El Chaltén tiene trekking libre, más variable. Para un agente que nunca estuvo, es más difícil escribirlo con confianza.</li>
+        <li><strong>No hay un educator sistemático del lado argentino.</strong> PROCHILE tiene redes activas de workshops y FAM trips para agentes internacionales. Argentina no tiene un equivalente de la misma eficacia para el segmento de lujo en Patagonia.</li>
+        <li><strong>Swoop Patagonia — la más especializada — tiene el mejor contenido argentino.</strong> Calafate:5, Fitz Roy:4, Perito Moreno:5, Los Glaciares:5. A mayor especialización, mejor contenido argentino. La causa es profundidad de conocimiento.</li>
+        <li><strong>Wayfairer y Scott Dunn tienen 0 menciones de Chile en sus páginas Argentina.</strong> Si hubiera estrategia activa de favorecer a Chile, esas páginas reflejarían cross-selling. La variedad entre agencias indica ausencia de estrategia, no una coordinada.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="synth">
+    <h3>⟐ Síntesis — La Conclusión Objetiva</h3>
+    <p><strong>Ambas posiciones son verdaderas, pero operan en distintos niveles de la organización y en períodos temporales diferentes.</strong></p>
+    <p>Hace 15-20 años fue estrategia: Torres del Paine tenía mejor producto, mejor marketing, mejor infraestructura de lujo y mayor demanda inbound. Las agencias construyeron sus portfolios en ese contexto y crearon templates narrativos que funcionaban.</p>
+    <p>Hoy es inercia estructural + ignorancia de producto: los agentes individuales heredaron esos templates y no tienen incentivos ni input suficiente para actualizarlos. No están activamente eligiendo vender Chile sobre Argentina — el "default" de sus sistemas fue construido sobre ese bias original y nunca fue revisado.</p>
+    <p><strong>El resultado práctico es idéntico: el Parque Nacional Los Glaciares — un sitio UNESCO del tamaño de Bélgica, con el único glaciar avanzante del mundo y el trekking de Fitz Roy — aparece como nota al pie de Torres del Paine en el 80% de las webs de las mejores agencias de lujo del mundo.</strong></p>
+    <p style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(245,240,232,.2);">Para Glamping Soul, la diferencia entre las dos causas es irrelevante. La oportunidad es la misma: <strong>ser el primer actor que educa activamente a estas agencias con una propuesta de valor clara y un producto de lujo concreto.</strong> El primero que llene ese vacío con información y producto tendrá la distribución. El resto llegará tarde.</p>
+  </div>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SECTION 3: SEGMENTOS + OUTREACH                           -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="segmentos" style="padding-bottom:20px;">
+<div class="wrap">
+  <div class="sec-label">Sección 03</div>
+  <h2>Segmentación Estratégica y Plantillas de Outreach</h2>
+  <p>Cuatro segmentos según el perfil de posicionamiento detectado. Cada uno tiene una narrativa de entrada diferente. El botón <strong>"Abrir en Gmail"</strong> completa automáticamente destinatario, asunto y cuerpo — listo para revisar y enviar.</p>
+</div>
+</section>
+
+<!-- ═══════════════════════════════ SEGMENTO 1 ═══════ -->
+<div id="seg1" class="wrap">
+<div class="seg-card s1">
+  <div class="seg-hdr">
+    <div class="seg-num">1</div>
+    <div>
+      <div class="seg-title">Patagonia Genérica</div>
+      <div class="seg-sub">Torres del Paine domina · Argentina subrepresentada · Patagonia tratada como destino binacional sin ancla argentina</div>
+    </div>
+  </div>
+  <div class="seg-body">
+    <div class="seg-desc">
+      <strong>Quiénes son:</strong> Agencias con páginas de "Patagonia" que combinan ARG + CHI donde Torres del Paine aparece entre 6 y 13 veces más que El Chaltén. El Parque Nacional Los Glaciares no existe como destino independiente en sus webs — es el lugar de tránsito antes de cruzar a Chile.<br><br>
+      <strong>El mensaje:</strong> No pedirles que "vendan más Argentina". Posicionarles la exclusividad: sus clientes ya conocen Torres del Paine. El Chaltén es la Patagonia que ninguno de sus competidores está vendiendo todavía.
+    </div>
+
+    <div class="ag-list">
+      <div class="ag-list-hdr"><span>Agencia</span><span>Contacto</span><span>Acción</span></div>
+      <div class="ag-row">
+        <div><div class="ag-name">Abercrombie &amp; Kent</div><div class="ag-contact">Dalia Gibu · VP DMC Sales &amp; Marketing – The Americas</div></div>
+        <div class="ag-email">dgibu@abercrombiekent.com.pe</div>
+        <button class="btn btn-gmail-1" onclick="openGmail('dgibu@abercrombiekent.com.pe', subjects.s1, bodies.s1_en.replace('[Name]','Dalia').replace('[Agency]','Abercrombie &amp; Kent').replace('[agency]','Abercrombie &amp; Kent'))">✉ Abrir en Gmail</button>
+      </div>
+      <div class="ag-row">
+        <div><div class="ag-name">Artisans of Leisure</div><div class="ag-contact">Ashley Isaacs Ganz · Founder &amp; CEO</div></div>
+        <div class="ag-email">aganz@artisansofleisure.com</div>
+        <button class="btn btn-gmail-1" onclick="openGmail('aganz@artisansofleisure.com', subjects.s1, bodies.s1_en.replace('[Name]','Ashley').replace('[Agency]','Artisans of Leisure').replace('[agency]','Artisans of Leisure'))">✉ Abrir en Gmail</button>
+      </div>
+      <div class="ag-row">
+        <div><div class="ag-name">Journey Latin America</div><div class="ag-contact">Argentina Travel Specialist</div></div>
+        <div class="ag-email">agents@journeylatinamerica.com</div>
+        <button class="btn btn-gmail-1" onclick="openGmail('agents@journeylatinamerica.com', subjects.s1, bodies.s1_en.replace('[Name]','the Patagonia team').replace('[Agency]','Journey Latin America').replace('[agency]','Journey Latin America'))">✉ Abrir en Gmail</button>
+      </div>
+      <div class="ag-row">
+        <div><div class="ag-name">Jacada Travel</div><div class="ag-contact">Latin America Specialist</div></div>
+        <div class="no-email">Email no disponible — buscar en LinkedIn</div>
+        <button class="btn btn-copy" disabled style="opacity:.4;cursor:default;">Sin email</button>
+      </div>
+      <div class="ag-row">
+        <div><div class="ag-name">Cazenove + Loyd</div><div class="ag-contact">South America Specialist</div></div>
+        <div class="no-email">Email no disponible — buscar en LinkedIn</div>
+        <button class="btn btn-copy" disabled style="opacity:.4;cursor:default;">Sin email</button>
+      </div>
+    </div>
+
+    <div class="email-section">
+      <div class="email-top">
+        <div class="email-lbl">Plantilla de Email — Segmento 1</div>
+        <div class="btn-g">
+          <button class="btn btn-copy" onclick="copyEmail('body-s1')">Copiar texto</button>
+        </div>
+      </div>
+      <div class="email-subj"><strong>Asunto:</strong> El Chaltén &amp; Los Glaciares: The Argentine Patagonia Missing from Your Portfolio</div>
+      <div class="email-body" id="body-s1">Dear [Name],
+
+My name is Nicolás Dico — I'm the co-founder of Glamping Soul, a boutique glamping collection operating within Parque Nacional Los Glaciares in Argentine Patagonia.
+
+I wanted to reach out because I've been studying how the world's leading luxury travel agencies position Patagonia — and I noticed something that I believe represents a real commercial opportunity for [Agency].
+
+Your Patagonia content currently features Torres del Paine prominently, as it deserves. But Argentine Patagonia — specifically El Chaltén and Parque Nacional Los Glaciares — is significantly underrepresented in most agencies' portfolios, including yours. This isn't a criticism; it reflects a 30-year industry dynamic that favored Chilean Patagonia for structural reasons. What it means today, however, is that the first agencies to correctly position the Argentine side will offer something genuinely distinct from their competitors.
+
+Here's what most of your clients don't know yet:
+— Parque Nacional Los Glaciares is a UNESCO World Heritage Site covering 726,927 hectares — larger than Belgium
+— Mount Fitz Roy (El Chaltén) offers trekking as visually spectacular as any circuit in Torres del Paine, with a fraction of the crowds
+— The Perito Moreno Glacier is the only advancing glacier in the world
+— Glamping Soul operates the only luxury glamping experience at both anchors of this park
+
+Our two properties:
+• Chalten Camp — boutique geodesic glamping at the base of Mount Fitz Roy, El Chaltén (open now)
+• Moreno Camp — the only property with direct views of Perito Moreno Glacier (opening November 2026)
+
+I'd love to send you our media kit and discuss what a partnership could look like. Would you have 20 minutes for a call in the coming weeks?
+
+Warm regards,
+
+Nicolás Dico
+Co-Founder, Glamping Soul
+nicodico@glampingsoul.com
+www.glampingsoul.com</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════ SEGMENTO 2 ═══════ -->
+<div id="seg2" class="wrap" style="margin-top:20px;">
+<div class="seg-card s2">
+  <div class="seg-hdr">
+    <div class="seg-num">2</div>
+    <div>
+      <div class="seg-title">Vendedores de EOLO</div>
+      <div class="seg-sub">Ya venden El Calafate · Pie en Argentina · El Chaltén es la extensión natural del itinerario</div>
+    </div>
+  </div>
+  <div class="seg-body">
+    <div class="seg-desc">
+      <strong>Quiénes son:</strong> Agencias que ya tienen EOLO en su portfolio argentino. Esto prueba que tienen capacidad y voluntad de vender Patagonia argentina de lujo. El gap es exclusivamente de producto en El Chaltén: hasta ahora no había qué ofrecer allí.<br><br>
+      <strong>El mensaje:</strong> "Ya tienen el pie en Argentina. Chalten Camp completa el relato: Buenos Aires → Moreno Camp → Chalten Camp es el itinerario argentino más completo del mercado."
+    </div>
+
+    <div class="ag-list">
+      <div class="ag-list-hdr"><span>Agencia</span><span>Contacto</span><span>Acción</span></div>
+      <div class="ag-row">
+        <div><div class="ag-name">Scott Dunn</div><div class="ag-contact">Jean-Sebastien Saleem · Sales &amp; Service Manager for the Americas</div></div>
+        <div class="ag-email">jean-sebastien.saleem@scottdunn.com</div>
+        <button class="btn btn-gmail-2" onclick="openGmail('jean-sebastien.saleem@scottdunn.com', subjects.s2, bodies.s2_en.replace('[Name]','Jean-Sebastien').replace('[Agency]','Scott Dunn').replace('[agency]','Scott Dunn'))">✉ Abrir en Gmail</button>
+      </div>
+      <div class="ag-row">
+        <div><div class="ag-name">Red Savannah</div><div class="ag-contact">Dineke Verlinden · Latin America Specialist (18+ años)</div></div>
+        <div class="ag-email">dverlinden@redsavannah.com</div>
+        <button class="btn btn-gmail-2" onclick="openGmail('dverlinden@redsavannah.com', subjects.s2, bodies.s2_en.replace('[Name]','Dineke').replace('[Agency]','Red Savannah').replace('[agency]','Red Savannah'))">✉ Abrir en Gmail</button>
+      </div>
+      <div class="ag-row">
+        <div><div class="ag-name">Indagare</div><div class="ag-contact">Ruchi Kirtikar · Industry Partnerships Associate</div></div>
+        <div class="ag-email">Ruchi.Kirtikar@indagare.com</div>
+        <button class="btn btn-gmail-2" onclick="openGmail('Ruchi.Kirtikar@indagare.com', subjects.s2, bodies.s2_en.replace('[Name]','Ruchi').replace('[Agency]','Indagare').replace('[agency]','Indagare'))">✉ Abrir en Gmail</button>
+      </div>
+      <div class="ag-row">
+        <div><div class="ag-name">Quintessentially Travel</div><div class="ag-contact">Lily Carey · Head of Product &amp; Partnerships</div></div>
+        <div class="ag-email">lily@quintessentiallytravel.com</div>
+        <button class="btn btn-gmail-2" onclick="openGmail('lily@quintessentiallytravel.com', subjects.s2, bodies.s2_en.replace('[Name]','Lily').replace('[Agency]','Quintessentially Travel').replace('[agency]','Quintessentially Travel'))">✉ Abrir en Gmail</button>
+      </div>
+      <div class="ag-row">
+        <div><div class="ag-name">Exclusif Voyages <span class="lang-badge">Francés</span></div><div class="ag-contact">Sophie &amp; Sabine Arbib · Co-Fundadoras</div></div>
+        <div class="ag-email">sophie@exclusifvoyages.com</div>
+        <button class="btn btn-gmail-2" onclick="openGmail('sophie@exclusifvoyages.com,sabine@exclusifvoyages.com', subjects.s2_fr, bodies.s2_fr)">✉ Abrir en Gmail (FR)</button>
+      </div>
+    </div>
+
+    <div class="email-section">
+      <div class="email-top">
+        <div class="email-lbl">Plantilla de Email — Segmento 2 (Inglés)</div>
+        <div class="btn-g">
+          <button class="btn btn-copy" onclick="copyEmail('body-s2')">Copiar texto</button>
+        </div>
+      </div>
+      <div class="email-subj"><strong>Asunto:</strong> Complete the Argentine Patagonia Story: El Chaltén after EOLO — Glamping Soul</div>
+      <div class="email-body" id="body-s2">Dear [Name],
+
+I'm Nicolás Dico, co-founder of Glamping Soul — boutique glamping within Parque Nacional Los Glaciares, Argentine Patagonia.
+
+I noticed that [Agency] features EOLO in your Argentina portfolio. That tells me you understand the Argentine Patagonia product at a level most agencies don't — and that makes you exactly the kind of partner I want to speak with.
+
+EOLO is exceptional for El Calafate and the southern end of Los Glaciares National Park. What it doesn't cover — and where we come in — is El Chaltén, the northern anchor of the same UNESCO World Heritage park, at the base of Mount Fitz Roy.
+
+Until recently, the problem was simple: there was no luxury product in El Chaltén that could sit alongside EOLO in quality. Chalten Camp changes that.
+
+The itinerary your clients have been waiting for:
+Buenos Aires → El Calafate (Moreno Camp, opening Nov. 2026) → El Chaltén (Chalten Camp) → Buenos Aires
+
+This is the most complete Argentine Patagonia story in the market. Two radically different landscapes. Two properties. One UNESCO World Heritage park. Zero need to cross into Chile.
+
+Chalten Camp:
+• Heated geodesic domes with panoramic Fitz Roy views
+• In-camp dining with Argentine Patagonian cuisine
+• Expert-guided trekking in Los Glaciares National Park
+• 3–4 night immersive programs
+
+Moreno Camp (Nov. 2026):
+• The only accommodation with direct views of Perito Moreno Glacier
+• The only advancing glacier in the world — watching it calve from your terrace
+
+Would you be open to a call this month? I'd love to walk you through both properties.
+
+Best regards,
+
+Nicolás Dico
+Co-Founder, Glamping Soul
+nicodico@glampingsoul.com
+www.glampingsoul.com</div>
+    </div>
+
+    <div class="email-section" style="margin-top:20px;">
+      <div class="email-top">
+        <div class="email-lbl">Plantilla Exclusif Voyages <span class="lang-badge">Francés</span></div>
+        <div class="btn-g">
+          <button class="btn btn-copy" onclick="copyEmail('body-s2-fr')">Copiar texto</button>
+        </div>
+      </div>
+      <div class="email-subj"><strong>Objet:</strong> El Chaltén et Los Glaciares : compléter l'histoire Patagonie pour vos clients</div>
+      <div class="email-body" id="body-s2-fr">Chères Sophie et Sabine,
+
+Je m'appelle Nicolás Dico, co-fondateur de Glamping Soul — un ensemble de propriétés de glamping boutique situées au cœur du Parc National Los Glaciares, Patagonie argentine.
+
+J'ai eu l'occasion de découvrir le portfolio d'Exclusif Voyages, et j'ai remarqué avec intérêt que vous proposez déjà EOLO — une propriété d'excellence pour El Calafate. Je vous contacte car il existe une suite naturelle à cet itinéraire que peu d'agences françaises ont encore intégrée.
+
+À seulement trois heures d'EOLO se trouve El Chaltén, village de montagne au pied du Mont Fitz Roy — un paysage d'une intensité visuelle comparable à Torres del Paine, mais infiniment plus préservé et exclusif. Le Parc National Los Glaciares, site du Patrimoine Mondial de l'UNESCO, est le parc national argentin le plus vaste — plus grand que la Belgique.
+
+Jusqu'à récemment, El Chaltén ne disposait d'aucun hébergement de luxe. Chalten Camp change cela : dômes géodésiques chauffés avec vue panoramique sur le Fitz Roy, cuisine gastronomique patagonienne, et programmes de trekking guidé sur mesure.
+
+Nous ouvrons également Moreno Camp en novembre 2026 — la seule propriété avec vue directe sur le Glacier Perito Moreno, le seul glacier en progression au monde.
+
+L'itinéraire : Buenos Aires → Moreno Camp (El Calafate) → Chalten Camp (El Chaltén) → Buenos Aires. Une Patagonie argentine complète, sans nécessité de traverser au Chili.
+
+Je serais ravi de vous envoyer notre dossier de presse et de discuter des modalités d'un partenariat. Seriez-vous disponibles pour un appel cette semaine ?
+
+Bien cordialement,
+
+Nicolás Dico
+Co-Fondateur, Glamping Soul
+nicodico@glampingsoul.com
+www.glampingsoul.com</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════ SEGMENTO 3 ═══════ -->
+<div id="seg3" class="wrap" style="margin-top:20px;">
+<div class="seg-card s3">
+  <div class="seg-hdr">
+    <div class="seg-num">3</div>
+    <div>
+      <div class="seg-title">Argentina First</div>
+      <div class="seg-sub">Buen conocimiento de la Patagonia argentina · Sin sesgo chileno · Gap: no hay producto de glamping de lujo en su portfolio</div>
+    </div>
+  </div>
+  <div class="seg-body">
+    <div class="seg-desc">
+      <strong>Quiénes son:</strong> Agencias que posicionan Argentina correctamente — sin subordinarla a Chile — pero que no tienen producto de lujo en El Chaltén ni frente al Perito Moreno porque hasta ahora no existía. Son los mejores prospectos: el conocimiento del destino está, el gap es solo de producto.<br><br>
+      <strong>El mensaje:</strong> "Ya están posicionando Argentina mejor que el 80% del mercado. El producto de glamping que le faltaba a ese portfolio existe ahora."
+    </div>
+
+    <div class="note-box">
+      <strong>⚠ Nota — LANDED Travel:</strong> Esta agencia ya vende Chalten Camp (Segmento 3 partner activo). El outreach para LANDED debe enfocarse <strong>exclusivamente en Moreno Camp (apertura nov. 2026)</strong> como next step natural. Ver plantilla especial abajo.
+    </div>
+
+    <div class="ag-list">
+      <div class="ag-list-hdr"><span>Agencia</span><span>Contacto</span><span>Acción</span></div>
+      <div class="ag-row">
+        <div><div class="ag-name">Blue Parallel</div><div class="ag-contact">Emmanuel Burgio · Founder &amp; President</div></div>
+        <div class="ag-email">emmanuel@blueparallel.com</div>
+        <button class="btn btn-gmail-3" onclick="openGmail('emmanuel@blueparallel.com', subjects.s3, bodies.s3_en.replace('[Name]','Emmanuel').replace('[Agency]','Blue Parallel').replace('[agency]','Blue Parallel'))">✉ Abrir en Gmail</button>
+      </div>
+      <div class="ag-row">
+        <div><div class="ag-name">Exeter Latin America</div><div class="ag-contact">Joe Sandillo · Co-Founder</div></div>
+        <div class="ag-email">joe@exeterlatinamerica.com</div>
+        <button class="btn btn-gmail-3" onclick="openGmail('joe@exeterlatinamerica.com', subjects.s3, bodies.s3_en.replace('[Name]','Joe').replace('[Agency]','Exeter Latin America').replace('[agency]','Exeter Latin America'))">✉ Abrir en Gmail</button>
+      </div>
+      <div class="ag-row">
+        <div><div class="ag-name">Wayfairer Travel</div><div class="ag-contact">South America Specialist</div></div>
+        <div class="ag-email">hello@wayfairertravel.com</div>
+        <button class="btn btn-gmail-3" onclick="openGmail('hello@wayfairertravel.com', subjects.s3, bodies.s3_en.replace('[Name]','the Wayfairer team').replace('[Agency]','Wayfairer Travel').replace('[agency]','Wayfairer Travel'))">✉ Abrir en Gmail</button>
+      </div>
+      <div class="ag-row">
+        <div><div class="ag-name">Audley Travel</div><div class="ag-contact">Yasmin B. · Argentina &amp; Brazil Country Specialist</div></div>
+        <div class="no-email">Email no disponible — buscar en LinkedIn (Yasmin B.)</div>
+        <button class="btn btn-copy" disabled style="opacity:.4;cursor:default;">Sin email</button>
+      </div>
+      <div class="ag-row">
+        <div><div class="ag-name">LANDED Travel <span class="lang-badge" style="background:#e8f5e8;color:#2a6a2a;">Partner activo</span></div><div class="ag-contact">Erynn Montgomery · Co-Founder / Travel Designer</div></div>
+        <div class="ag-email">erynn@landedtravel.com</div>
+        <button class="btn btn-gmail-3" onclick="openGmail('erynn@landedtravel.com', subjects.s3_landed, bodies.s3_landed)">✉ Gmail (Moreno Camp)</button>
+      </div>
+    </div>
+
+    <div class="email-section">
+      <div class="email-top">
+        <div class="email-lbl">Plantilla General — Segmento 3</div>
+        <div class="btn-g">
+          <button class="btn btn-copy" onclick="copyEmail('body-s3')">Copiar texto</button>
+        </div>
+      </div>
+      <div class="email-subj"><strong>Asunto:</strong> Luxury Glamping Now Available in Los Glaciares National Park — Glamping Soul</div>
+      <div class="email-body" id="body-s3">Dear [Name],
+
+I'm Nicolás Dico, co-founder of Glamping Soul — boutique glamping within Parque Nacional Los Glaciares in Argentine Patagonia.
+
+I've been reviewing how leading luxury agencies position Argentina, and I noticed that [Agency] does something most don't: you give Argentina its own space rather than treating it purely as a complement to Torres del Paine. That approach is both more accurate and more compelling for the clients you're serving — and it tells me you're the right partner for what I'm about to share.
+
+The gap I'd like to address: your clients traveling to El Chaltén and El Calafate currently have limited options for accommodation that matches the quality of the overall experience you're curating. Glamping Soul is designed to fill that gap.
+
+Until Chalten Camp opened, visitors to El Chaltén — one of the most spectacular trekking destinations in the world — had no luxury option. Travelers curated by agencies like yours were doing the trekking of a lifetime and returning to modest hotels. That no longer has to be the case.
+
+Our properties:
+• Chalten Camp (El Chaltén): Geodesic glamping at the base of Mount Fitz Roy. Curated trekking programs, in-camp dining, and an immersive experience clients describe for years after.
+• Moreno Camp (El Calafate, opening Nov. 2026): The only property with direct views of Perito Moreno Glacier. The experience of watching the world's only advancing glacier from your terrace — available nowhere else.
+
+Together, they create the most complete luxury itinerary in Argentine Patagonia available: Buenos Aires → Moreno Camp → Chalten Camp. Two properties. One UNESCO World Heritage park. An itinerary your clients will not find with any other agency.
+
+I'd love to send you our fact sheet and discuss rates. Would a brief call work this month?
+
+Warm regards,
+
+Nicolás Dico
+Co-Founder, Glamping Soul
+nicodico@glampingsoul.com
+www.glampingsoul.com</div>
+    </div>
+
+    <div class="email-section" style="margin-top:20px;">
+      <div class="email-top">
+        <div class="email-lbl">Plantilla Especial — LANDED Travel (Moreno Camp)</div>
+        <div class="btn-g">
+          <button class="btn btn-copy" onclick="copyEmail('body-s3-landed')">Copiar texto</button>
+        </div>
+      </div>
+      <div class="email-subj"><strong>Asunto:</strong> Moreno Camp Opening Nov. 2026 — First Access for LANDED Travel Partners</div>
+      <div class="email-body" id="body-s3-landed">Dear Erynn,
+
+I'm writing with a significant update for your Argentine Patagonia programs.
+
+Moreno Camp — Glamping Soul's second property — will open in November 2026. It will be the only accommodation with direct views of Perito Moreno Glacier, located within Parque Nacional Los Glaciares, adjacent to the glacier itself.
+
+As a current Chalten Camp partner, I wanted to reach you first — before we open broader distribution.
+
+The itinerary this unlocks:
+• El Chaltén → Chalten Camp (Fitz Roy, Los Glaciares North) — existing
+• El Calafate → Moreno Camp (Perito Moreno Glacier, Los Glaciares South) — new
+
+This creates the most complete Argentine Patagonia sequence in the luxury market: two properties, two radically different landscapes, within the same UNESCO World Heritage national park. Your clients can spend their entire Argentine Patagonia time within Glamping Soul — no compromises on accommodation quality at either end.
+
+I'd love to brief you on Moreno Camp — rates, design, programming — and discuss early-access availability for your 2026/27 season. When could we connect?
+
+Best,
+
+Nicolás Dico
+Co-Founder, Glamping Soul
+nicodico@glampingsoul.com
+www.glampingsoul.com</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════ SEGMENTO 4 ═══════ -->
+<div id="seg4" class="wrap" style="margin-top:20px;padding-bottom:60px;">
+<div class="seg-card s4">
+  <div class="seg-hdr">
+    <div class="seg-num">4</div>
+    <div>
+      <div class="seg-title">Cross-Border Equilibrado</div>
+      <div class="seg-sub">Itinerarios ARG + CHI balanceados · El Chaltén aparece como parada de 1 noche · Oportunidad de convertirlo en ancla</div>
+    </div>
+  </div>
+  <div class="seg-body">
+    <div class="seg-desc">
+      <strong>Quiénes son:</strong> Agencias que ya hacen bien el balance Argentina + Chile. El Calafate y El Chaltén están en sus itinerarios, pero como paradas cortas en tránsito entre Buenos Aires y Torres del Paine. El Chaltén vale 3 noches, no 1. Ese es el pivot.<br><br>
+      <strong>El mensaje:</strong> "3 noches en Chalten Camp vs. 1 noche de tránsito — la diferencia entre un itinerario que se olvida y uno que el cliente recomienda de por vida."
+    </div>
+
+    <div class="ag-list">
+      <div class="ag-list-hdr"><span>Agencia</span><span>Contacto</span><span>Acción</span></div>
+      <div class="ag-row">
+        <div><div class="ag-name">Butterfield &amp; Robinson</div><div class="ag-contact">Stephanie Gulledge · Experience Designer – Latin America</div></div>
+        <div class="ag-email">stephanie.gulledge@butterfield.com</div>
+        <button class="btn btn-gmail-4" onclick="openGmail('stephanie.gulledge@butterfield.com', subjects.s4, bodies.s4_en.replace('[Name]','Stephanie').replace('[Agency]','Butterfield &amp; Robinson').replace('[agency]','Butterfield &amp; Robinson'))">✉ Abrir en Gmail</button>
+      </div>
+      <div class="ag-row">
+        <div><div class="ag-name">Lightfoot Travel</div><div class="ag-contact">Olie Lever · Latin America Destination Expert</div></div>
+        <div class="ag-email">olie@lightfoottravel.com</div>
+        <button class="btn btn-gmail-4" onclick="openGmail('olie@lightfoottravel.com', subjects.s4, bodies.s4_en.replace('[Name]','Olie').replace('[Agency]','Lightfoot Travel').replace('[agency]','Lightfoot Travel'))">✉ Abrir en Gmail</button>
+      </div>
+      <div class="ag-row">
+        <div><div class="ag-name">Extraordinary Journeys</div><div class="ag-contact">Olivia Schellenberg · Head of Sales &amp; Product Dev., South America</div></div>
+        <div class="ag-email">olivia@extraordinaryjourneys.com</div>
+        <button class="btn btn-gmail-4" onclick="openGmail('olivia@extraordinaryjourneys.com', subjects.s4, bodies.s4_en.replace('[Name]','Olivia').replace('[Agency]','Extraordinary Journeys').replace('[agency]','Extraordinary Journeys'))">✉ Abrir en Gmail</button>
+      </div>
+      <div class="ag-row">
+        <div><div class="ag-name">Ker &amp; Downey</div><div class="ag-contact">Elizabeth Frels · Director of Product Management &amp; Development</div></div>
+        <div class="ag-email">efrels@kerdowney.com</div>
+        <button class="btn btn-gmail-4" onclick="openGmail('efrels@kerdowney.com', subjects.s4, bodies.s4_en.replace('[Name]','Elizabeth').replace('[Agency]','Ker &amp; Downey').replace('[agency]','Ker &amp; Downey'))">✉ Abrir en Gmail</button>
+      </div>
+    </div>
+
+    <div class="email-section">
+      <div class="email-top">
+        <div class="email-lbl">Plantilla de Email — Segmento 4</div>
+        <div class="btn-g">
+          <button class="btn btn-copy" onclick="copyEmail('body-s4')">Copiar texto</button>
+        </div>
+      </div>
+      <div class="email-subj"><strong>Asunto:</strong> El Chaltén Deserves 3 Nights — Not One — Glamping Soul</div>
+      <div class="email-body" id="body-s4">Dear [Name],
+
+I'm Nicolás Dico, co-founder of Glamping Soul — boutique glamping within Parque Nacional Los Glaciares, Argentine Patagonia.
+
+I've been looking at cross-border Patagonia itineraries, and I noticed something consistent: El Chaltén often appears as a 1-night transit stop between El Calafate and Torres del Paine. Given that Mount Fitz Roy is one of the most dramatic landscapes on earth — and that the trekking in Los Glaciares National Park rivals any circuit in the world for visual impact — that's the single biggest undersell in Patagonia luxury travel today.
+
+I'd like to propose that El Chaltén becomes an anchor in your cross-border programs, not a night in transit.
+
+Here's what 3 nights in El Chaltén looks like:
+Day 1: Arrival at Chalten Camp, welcome dinner, Fitz Roy at dusk
+Day 2: Laguna de los Tres — the closest approach to the Fitz Roy massif. One of the top 5 day hikes in South America by any measure.
+Day 3: Laguna Torre — views of Cerro Torre, a sheer granite spire considered among the world's most technically difficult climbs.
+
+Your clients will come back saying that El Chaltén — not Torres del Paine — was the part that surprised them most. That's the competitive advantage for the agency that positions it correctly.
+
+Chalten Camp provides the luxury infrastructure that makes a 3-night stay not just possible but exceptional: heated geodesic domes, in-camp dining, expert guiding. And from November 2026, Moreno Camp brings the same approach to Perito Moreno Glacier.
+
+Would you have 20 minutes this month to explore what this could look like in your programs?
+
+Best regards,
+
+Nicolás Dico
+Co-Founder, Glamping Soul
+nicodico@glampingsoul.com
+www.glampingsoul.com</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SECTION 4: MATRIZ DE CONTACTOS                             -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section id="matriz">
+<div class="wrap">
+  <div class="sec-label">Sección 04</div>
+  <h2>Matriz de Contactos — Referencia Rápida</h2>
+  <p>Todas las agencias con email disponible, ordenadas por prioridad. Los botones abren Gmail con asunto pre-cargado según segmento.</p>
+
+  <div class="tbl-wrap">
+  <table class="matrix-tbl">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Agencia</th>
+        <th>Contacto</th>
+        <th>Email</th>
+        <th>Segmento</th>
+        <th>Prioridad</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td><strong>Abercrombie &amp; Kent</strong></td><td>Dalia Gibu</td><td style="font-family:monospace;font-size:12px;">dgibu@abercrombiekent.com.pe</td><td><span class="tag-seg t1">Genérica</span></td><td class="p5-dot">5</td><td><button class="btn btn-gmail-1" style="font-size:11px;padding:5px 12px;" onclick="openGmail('dgibu@abercrombiekent.com.pe',subjects.s1,bodies.s1_en.replace('[Name]','Dalia').replace(/\[Agency\]/g,'Abercrombie &amp; Kent').replace(/\[agency\]/g,'Abercrombie &amp; Kent'))">✉ Gmail</button></td></tr>
+      <tr><td>2</td><td><strong>Artisans of Leisure</strong></td><td>Ashley Isaacs Ganz</td><td style="font-family:monospace;font-size:12px;">aganz@artisansofleisure.com</td><td><span class="tag-seg t1">Genérica</span></td><td class="p5-dot">5</td><td><button class="btn btn-gmail-1" style="font-size:11px;padding:5px 12px;" onclick="openGmail('aganz@artisansofleisure.com',subjects.s1,bodies.s1_en.replace('[Name]','Ashley').replace(/\[Agency\]/g,'Artisans of Leisure').replace(/\[agency\]/g,'Artisans of Leisure'))">✉ Gmail</button></td></tr>
+      <tr><td>3</td><td><strong>Blue Parallel</strong></td><td>Emmanuel Burgio</td><td style="font-family:monospace;font-size:12px;">emmanuel@blueparallel.com</td><td><span class="tag-seg t3">ARG First</span></td><td class="p5-dot">5</td><td><button class="btn btn-gmail-3" style="font-size:11px;padding:5px 12px;" onclick="openGmail('emmanuel@blueparallel.com',subjects.s3,bodies.s3_en.replace('[Name]','Emmanuel').replace(/\[Agency\]/g,'Blue Parallel').replace(/\[agency\]/g,'Blue Parallel'))">✉ Gmail</button></td></tr>
+      <tr><td>4</td><td><strong>Ker &amp; Downey</strong></td><td>Elizabeth Frels</td><td style="font-family:monospace;font-size:12px;">efrels@kerdowney.com</td><td><span class="tag-seg t4">Cross-Border</span></td><td class="p5-dot">5</td><td><button class="btn btn-gmail-4" style="font-size:11px;padding:5px 12px;" onclick="openGmail('efrels@kerdowney.com',subjects.s4,bodies.s4_en.replace('[Name]','Elizabeth').replace(/\[Agency\]/g,'Ker &amp; Downey').replace(/\[agency\]/g,'Ker &amp; Downey'))">✉ Gmail</button></td></tr>
+      <tr><td>5</td><td><strong>Exeter Latin America</strong></td><td>Joe Sandillo</td><td style="font-family:monospace;font-size:12px;">joe@exeterlatinamerica.com</td><td><span class="tag-seg t3">ARG First</span></td><td class="p5-dot">5</td><td><button class="btn btn-gmail-3" style="font-size:11px;padding:5px 12px;" onclick="openGmail('joe@exeterlatinamerica.com',subjects.s3,bodies.s3_en.replace('[Name]','Joe').replace(/\[Agency\]/g,'Exeter Latin America').replace(/\[agency\]/g,'Exeter Latin America'))">✉ Gmail</button></td></tr>
+      <tr><td>6</td><td><strong>LANDED Travel</strong></td><td>Erynn Montgomery</td><td style="font-family:monospace;font-size:12px;">erynn@landedtravel.com</td><td><span class="tag-seg t3">ARG First</span></td><td class="p5-dot">5</td><td><button class="btn btn-gmail-3" style="font-size:11px;padding:5px 12px;" onclick="openGmail('erynn@landedtravel.com',subjects.s3_landed,bodies.s3_landed)">✉ Gmail</button></td></tr>
+      <tr><td>7</td><td><strong>Lightfoot Travel</strong></td><td>Olie Lever</td><td style="font-family:monospace;font-size:12px;">olie@lightfoottravel.com</td><td><span class="tag-seg t4">Cross-Border</span></td><td class="p5-dot">5</td><td><button class="btn btn-gmail-4" style="font-size:11px;padding:5px 12px;" onclick="openGmail('olie@lightfoottravel.com',subjects.s4,bodies.s4_en.replace('[Name]','Olie').replace(/\[Agency\]/g,'Lightfoot Travel').replace(/\[agency\]/g,'Lightfoot Travel'))">✉ Gmail</button></td></tr>
+      <tr><td>8</td><td><strong>Extraordinary Journeys</strong></td><td>Olivia Schellenberg</td><td style="font-family:monospace;font-size:12px;">olivia@extraordinaryjourneys.com</td><td><span class="tag-seg t4">Cross-Border</span></td><td class="p5-dot">5</td><td><button class="btn btn-gmail-4" style="font-size:11px;padding:5px 12px;" onclick="openGmail('olivia@extraordinaryjourneys.com',subjects.s4,bodies.s4_en.replace('[Name]','Olivia').replace(/\[Agency\]/g,'Extraordinary Journeys').replace(/\[agency\]/g,'Extraordinary Journeys'))">✉ Gmail</button></td></tr>
+      <tr><td>9</td><td><strong>Red Savannah</strong></td><td>Dineke Verlinden</td><td style="font-family:monospace;font-size:12px;">dverlinden@redsavannah.com</td><td><span class="tag-seg t2">EOLO+</span></td><td class="p5-dot">5</td><td><button class="btn btn-gmail-2" style="font-size:11px;padding:5px 12px;" onclick="openGmail('dverlinden@redsavannah.com',subjects.s2,bodies.s2_en.replace('[Name]','Dineke').replace(/\[Agency\]/g,'Red Savannah').replace(/\[agency\]/g,'Red Savannah'))">✉ Gmail</button></td></tr>
+      <tr><td>10</td><td><strong>Butterfield &amp; Robinson</strong></td><td>Stephanie Gulledge</td><td style="font-family:monospace;font-size:12px;">stephanie.gulledge@butterfield.com</td><td><span class="tag-seg t4">Cross-Border</span></td><td class="p5-dot">5</td><td><button class="btn btn-gmail-4" style="font-size:11px;padding:5px 12px;" onclick="openGmail('stephanie.gulledge@butterfield.com',subjects.s4,bodies.s4_en.replace('[Name]','Stephanie').replace(/\[Agency\]/g,'Butterfield &amp; Robinson').replace(/\[agency\]/g,'Butterfield &amp; Robinson'))">✉ Gmail</button></td></tr>
+      <tr><td>11</td><td><strong>Indagare</strong></td><td>Ruchi Kirtikar</td><td style="font-family:monospace;font-size:12px;">Ruchi.Kirtikar@indagare.com</td><td><span class="tag-seg t2">EOLO+</span></td><td class="p5-dot">5</td><td><button class="btn btn-gmail-2" style="font-size:11px;padding:5px 12px;" onclick="openGmail('Ruchi.Kirtikar@indagare.com',subjects.s2,bodies.s2_en.replace('[Name]','Ruchi').replace(/\[Agency\]/g,'Indagare').replace(/\[agency\]/g,'Indagare'))">✉ Gmail</button></td></tr>
+      <tr><td>12</td><td><strong>Quintessentially Travel</strong></td><td>Lily Carey</td><td style="font-family:monospace;font-size:12px;">lily@quintessentiallytravel.com</td><td><span class="tag-seg t2">EOLO+</span></td><td class="p5-dot">5</td><td><button class="btn btn-gmail-2" style="font-size:11px;padding:5px 12px;" onclick="openGmail('lily@quintessentiallytravel.com',subjects.s2,bodies.s2_en.replace('[Name]','Lily').replace(/\[Agency\]/g,'Quintessentially Travel').replace(/\[agency\]/g,'Quintessentially Travel'))">✉ Gmail</button></td></tr>
+      <tr><td>13</td><td><strong>Exclusif Voyages</strong></td><td>Sophie &amp; Sabine Arbib</td><td style="font-family:monospace;font-size:12px;">sophie@exclusifvoyages.com</td><td><span class="tag-seg t2">EOLO+</span></td><td class="p5-dot">5</td><td><button class="btn btn-gmail-2" style="font-size:11px;padding:5px 12px;" onclick="openGmail('sophie@exclusifvoyages.com,sabine@exclusifvoyages.com',subjects.s2_fr,bodies.s2_fr)">✉ Gmail (FR)</button></td></tr>
+      <tr><td>14</td><td><strong>Scott Dunn</strong></td><td>Jean-Sebastien Saleem</td><td style="font-family:monospace;font-size:12px;">jean-sebastien.saleem@scottdunn.com</td><td><span class="tag-seg t2">EOLO+</span></td><td class="p5-dot">5</td><td><button class="btn btn-gmail-2" style="font-size:11px;padding:5px 12px;" onclick="openGmail('jean-sebastien.saleem@scottdunn.com',subjects.s2,bodies.s2_en.replace('[Name]','Jean-Sebastien').replace(/\[Agency\]/g,'Scott Dunn').replace(/\[agency\]/g,'Scott Dunn'))">✉ Gmail</button></td></tr>
+      <tr><td>15</td><td><strong>Journey Latin America</strong></td><td>Argentina Specialist</td><td style="font-family:monospace;font-size:12px;">agents@journeylatinamerica.com</td><td><span class="tag-seg t1">Genérica</span></td><td class="p4-dot">4</td><td><button class="btn btn-gmail-1" style="font-size:11px;padding:5px 12px;" onclick="openGmail('agents@journeylatinamerica.com',subjects.s1,bodies.s1_en.replace('[Name]','the Patagonia team').replace(/\[Agency\]/g,'Journey Latin America').replace(/\[agency\]/g,'Journey Latin America'))">✉ Gmail</button></td></tr>
+      <tr><td>16</td><td><strong>Wayfairer Travel</strong></td><td>South America Specialist</td><td style="font-family:monospace;font-size:12px;">hello@wayfairertravel.com</td><td><span class="tag-seg t3">ARG First</span></td><td class="p3-dot">3</td><td><button class="btn btn-gmail-3" style="font-size:11px;padding:5px 12px;" onclick="openGmail('hello@wayfairertravel.com',subjects.s3,bodies.s3_en.replace('[Name]','the Wayfairer team').replace(/\[Agency\]/g,'Wayfairer Travel').replace(/\[agency\]/g,'Wayfairer Travel'))">✉ Gmail</button></td></tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+</section>
+
+<footer>
+  <strong>GLAMPING SOUL</strong> &nbsp;·&nbsp; Informe Estratégico Interno &nbsp;·&nbsp; Mayo 2026 &nbsp;·&nbsp; Confidencial<br>
+  <span style="margin-top:8px;display:block;">Análisis basado en auditoría directa de 12 webs · 51 agencias en universo comercial total · nicodico@glampingsoul.com</span>
+</footer>
+
+<script>
+// ─── EMAIL SUBJECTS ───────────────────────────────────────────────
+const subjects = {
+  s1: "El Chaltén & Los Glaciares: The Argentine Patagonia Missing from Your Portfolio",
+  s2: "Complete the Argentine Patagonia Story: El Chaltén after EOLO — Glamping Soul",
+  s2_fr: "El Chaltén et Los Glaciares : compléter l'histoire Patagonie pour vos clients",
+  s3: "Luxury Glamping Now Available in Los Glaciares National Park — Glamping Soul",
+  s3_landed: "Moreno Camp Opening Nov. 2026 — First Access for LANDED Travel Partners",
+  s4: "El Chaltén Deserves 3 Nights — Not One — Glamping Soul"
+};
+
+// ─── EMAIL BODIES ─────────────────────────────────────────────────
+const bodies = {
+  s1_en: document.getElementById('body-s1') ? document.getElementById('body-s1').innerText : '',
+  s2_en: document.getElementById('body-s2') ? document.getElementById('body-s2').innerText : '',
+  s2_fr: document.getElementById('body-s2-fr') ? document.getElementById('body-s2-fr').innerText : '',
+  s3_en: document.getElementById('body-s3') ? document.getElementById('body-s3').innerText : '',
+  s3_landed: document.getElementById('body-s3-landed') ? document.getElementById('body-s3-landed').innerText : '',
+  s4_en: document.getElementById('body-s4') ? document.getElementById('body-s4').innerText : ''
+};
+
+// ─── OPEN GMAIL COMPOSE ──────────────────────────────────────────
+function openGmail(to, subject, body) {
+  const url = 'https://mail.google.com/mail/?view=cm&fs=1'
+    + '&to=' + encodeURIComponent(to)
+    + '&su=' + encodeURIComponent(subject)
+    + '&body=' + encodeURIComponent(body);
+  window.open(url, '_blank');
+}
+
+// ─── COPY TO CLIPBOARD ───────────────────────────────────────────
+function copyEmail(elementId) {
+  const el = document.getElementById(elementId);
+  if (!el) return;
+  const text = el.innerText;
+  navigator.clipboard.writeText(text).then(function() {
+    // Find the copy button near this element and show feedback
+    const btns = document.querySelectorAll('.btn-copy');
+    btns.forEach(function(btn) {
+      if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(elementId)) {
+        const orig = btn.innerText;
+        btn.innerText = '✓ Copiado';
+        btn.style.background = '#5C6229';
+        btn.style.color = '#fff';
+        setTimeout(function() {
+          btn.innerText = orig;
+          btn.style.background = '';
+          btn.style.color = '';
+        }, 2200);
+      }
+    });
+  }).catch(function() {
+    // Fallback for older browsers
+    const range = document.createRange();
+    range.selectNodeContents(el);
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+    document.execCommand('copy');
+    sel.removeAllRanges();
+  });
+}
+</script>
+</body>
+</html>
