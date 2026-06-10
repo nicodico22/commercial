@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tareas de Presencia Web 2026 · Glamping Soul</title>
+  <style>
+    :root {
+      --olive:          #5C6229;
+      --olive-light:    #7a8235;
+      --olive-faint:    #f0f1e6;
+      --charcoal:       #2B2B2B;
+      --burgundy:       #6B2D2D;
+      --burgundy-faint: #f7efef;
+      --navy:           #2C3E50;
+      --navy-faint:     #edf1f5;
+      --linen:          #F5F0E8;
+      --linen-dark:     #EDE6D6;
+      --white:          #FFFFFF;
+      --green:          #2d7a2d;
+      --green-faint:    #eaf3ea;
+      --amber:          #b8860b;
+      --amber-faint:    #fef9ec;
+      --slate:          #607080;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Georgia', serif; background: var(--linen); color: var(--charcoal); line-height: 1.7; }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--olive);
+      color: var(--linen);
+      padding: 52px 48px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    header::after {
+      content: '';
+      position: absolute;
+      right: -60px; top: -60px;
+      width: 360px; height: 360px;
+      border-radius: 50%;
+      border: 70px solid rgba(255,255,255,0.04);
+      pointer-events: none;
+    }
+    .eyebrow {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 11px; letter-spacing: 3px;
+      text-transform: uppercase; opacity: 0.7;
+      margin-bottom: 14px;
+    }
+    header h1 { font-size: 36px; font-weight: normal; line-height: 1.25; margin-bottom: 8px; }
+    header p.sub { font-size: 15px; font-weight: normal; opacity: 0.75; }
+
+    /* ── PROGRESS BAR ── */
+    .progress-wrap {
+      background: rgba(0,0,0,0.25);
+      padding: 20px 48px 0;
+    }
+    .progress-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .progress-label {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 12px; letter-spacing: 1.5px;
+      text-transform: uppercase; color: rgba(245,240,232,0.8);
+    }
+    #progress-text {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 13px; color: var(--linen);
+      font-weight: bold;
+    }
+    .bar-track {
+      height: 8px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    #progress-fill {
+      height: 100%;
+      width: 0%;
+      background: #6cf76c;
+      border-radius: 4px;
+      transition: width 0.5s ease;
+    }
+
+    /* ── LAYOUT ── */
+    .container { max-width: 1060px; margin: 0 auto; padding: 0 48px 80px; }
+
+    /* ── WAVE HEADER ── */
+    .wave-header {
+      display: flex; align-items: center; gap: 16px;
+      margin: 52px 0 20px;
+    }
+    .wave-badge {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 10px; letter-spacing: 2.5px;
+      text-transform: uppercase; font-weight: bold;
+      padding: 5px 14px; border-radius: 20px;
+      white-space: nowrap;
+    }
+    .badge-urgente  { background: var(--burgundy); color: var(--linen); }
+    .badge-ola1     { background: var(--navy);     color: var(--linen); }
+    .badge-ola2     { background: var(--olive);    color: var(--linen); }
+    .badge-ola3     { background: var(--slate);    color: var(--linen); }
+    .wave-title {
+      font-size: 20px; font-weight: normal; color: var(--charcoal);
+    }
+    .wave-meta {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 12px; color: #888; margin-left: auto;
+    }
+    .wave-rule { border: none; border-top: 1px solid #d8d0c4; }
+
+    /* ── TASK CARD ── */
+    .task-card {
+      background: var(--white);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin: 12px 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+      transition: opacity 0.3s ease, background 0.3s ease;
+      cursor: pointer;
+      border-left: 4px solid transparent;
+    }
+    .task-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+
+    /* Wave color accents */
+    .task-card[data-wave="urgente"] { border-left-color: var(--burgundy); }
+    .task-card[data-wave="ola1"]    { border-left-color: var(--navy); }
+    .task-card[data-wave="ola2"]    { border-left-color: var(--olive); }
+    .task-card[data-wave="ola3"]    { border-left-color: var(--slate); }
+
+    /* Completed state */
+    .task-card.done {
+      background: var(--green-faint);
+      border-left-color: var(--green) !important;
+      opacity: 0.75;
+    }
+    .task-card.done .task-title { text-decoration: line-through; color: #888; }
+    .task-card.done .task-detail { color: #aaa; }
+
+    /* ── CHECKBOX ── */
+    .check-wrap {
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+    .task-checkbox {
+      display: none;
+    }
+    .check-box {
+      width: 24px; height: 24px;
+      border: 2px solid #ccc;
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: var(--white);
+      flex-shrink: 0;
+    }
+    .check-box:hover { border-color: var(--green); }
+    .task-checkbox:checked + .check-box {
+      background: var(--green);
+      border-color: var(--green);
+    }
+    .check-box svg { display: none; }
+    .task-checkbox:checked + .check-box svg { display: block; }
+
+    /* ── TASK CONTENT ── */
+    .task-body { flex: 1; min-width: 0; }
+    .task-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 4px; }
+    .task-title {
+      font-size: 15px;
+      font-weight: normal;
+      color: var(--navy);
+      line-height: 1.4;
+    }
+    .task-email {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 11px; color: var(--olive);
+      white-space: nowrap; flex-shrink: 0;
+    }
+    .task-detail {
+      font-size: 13px;
+      color: #666;
+      line-height: 1.55;
+      margin-top: 2px;
+    }
+    .task-tags {
+      display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px;
+    }
+    .t-tag {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 10px; padding: 2px 8px;
+      border-radius: 10px; letter-spacing: 0.5px;
+    }
+    .t-chalten { background: var(--green-faint); color: var(--green); }
+    .t-moreno  { background: var(--navy-faint);  color: var(--navy); }
+    .t-virtuoso{ background: var(--olive-faint); color: var(--olive); }
+    .t-urgente { background: var(--burgundy-faint); color: var(--burgundy); }
+    .t-new     { background: #d4edda; color: #1a5c1a; border: 1px solid #2d7a2d; }
+
+    /* ── COMPLETION MODAL ── */
+    #completion-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+    #completion-overlay.show { display: flex; }
+    #completion-modal {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 48px 52px;
+      max-width: 540px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.25);
+      position: relative;
+      animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    @keyframes popIn {
+      from { transform: scale(0.85); opacity: 0; }
+      to   { transform: scale(1);    opacity: 1; }
+    }
+    .modal-icon {
+      width: 72px; height: 72px;
+      background: var(--green-faint);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 32px;
+    }
+    #completion-modal h2 {
+      font-size: 26px; font-weight: normal;
+      color: var(--charcoal); margin-bottom: 12px;
+    }
+    #completion-modal p {
+      font-size: 14px; color: #666;
+      line-height: 1.6; margin-bottom: 28px;
+    }
+    .modal-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--olive);
+      color: var(--linen);
+      border: none;
+      padding: 13px 28px;
+      border-radius: 8px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 13px; letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.2s;
+    }
+    .btn-primary:hover { background: var(--olive-light); }
+    .btn-secondary {
+      background: transparent;
+      color: var(--slate);
+      border: 1px solid #ccc;
+      padding: 13px 28px;
+      border-radius: 8px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 13px;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--slate); }
+
+    /* ── STATS BAR ── */
+    .stats-row {
+      display: flex; gap: 16px; flex-wrap: wrap;
+      background: var(--linen-dark);
+      padding: 20px 48px;
+    }
+    .stat-pill {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 12px; color: #666;
+    }
+    .stat-pill strong { color: var(--charcoal); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--charcoal); color: #aaa;
+      padding: 28px 48px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: 12px;
+    }
+    footer a { color: #ccc; }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════ HEADER ═══════════════ -->
+<header>
+  <div class="eyebrow">Glamping Soul · Inteligencia Comercial · Plan de Acción</div>
+  <h1>Tareas de Presencia Web 2026</h1>
+  <p class="sub">Acciones derivadas de los informes de presencia web y distribución · Junio 2026</p>
+</header>
+
+<!-- ═══════════════ PROGRESS ═══════════════ -->
+<div class="progress-wrap">
+  <div class="progress-top">
+    <span class="progress-label">Progreso general</span>
+    <span id="progress-text">0 / 22 tareas completadas</span>
+  </div>
+  <div class="bar-track">
+    <div id="progress-fill"></div>
+  </div>
+</div>
+
+<!-- ═══════════════ STATS BAR ═══════════════ -->
+<div class="stats-row">
+  <span class="stat-pill"><strong>22</strong> tareas totales</span>
+  <span class="stat-pill"><strong>5</strong> urgentes (Moreno Camp)</span>
+  <span class="stat-pill"><strong>5</strong> ola 1 · 30 días</span>
+  <span class="stat-pill"><strong>7</strong> ola 2 · 60 días</span>
+  <span class="stat-pill"><strong>5</strong> ola 3 · 90 días</span>
+</div>
+
+<!-- ═══════════════ TASKS ═══════════════ -->
+<div class="container">
+
+  <!-- ─── OLA URGENTE ─── -->
+  <div class="wave-header">
+    <span class="wave-badge badge-urgente">Urgente</span>
+    <span class="wave-title">Activación de Moreno Camp</span>
+    <span class="wave-meta">Los 5 operadores que ya tienen Chalten Camp</span>
+  </div>
+  <hr class="wave-rule">
+
+  <!-- T1 -->
+  <label class="task-card" data-wave="urgente" data-id="t1">
+    <div class="check-wrap">
+      <input type="checkbox" class="task-checkbox" id="t1">
+      <div class="check-box">
+        <svg width="14" height="11" viewBox="0 0 14 11" fill="none">
+          <path d="M1 5L5 9L13 1" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+    <div class="task-body">
+      <div class="task-header">
+        <div class="task-title">Activar Moreno Camp en Swoop Patagonia</div>
+        <span class="task-email">swoop-patagonia.com</span>
+      </div>
+      <div class="task-detail">
+        Ya tienen página dedicada de Chalten Camp con booking form y comentarios de especialistas. Proponer incorporar Moreno Camp con el mismo formato. Su guía de hoteles El Calafate lista Explora y EOLO — Moreno Camp debe entrar en esa lista. Contactar vía formulario de partner o info@swoop-patagonia.com.
+      </div>
+      <div class="task-tags">
+        <span class="t-tag t-moreno">Moreno Camp</span>
+        <span class="t-tag t-chalten">Chalten Camp ya activo</span>
+        <span class="t-tag t-new">Nuevo canal</span>
+      </div>
+    </div>
+  </label>
+
+  <!-- T2 -->
+  <label class="task-card" data-wave="urgente" data-id="t2">
+    <div class="check-wrap">
+      <input type="checkbox" class="task-checkbox" id="t2">
+      <div class="check-box">
+        <svg width="14" height="11" viewBox="0 0 14 11" fill="none">
+          <path d="M1 5L5 9L13 1" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+    <div class="task-body">
+      <div class="task-header">
+        <div class="task-title">Activar Moreno Camp en Adventure Life</div>
+        <span class="task-email">adventure-life.com</span>
+      </div>
+      <div class="task-detail">
+        Tienen página de hotel dedicada para Chalten Camp con 6 itinerarios vinculados (USD 1.992–7.337). Tienen también itinerarios de Perito Moreno Glacier sin glamping listado — Moreno Camp es el match perfecto. Proponer misma estructura de página + itinerarios El Calafate. Contactar vía hotels@adventure-life.com o formulario de partners.
+      </div>
+      <div class="task-tags">
+        <span class="t-tag t-moreno">Moreno Camp</span>
+        <span class="t-tag t-chalten">Chalten Camp ya activo</span>
+        <span class="t-tag t-new">Nuevo canal</span>
+      </div>
+    </div>
+  </label>
+
+  <!-- T3 -->
+  <label class="task-card" data-wave="urgente" data-id="t3">
+    <div class="check-wrap">
+      <input type="checkbox" class="task-checkbox" id="t3">
+      <div class="check-box">
+        <svg width="14" height="11" viewBox="0 0 14 11" fill="none">
+          <path d="M1 5L5 9L13 1" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+    <div class="task-body">
+      <div class="task-header">
+        <div class="task-title">Activar Moreno Camp en Walk Into Luxury</div>
+        <span class="task-email">walkintoluxury.com</span>
+      </div>
+      <div class="task-detail">
+        Tienen página de alojamiento de Chalten Camp y una excursión de 4 días con base en el camp. El perfil del operador (luxury hiking) es el más afín al canal Virtuoso. Proponer Moreno Camp como extensión natural del circuito El Chaltén → El Calafate. Potencial: crear un "8-day Patagonia Glamping Journey" combinado.
+      </div>
+      <div class="task-tags">
+        <span class="t-tag t-moreno">Moreno Camp</span>
+        <span class="t-tag t-chalten">Chalten Camp ya activo</span>
+        <span class="t-tag t-new">Nuevo canal</span>
+        <span class="t-tag t-virtuoso">Perfil Virtuoso</span>
+      </div>
+    </div>
+  </label>
+
+  <!-- T4 -->
+  <label class="task-card" data-wave="urgente" data-id="t4">
+    <div class="check-wrap">
+      <input type="checkbox" class="task-checkbox" id="t4">
+      <div class="check-box">
+        <svg width="14" height="11" viewBox="0 0 14 11" fill="none">
+          <path d="M1 5L5 9L13 1" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+    <div class="task-body">
+      <div class="task-header">
+        <div class="task-title">Activar Moreno Camp en Amazon Adventures</div>
+        <span class="task-email">amazonadventures.com · Austin TX</span>
+      </div>
+      <div class="task-detail">
+        Tienen página dedicada de Chalten Camp. Sin producto de El Calafate glamping visible. Proponer incorporar Moreno Camp con el mismo formato. Argumento: circuito bipropiedad argentino completo bajo una sola marca. Contactar vía info@amazonadventures.com o formulario web.
+      </div>
+      <div class="task-tags">
+        <span class="t-tag t-moreno">Moreno Camp</span>
+        <span class="t-tag t-chalten">Chalten Camp ya activo</span>
+        <span class="t-tag t-new">Nuevo canal</span>
+      </div>
+    </div>
+  </label>
+
+  <!-- T5 -->
+  <label class="task-card" data-wave="urgente" data-id="t5">
+    <div class="check-wrap">
+      <input type="checkbox" class="task-checkbox" id="t5">
+      <div class="check-box">
+        <svg width="14" height="11" viewBox="0 0 14 11" fill="none">
+          <path d="M1 5L5 9L13 1" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+    <div class="task-body">
+      <div class="task-header">
+        <div class="task-title">RipioTurismo — Reemplazar Pristine Camps por Moreno Camp en paquete "Glamping Lovers"</div>
+        <span class="task-email">peritomorenoglacier.com</span>
+      </div>
+      <div class="task-detail">
+        RipioTurismo tiene un paquete bookable activo "Glamping Lovers: El Calafate + El Chaltén" que usa Chalten Camp (3 noches) + Pristine Luxury Camps (2 noches). Proponer versión con Moreno Camp en lugar de Pristine. El paquete ya existe y ya se vende — la operación es cambiar una propiedad competidora por GS en el slot El Calafate.
+      </div>
+      <div class="task-tags">
+        <span class="t-tag t-moreno">Moreno Camp</span>
+        <span class="t-tag t-chalten">Chalten Camp ya activo</span>
+        <span class="t-tag t-urgente">Pristine ocupa el slot</span>
+      </div>
+    </div>
+  </label>
+
+
+  <!-- ─── OLA 1 ─── -->
+  <div class="wave-header">
+    <span class="wave-badge badge-ola1">Ola 1</span>
+    <span class="wave-title">Canal Virtuoso USA — Prioridad Máxima</span>
+    <span class="wave-meta">Contacto inmediato · próximos 30 días</span>
+  </div>
+  <hr class="wave-rule">
+
+  <!-- T6 -->
+  <label class="task-card" data-wave="ola1" data-id="t6">
+    <div class="check-wrap">
+      <input type="checkbox" class="task-checkbox" id="t6">
+      <div class="check-box">
+        <svg width="14" height="11" viewBox="0 0 14 11" fill="none">
+          <path d="M1 5L5 9L13 1" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+    <div class="task-body">
+      <div class="task-header">
+        <div class="task-title">Extraordinary Journeys — Convertir mención editorial a página de producto</div>
+        <span class="task-email">elizabeth@ejafrica.com</span>
+      </div>
+      <div class="task-detail">
+        Chalten Camp aparece en el artículo "Best Glamping in South America" pero sin página dedicada. Explora El Chaltén y Hotel Destino Sur sí tienen páginas de producto en EJ. Enviar fact sheet, fotos alta resolución, rates 2026/27. Ofrecer FAM para temporada 26/27. Argumento: ya la tienen listada — solo falta estructura comercial. Contacto: Elizabeth Gordon Halliday · Serandipians / Tour Operator · Washington DC.
+      </div>
+      <div class="task-tags">
+        <span class="t-tag t-chalten">Chalten Camp</span>
+        <span class="t-tag t-moreno">Moreno Camp</span>
+        <span class="t-tag t-virtuoso">Serandipians</span>
+        <span class="t-tag t-urgente">Editorial → Producto</span>
+      </div>
+    </div>
+  </label>
+
+  <!-- T7 -->
+  <label class="task-card" data-wave="ola1" data-id="t7">
+    <div class="check-wrap">
+      <input type="checkbox" class="task-checkbox" id="t7">
+      <div class="check-box">
+        <svg width="14" height="11" viewBox="0 0 14 11" fill="none">
+          <path d="M1 5L5 9L13 1" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+    <div class="task-body">
+      <div class="task-header">
+        <div class="task-title">The Local Foreigner — Proponer GS como eslabón El Chaltén del circuito Patagonia</div>
+        <span class="task-email">patty.ehinger@localforeigner.com · whitney.patapoff@localforeigner.com</span>
+      </div>
+      <div class="task-detail">
+        Virtuoso A-List (T&L), especialistas Sudamérica, NYC. Patty ya tiene al grupo Conway en The Singular Patagonia (Chile). Proponer Chalten Camp como el destino El Chaltén en el mismo circuito, y Moreno Camp para El Calafate. Argumento: "The Singular es Chile — tus clientes cruzan a Argentina, ahí están Chalten Camp y Moreno Camp." Alcance doble: Patty Ehinger + Whitney Patapoff.
+      </div>
+      <div class="task-tags">
+        <span class="t-tag t-chalten">Chalten Camp</span>
+        <span class="t-tag t-moreno">Moreno Camp</span>
+        <span class="t-tag t-virtuoso">Virtuoso A-List · NYC</span>
+      </div>
+    </div>
+  </label>
+
+  <!-- T8 -->
+  <label class="task-card" data-wave="ola1" data-id="t8">
+    <div class="check-wrap">
+      <input type="checkbox" class="task-checkbox" id="t8">
+      <div class="check-box">
+        <svg width="14" height="11" viewBox="0 0 14 11" fill="none">
+          <path d="M1 5L5 9L13 1" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+    <div class="task-body">
+      <div class="task-header">
+        <div class="task-title">Earle Travel — Propuesta unificada a las tres asesoras (Virtuoso, Indiana)</div>
+        <span class="task-email">catalina@earletravel.com · amaranta@earletravel.com · miguel@earletravel.com</span>
+      </div>
+      <div class="task-detail">
+        Tres personas especializadas en Sudamérica: Catalina Aguirre ("South America and wellness"), Amaranta Selby ("sell South America"), Miguel Aguirre ("Argentina, Chile, Peru, Brazil, Mexico, Family, Food/wine, adventure"). Un solo outreach, tres impactos. Propuesta: Chalten Camp (El Chaltén) + Moreno Camp (El Calafate) como el arco completo de Patagonia argentina de lujo.
+      </div>
+      <div class="task-tags">
+        <span class="t-tag t-chalten">Chalten Camp</span>
+        <span class="t-tag t-moreno">Moreno Camp</span>
+        <span class="t-tag t-virtuoso">Virtuoso · Indiana</span>
+      </div>
+    </div>
+  </label>
+
+  <!-- T9 -->
+  <label class="task-card" data-wave="ola1" data-id="t9">
+    <div class="check-wrap">
+      <input type="checkbox" class="task-checkbox" id="t9">
+      <div class="check-box">
+        <svg width="14" height="11" viewBox="0 0 14 11" fill="none">
+          <path d="M1 5L5 9L13 1" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+    <div class="task-body">
+      <div class="task-header">
+        <div class="task-title">SmartFlyer / Vaquera — Proponer inclusión de GS en el sitio (SmartFlyer ya tiene EOLO)</div>
+        <span class="task-email">sarah.thomas@smartflyer.com</span>
+      </div>
+      <div class="task-detail">
+        SmartFlyer tiene una página dedicada a EOLO (smartflyer-clientservices.com/eolo). Sarah Thomas (Vaquera Travel / SmartFlyer, Austin TX) tiene Argentina y Chile explícito. Proponer inclusión de Chalten Camp + Moreno Camp en el mismo canal. Argumento: "Argentina completa — GS cubre El Chaltén y El Calafate como complemento al circuito EOLO / Pristine." Alcance adicional: Dan Calabretta y Sydney Adler (SmartFlyer NYC).
+      </div>
+      <div class="task-tags">
+        <span class="t-tag t-chalten">Chalten Camp</span>
+        <span class="t-tag t-moreno">Moreno Camp</span>
+        <span class="t-tag t-virtuoso">SmartFlyer / Virtuoso</span>
+      </div>
+    </div>
+  </label>
+
+  <!-- T10 -->
+  <label class="task-card" data-wave="ola1" data-id="t10">
+    <div class="check-wrap">
+      <input type="checkbox" class="task-checkbox" id="t10">
+      <div class="check-box">
+        <svg width="14" height="11" viewBox="0 0 14 11" fill="none">
+          <path d="M1 5L5 9L13 1" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+    <div class="task-body">
+      <div class="task-header">
+        <div class="task-title">The Travel Butler — Inquiry activo para The Singular · Ventana de tiempo limitada</div>
+        <span class="task-email">susan2thetravelbutler.org · Waco TX · Virtuoso</span>
+      </div>
+      <div class="task-detail">
+        Susan Butler tiene un inquiry abierto para The Singular Patagonia (Chile). Es el momento ideal: proponer GS El Chaltén para el mismo viaje, antes de que cierre el circuito sin incluir la parte argentina. Argumento: "The Singular cubre Puerto Natales. Chalten Camp completa El Chaltén — el trekking capital de Patagonia. Una semana más, una experiencia completa."
+      </div>
+      <div class="task-tags">
+        <span class="t-tag t-chalten">Chalten Camp</span>
+        <span class="t-tag t-virtuoso">Virtuoso · Waco TX</span>
+        <span class="t-tag t-urgente">Inquiry activo ahora</span>
+      </div>
+    </div>
+  </label>
+
+
+  <!-- ─── OLA 2 ─── -->
+  <div class="wave-header">
+    <span class="wave-badge badge-ola2">Ola 2</span>
+    <span class="wave-title">Canal Virtuoso USA — Prioridad Alta</span>
+    <span class="wave-meta">Outreach masivo · próximos 60 días</span>
+  </div>
+  <hr class="wave-rule">
+
+  <!-- T11 -->
+  <label class="task-card" data-wave="ola2" data-id="t11">
+    <div class="check-wrap">
+      <input type="checkbox" class="task-checkbox" id="t11">
+      <div class="check-box">
+        <svg width="14" height="11" viewBox="0 0 14 11" fill="none">
+          <path d="M1 5L5 9L13 1" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+    <div class="task-body">
+      <div class="task-header">
+        <div class="task-title">Barrett Phillips / Strong Travel — Post-FAM Patagonia</div>
+        <span class="task-email">barrett@strongtravel.com · Charlotte NC · Virtuoso</span>
+      </div>
+      <div class="task-detail">
+        Barrett estaba en FAM Patagonia activo con Exeter, con Patagonia Camp en ruta. Cuando regrese, contactar con propuesta de incorporar GS al circuito. Está en el modo de incorporar nuevas propiedades — el momento ideal. Argumento: Chalten Camp es el cierre natural post-Patagonia Camp para el circuito El Chaltén.
+      </div>
+      <div class="task-tags">
+        <span class="t-tag t-chalten">Chalten Camp</span>
+        <span class="t-tag t-virtuoso">Virtuoso · Charlotte NC</span>
+      </div>
+    </div>
+  </label>
+
+  <!-- T12 -->
+  <label class="task-card" data-wave="ola2" data-id="t12">
+    <div class="check-wrap">
+      <input type="checkbox" class="task-checkbox" id="t12">
+      <div class="check-box">
+        <svg width="14" height="11" viewBox="0 0 14 11" fill="none">
+          <path d="M1 5L5 9L13 1" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+    <div class="task-body">
+      <div class="task-header">
+        <div class="task-title">Bellevue World Travel / Andavo — Chile y Argentina explícito</div>
+        <span class="task-email">cathy@bellevueworldtravel.com · Chicago IL · Virtuoso</span>
+      </div>
+      <div class="task-detail">
+        Cathy Lewis, Virtuoso, especialidad Chile y Argentina explícita. Outreach estándar con kit comercial: fact sheet, fotos, rates 26/27, mensaje de circuito bipropiedad.
+      </div>
+      <div class="task-tags">
+        <span class="t-tag t-chalten">Chalten Camp</span>
+        <span class="t-tag t-moreno">Moreno Camp</span>
+        <span class="t-tag t-virtuoso">Virtuoso · Chicago IL</span>
+      </div>
+    </div>
+  </label>
+
+  <!-- T13 -->
+  <label class="task-card" data-wave="ola2" data-id="t13">
+    <div class="check-wrap">
+      <input type="checkbox" class="task-checkbox" id="t13">
+      <div class="check-box">
+        <svg width="14" height="11" viewBox="0 0 14 11" fill="none">
+          <path d="M1 5L5 9L13 1" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+    <div class="task-body">
+      <div class="task-header">
+        <div class="task-title">Betty MacLean Travel — Argentina en primer lugar de su especialidad</div>
+        <span class="task-email">tina@bettymacleantravel.com · Naples FL · Virtuoso</span>
+      </div>
+      <div class="task-detail">
+        Tina Vincent, Argentina es la primera especialidad listada. Outreach con kit comercial GS. Propuesta: circuito El Chaltén + El Calafate como el arco argentino de lujo.
+      </div>
+      <div class="task-tags">
+        <span class="t-tag t-chalten">Chalten Camp</span>
+        <span class="t-tag t-moreno">Moreno Camp</span>
+        <span class="t-tag t-virtuoso">Virtuoso · Naples FL</span>
+      </div>
+    </div>
+  </label>
+
+  <!-- T14 -->
+  <label class="task-card" data-wave="ola2" data-id="t14">
+    <div class="check-wrap">
+      <input type="checkbox" class="task-checkbox" id="t14">
+      <div class="check-box">
+        <svg width="14" height="11" viewBox="0 0 14 11" fill="none">
+          <path d="M1 5L5 9L13 1" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+    <div class="task-body">
+      <div class="task-header">
+        <div class="task-title">Vivant / Embark Beyond — "Chile Argentina" explícito · Honeymoon + food/wine</div>
+        <span class="task-email">dana@travelvivant.com · Delray Beach FL · Virtuoso</span>
+      </div>
+      <div class="task-detail">
+        Dana Lewis, "Chile Argentina" en notas, honeymoon y food/wine. El perfil de Moreno Camp (chef Martín Lukesch, cocina de fuego, glaciar) es especialmente apto para este segmento. Proponer GS como la experiencia culinaria + naturaleza de Patagonia argentina.
+      </div>
+      <div class="task-tags">
+        <span class="t-tag t-chalten">Chalten Camp</span>
+        <span class="t-tag t-moreno">Moreno Camp</span>
+        <span class="t-tag t-virtuoso">Virtuoso · Delray Beach FL</span>
+      </div>
+    </div>
+  </label>
+
+  <!-- T15 -->
+  <label class="task-card" data-wave="ola2" data-id="t15">
+    <div class="check-wrap">
+      <input type="checkbox" class="task-checkbox" id="t15">
+      <div class="check-box">
+        <svg width="14" height="11" viewBox="0 0 14 11" fill="none">
+          <path d="M1 5L5 9L13 1" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+    <div class="task-body">
+      <div class="task-header">
+        <div class="task-title">Wagner Bespoke Travel / Coastline — Argentina explícito · family · food/wine</div>
+        <span class="task-email">eli@wagnertravel.com · Santa Monica CA · Virtuoso</span>
+      </div>
+      <div class="task-detail">
+        Eli Wagner, Argentina explícito, family y food/wine. Outreach con kit comercial. Proponer Chalten Camp como opción family con guías privados y Moreno Camp como la extensión culinaria/glaciar.
+      </div>
+      <div class="task-tags">
+        <span class="t-tag t-chalten">Chalten Camp</span>
+        <span class="t-tag t-moreno">Moreno Camp</span>
+        <span class="t-tag t-virtuoso">Virtuoso · Santa Monica CA</span>
+      </div>
+    </div>
+  </label>
+
+  <!-- T16 -->
+  <label class="task-card" data-wave="ola2" data-id="t16">
+    <div class="check-wrap">
+      <input type="checkbox" class="task-checkbox" id="t16">
+      <div class="check-box">
+        <svg width="14" height="11" viewBox="0 0 14 11" fill="none">
+          <path d="M1 5L5 9L13 1" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+    <div class="task-body">
+      <div class="task-header">
+        <div class="task-title">Posh Travel Ltd — "Peru, Chile Argentina" explícito · Virtuoso · New Hampshire</div>
+        <span class="task-email">kathy@poshtravel.com · Greenland NH · Virtuoso</span>
+      </div>
+      <div class="task-detail">
+        Kathy Burns Lamphier, President. Argentina entre sus destinos principales. Outreach con kit comercial GS estándar: fact sheet bilingüe, fotos, rates 26/27, propuesta circuito bipropiedad.
+      </div>
+      <div class="task-tags">
+        <span class="t-tag t-chalten">Chalten Camp</span>
+        <span class="t-tag t-moreno">Moreno Camp</span>
+        <span class="t-tag t-virtuoso">Virtuoso · Greenland NH</span>
+      </div>
+    </div>
+  </label>
+
+  <!-- T17 -->
+  <label class="task-card" data-wave="ola2" data-id="t17">
+    <div class="check-wrap">
+      <input type="checkbox" class="task-checkbox" id="t17">
+      <div class="check-box">
+        <svg width="14" height="11" viewBox="0 0 14 11" fill="none">
+          <path d="M1 5L5 9L13 1" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+    <div class="task-body">
+      <div class="task-header">
+        <div class="task-title">Global Basecamps — Reemplazar Hosteria El Puma por Chalten Camp en itinerario El Chaltén</div>
+        <span class="task-email">michael@globalbasecamps.com · Encinitas CA · Tour Operator</span>
+      </div>
+      <div class="task-detail">
+        Michael D'Amico. En su itinerario de El Chaltén usan Hosteria El Puma — propiedad no competidora pero de menor estándar. Ya tienen EOLO, Patagonia Camp, Tierra Patagonia y EcoCamp. Propuesta de upgrade: Chalten Camp como la opción glamping de lujo que eleva el producto El Chaltén. Argumento claro de diferenciación y precio.
+      </div>
+      <div class="task-tags">
+        <span class="t-tag t-chalten">Chalten Camp</span>
+        <span class="t-tag t-urgente">Reemplazar El Puma</span>
+      </div>
+    </div>
+  </label>
+
+
+  <!-- ─── OLA 3 ─── -->
+  <div class="wave-header">
+    <span class="wave-badge badge-ola3">Ola 3</span>
+    <span class="wave-title">Consolidación y Agencias con Bookings Activos de Competidores</span>
+    <span class="wave-meta">Próximos 90 días</span>
+  </div>
+  <hr class="wave-rule">
+
+  <!-- T18 -->
+  <label class="task-card" data-wave="ola3" data-id="t18">
+    <div class="check-wrap">
+      <input type="checkbox" class="task-checkbox" id="t18">
+      <div class="check-box">
+        <svg width="14" height="11" viewBox="0 0 14 11" fill="none">
+          <path d="M1 5L5 9L13 1" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+    <div class="task-body">
+      <div class="task-header">
+        <div class="task-title">Agencias con Awasi activo — Proponer GS como el brazo argentino del circuito</div>
+        <span class="task-email">beth@getawayguild.com · asprague@tzell.com · terri.myerson@frosch.com · sales@simplyselect.com · jamie@elitetraveldesigns.com · Liz@burrtravel.com · Jaime@DreamscapeTraveler.com</span>
+      </div>
+      <div class="task-detail">
+        7 agencias con bookings confirmados en Awasi (Torres del Paine, Chile). Sus clientes están haciendo circuitos Patagonia Chile+Argentina. Mensaje: "Tus clientes en Awasi necesitan algo para El Chaltén y El Calafate. Chalten Camp y Moreno Camp son los únicos que ofrecen el mismo nivel de inmersión en el lado argentino." Es el argumento más directo: no compiten, complementan.
+      </div>
+      <div class="task-tags">
+        <span class="t-tag t-chalten">Chalten Camp</span>
+        <span class="t-tag t-moreno">Moreno Camp</span>
+        <span class="t-tag t-virtuoso">Virtuoso · Múltiples agencias</span>
+      </div>
+    </div>
+  </label>
+
+  <!-- T19 -->
+  <label class="task-card" data-wave="ola3" data-id="t19">
+    <div class="check-wrap">
+      <input type="checkbox" class="task-checkbox" id="t19">
+      <div class="check-box">
+        <svg width="14" height="11" viewBox="0 0 14 11" fill="none">
+          <path d="M1 5L5 9L13 1" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+    <div class="task-body">
+      <div class="task-header">
+        <div class="task-title">Agencias con The Singular activo — GS como el destino El Chaltén / El Calafate</div>
+        <span class="task-email">jessica@walksaroundtheworld.com · karen@wellplacedtravel.com · mindee@bachtravels.com · hedy@hedytravel.com · kallyn@summitandhorizon.com</span>
+      </div>
+      <div class="task-detail">
+        8 agencias con bookings de The Singular Patagonia en CRM. Mensaje: "The Singular está en Puerto Natales, Chile. Tus clientes cruzan a Argentina — Chalten Camp en El Chaltén y Moreno Camp en El Calafate son el lado argentino del mismo viaje." Acción: outreach post-temporada con propuesta de incluir GS en itinerarios 2026/27.
+      </div>
+      <div class="task-tags">
+        <span class="t-tag t-chalten">Chalten Camp</span>
+        <span class="t-tag t-moreno">Moreno Camp</span>
+        <span class="t-tag t-virtuoso">Virtuoso · múltiples</span>
+      </div>
+    </div>
+  </label>
+
+  <!-- T20 -->
+  <label class="task-card" data-wave="ola3" data-id="t20">
+    <div class="check-wrap">
+      <input type="checkbox" class="task-checkbox" id="t20">
+      <div class="check-box">
+        <svg width="14" height="11" viewBox="0 0 14 11" fill="none">
+          <path d="M1 5L5 9L13 1" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+    <div class="task-body">
+      <div class="task-header">
+        <div class="task-title">Mosaic Safari / Departure Lounge — Booking TSS activo · Patagonia activo</div>
+        <span class="task-email">crisney@mosaicsafaris.com · Austin TX · Virtuoso</span>
+      </div>
+      <div class="task-detail">
+        Crisney Lane, Chile especialidad, booking TSS 2025 activo, conoce "Remote" (propiedad similar de lujo). El perfil de cliente es exactamente el target de GS. Outreach con argumento: GS como la versión argentina del mismo segmento de lujo experiencial que ya vende.
+      </div>
+      <div class="task-tags">
+        <span class="t-tag t-chalten">Chalten Camp</span>
+        <span class="t-tag t-moreno">Moreno Camp</span>
+        <span class="t-tag t-virtuoso">Virtuoso · Austin TX</span>
+      </div>
+    </div>
+  </label>
+
+  <!-- T21 -->
+  <label class="task-card" data-wave="ola3" data-id="t21">
+    <div class="check-wrap">
+      <input type="checkbox" class="task-checkbox" id="t21">
+      <div class="check-box">
+        <svg width="14" height="11" viewBox="0 0 14 11" fill="none">
+          <path d="M1 5L5 9L13 1" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+    <div class="task-body">
+      <div class="task-header">
+        <div class="task-title">Elite Travel International / Embark Beyond — "All over SA and Chile" · TSS booking activo</div>
+        <span class="task-email">josh@elitetravelinternational.com · Santa Monica CA · Virtuoso</span>
+      </div>
+      <div class="task-detail">
+        Josh Geller, Sudamérica y Chile, booking The Singular activo. Proponer GS como el complemento argentino del mismo circuito. Alcance conjunto con Wagner Bespoke (también Santa Monica CA) para maximizar impacto geográfico.
+      </div>
+      <div class="task-tags">
+        <span class="t-tag t-chalten">Chalten Camp</span>
+        <span class="t-tag t-moreno">Moreno Camp</span>
+        <span class="t-tag t-virtuoso">Virtuoso · Santa Monica CA</span>
+      </div>
+    </div>
+  </label>
+
+  <!-- T22 -->
+  <label class="task-card" data-wave="ola3" data-id="t22">
+    <div class="check-wrap">
+      <input type="checkbox" class="task-checkbox" id="t22">
+      <div class="check-box">
+        <svg width="14" height="11" viewBox="0 0 14 11" fill="none">
+          <path d="M1 5L5 9L13 1" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+    <div class="task-body">
+      <div class="task-header">
+        <div class="task-title">Just Escape Travel — "Latin America & South America" · TSS booking activo</div>
+        <span class="task-email">michelle@justescapetravel.com · San Diego CA</span>
+      </div>
+      <div class="task-detail">
+        Michelle Barth, Latinoamérica y Sudamérica como especialidad principal, booking The Singular activo. Proponer GS como la alternativa / complemento argentino al circuito que ya tiene activo. Outreach con kit comercial estándar.
+      </div>
+      <div class="task-tags">
+        <span class="t-tag t-chalten">Chalten Camp</span>
+        <span class="t-tag t-moreno">Moreno Camp</span>
+      </div>
+    </div>
+  </label>
+
+</div><!-- /container -->
+
+<footer>
+  <p>Glamping Soul · Plan de Acción Presencia Web · Junio 2026 — Fuente: <a href="informe-presencia-web-update-junio2026.html">Informe Update</a> + <a href="informe-presencia-web-carole-baden-2026.html">Informe Carole Baden</a></p>
+  <p style="margin-top:6px; color:#666;">Al completar las 22 tareas se enviará una notificación automática por mail a los responsables.</p>
+</footer>
+
+<!-- ═══════════════ COMPLETION MODAL ═══════════════ -->
+<div id="completion-overlay">
+  <div id="completion-modal">
+    <div class="modal-icon">✓</div>
+    <h2>Todas las tareas completadas</h2>
+    <p>
+      Se completaron las 22 acciones del plan de presencia web 2026.<br>
+      Se enviará una notificación a los equipos de Comunicación y Comercial de Glamping Soul.
+    </p>
+    <div class="modal-buttons">
+      <a id="send-mail-btn" href="#" class="btn-primary">Enviar notificación por mail</a>
+      <button onclick="document.getElementById('completion-overlay').classList.remove('show')" class="btn-secondary">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ JAVASCRIPT ═══════════════ -->
+<script>
+  const TOTAL = 22;
+  const MAIL_TO = 'nicodico@glampingsoul.com';
+  const MAIL_CC = 'communication@glampingsoul.com,commercial@glampingsoul.com';
+  const STORAGE_KEY = 'gs_tasks_2026';
+
+  // ── Persist state ──────────────────────────────────────
+  function saveState() {
+    const state = {};
+    document.querySelectorAll('.task-checkbox').forEach(cb => {
+      state[cb.id] = cb.checked;
+    });
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
+  }
+
+  function loadState() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      const state = JSON.parse(raw);
+      document.querySelectorAll('.task-checkbox').forEach(cb => {
+        if (state[cb.id]) {
+          cb.checked = true;
+          cb.closest('.task-card').classList.add('done');
+        }
+      });
+    } catch(e) {}
+  }
+
+  // ── Update progress bar ────────────────────────────────
+  function updateProgress() {
+    const checked = document.querySelectorAll('.task-checkbox:checked').length;
+    const pct = Math.round((checked / TOTAL) * 100);
+
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-text').textContent =
+      checked + ' / ' + TOTAL + ' tareas completadas (' + pct + '%)';
+
+    if (checked === TOTAL) {
+      triggerCompletion();
+    }
+  }
+
+  // ── Build mailto link ──────────────────────────────────
+  function buildMailto() {
+    const now = new Date();
+    const fecha = now.toLocaleDateString('es-AR', {
+      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+    });
+
+    const subject = encodeURIComponent(
+      'Glamping Soul · Plan de Presencia Web 2026 completado — ' + fecha
+    );
+
+    const completedTasks = [];
+    document.querySelectorAll('.task-card.done .task-title').forEach(el => {
+      completedTasks.push('- ' + el.textContent.trim());
+    });
+
+    const body = encodeURIComponent(
+      'Hola,\n\n' +
+      'Se completaron las 22 tareas del Plan de Presencia Web 2026 de Glamping Soul.\n\n' +
+      'Fecha de cierre: ' + fecha + '\n\n' +
+      'RESUMEN DE TAREAS COMPLETADAS\n' +
+      '══════════════════════════════\n\n' +
+      completedTasks.join('\n') + '\n\n' +
+      '──────────────────────────────────\n' +
+      'Este mail fue generado automáticamente por el tracker de tareas de Glamping Soul.\n' +
+      'Ver informe completo: informe-presencia-web-update-junio2026.html'
+    );
+
+    return 'mailto:' + MAIL_TO +
+           '?cc=' + encodeURIComponent(MAIL_CC) +
+           '&subject=' + subject +
+           '&body=' + body;
+  }
+
+  // ── Trigger completion ─────────────────────────────────
+  function triggerCompletion() {
+    document.getElementById('send-mail-btn').href = buildMailto();
+    document.getElementById('completion-overlay').classList.add('show');
+    // Also auto-open the mail client after a short delay
+    setTimeout(function() {
+      window.location.href = buildMailto();
+    }, 1200);
+  }
+
+  // ── Event listeners ────────────────────────────────────
+  document.querySelectorAll('.task-card').forEach(card => {
+    card.addEventListener('click', function(e) {
+      // Allow clicking anywhere on the card to toggle
+      const cb = this.querySelector('.task-checkbox');
+      if (e.target !== cb) {
+        cb.checked = !cb.checked;
+      }
+      this.classList.toggle('done', cb.checked);
+      updateProgress();
+      saveState();
+    });
+
+    // Prevent label default double-toggle
+    const cb = card.querySelector('.task-checkbox');
+    cb.addEventListener('change', function(e) {
+      e.stopPropagation();
+      card.classList.toggle('done', this.checked);
+      updateProgress();
+      saveState();
+    });
+  });
+
+  // Close modal on overlay click
+  document.getElementById('completion-overlay').addEventListener('click', function(e) {
+    if (e.target === this) this.classList.remove('show');
+  });
+
+  // ── Init ──────────────────────────────────────────────
+  loadState();
+  updateProgress();
+</script>
+
+</body>
+</html>
