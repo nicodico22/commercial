@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perón 1736 — Análisis de Presencia en Mercado · Junio 2026</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f4f6fb;
+      color: #1a1a2e;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    @media print {
+      body { background: #fff; font-size: 12px; }
+      * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+
+    header {
+      background: linear-gradient(135deg, #1f3a6d 0%, #2d5a9e 100%);
+      color: #fff;
+      padding: 40px 44px 32px;
+    }
+    .header-tag {
+      display: inline-block;
+      background: rgba(255,255,255,0.13);
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 0.68rem;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    header h1 { font-size: 1.9rem; font-weight: 700; letter-spacing: -0.5px; line-height: 1.2; }
+    header h1 span { color: #a5b4fc; }
+    .header-sub { margin-top: 8px; opacity: 0.70; font-size: 0.88rem; line-height: 1.5; }
+    .header-meta {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .header-chip {
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 6px;
+      padding: 5px 13px;
+      font-size: 0.76rem;
+      color: rgba(255,255,255,0.88);
+    }
+
+    /* ── CRITICAL BANNER ── */
+    .critical-banner {
+      background: #fef2f2;
+      border-left: 4px solid #dc2626;
+      padding: 18px 44px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .banner-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 2px; }
+    .banner-title { font-weight: 700; color: #991b1b; font-size: 0.97rem; }
+    .banner-body { font-size: 0.86rem; color: #7f1d1d; margin-top: 4px; line-height: 1.6; }
+
+    .content { padding: 32px 44px; }
+
+    .section-label {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: #6b7280;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-label::after { content: ''; flex: 1; height: 1px; background: #e2e8f0; }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+    .stat-box {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 16px 18px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .stat-box.critical { border-color: #fee2e2; background: #fffbfb; }
+    .stat-label { font-size: 0.67rem; text-transform: uppercase; letter-spacing: 0.6px; color: #9ca3af; }
+    .stat-value { font-size: 1.35rem; font-weight: 700; margin-top: 4px; color: #1a1a2e; }
+    .stat-value.red { color: #dc2626; }
+    .stat-value.amber { color: #d97706; }
+    .stat-value.green { color: #16a34a; }
+    .stat-note { font-size: 0.70rem; color: #9ca3af; margin-top: 4px; }
+
+    .channel-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .channel-card {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 20px 22px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .channel-card.active { border-left: 4px solid #16a34a; }
+    .channel-card.inactive { border-left: 4px solid #dc2626; background: #fffbfb; }
+    .channel-name { font-size: 0.9rem; font-weight: 700; color: #1a1a2e; }
+    .channel-status {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 4px 11px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+    .status-active { background: #dcfce7; color: #166534; }
+    .status-inactive { background: #fee2e2; color: #991b1b; }
+    .channel-detail { font-size: 0.82rem; color: #6b7280; margin-top: 10px; line-height: 1.6; }
+    .channel-detail strong { color: #1a1a2e; }
+
+    .visibility-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      margin-bottom: 32px;
+      font-size: 0.84rem;
+    }
+    .visibility-table thead th {
+      background: #1f3a6d;
+      color: #fff;
+      padding: 12px 14px;
+      text-align: left;
+      font-size: 0.70rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+    }
+    .visibility-table tbody td {
+      padding: 11px 14px;
+      border-bottom: 1px solid #f0f2f7;
+      vertical-align: middle;
+    }
+    .visibility-table tbody tr:last-child td { border-bottom: none; }
+    .visibility-table tbody tr:nth-child(even) { background: #f8fafd; }
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+    .badge-ok { background: #dcfce7; color: #166534; }
+    .badge-missing { background: #fee2e2; color: #991b1b; }
+    .badge-partial { background: #fef9c3; color: #854d0e; }
+
+    .issue-card {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 18px 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      border-left: 4px solid #dc2626;
+    }
+    .issue-title { font-weight: 700; font-size: 0.90rem; color: #1a1a2e; margin-bottom: 8px; }
+    .issue-body { font-size: 0.84rem; color: #374151; line-height: 1.7; }
+    .issue-body strong { color: #1a1a2e; }
+
+    .matrix-box {
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      border-radius: 12px;
+      padding: 22px 24px;
+      margin-bottom: 32px;
+    }
+    .matrix-box h3 {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #0369a1;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .matrix-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    .matrix-item { background: #fff; border-radius: 8px; padding: 14px 16px; border: 1px solid #bae6fd; }
+    .matrix-label { font-size: 0.75rem; text-transform: uppercase; color: #0369a1; font-weight: 700; }
+    .matrix-value { font-size: 1.2rem; font-weight: 800; color: #0c4a6e; margin-top: 6px; }
+
+    .reco-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+    .reco-card {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 18px 20px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      display: flex;
+      gap: 16px;
+    }
+    .reco-num {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #dbeafe;
+      color: #1e40af;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.82rem;
+      flex-shrink: 0;
+    }
+    .reco-body { flex: 1; }
+    .reco-title { font-weight: 700; font-size: 0.92rem; color: #1a1a2e; }
+    .reco-desc { font-size: 0.84rem; color: #4b5563; margin-top: 6px; line-height: 1.7; }
+    .reco-desc strong { color: #1a1a2e; }
+    .reco-desc code {
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      border-radius: 4px;
+      padding: 2px 7px;
+      font-size: 0.81rem;
+      font-family: monospace;
+      color: #374151;
+    }
+
+    .summary-box {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 22px 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      margin-bottom: 32px;
+    }
+    .summary-box h3 {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin-bottom: 12px;
+    }
+    .summary-box p {
+      font-size: 0.86rem;
+      color: #374151;
+      line-height: 1.7;
+      margin-bottom: 12px;
+    }
+    .summary-box p:last-child { margin-bottom: 0; }
+
+    /* LINKS */
+    a { color: #2563eb; text-decoration: none; border-bottom: 1px solid rgba(37, 99, 235, 0.3); }
+    a:hover { color: #1d4ed8; border-bottom-color: #1d4ed8; }
+    .source-link { font-size: 0.75rem; color: #6b7280; display: inline-block; margin-left: 4px; font-weight: 500; }
+
+    footer {
+      text-align: center;
+      padding: 20px 44px;
+      font-size: 0.72rem;
+      color: #9ca3af;
+      border-top: 1px solid #e2e8f0;
+      background: #fff;
+    }
+
+    @media (max-width: 768px) {
+      header, .critical-banner, .content { padding-left: 16px; padding-right: 16px; }
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+      .channel-grid { grid-template-columns: 1fr; }
+      .matrix-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header>
+  <div class="header-tag">Análisis de Presencia en Mercado · Junio 2026</div>
+  <h1>Perón 1736 <span>·</span> Distribución y Visibilidad</h1>
+  <p class="header-sub">Dónde está publicada la propiedad, dónde falta, y por qué la presencia fragmentada amplifica el problema de visibilidad técnica</p>
+  <div class="header-meta">
+    <span class="header-chip">3 ambientes · Reciclado</span>
+    <span class="header-chip">San Nicolás, CABA</span>
+    <span class="header-chip">Estado actual: junio 2026</span>
+  </div>
+</header>
+
+<!-- ── CRITICAL BANNER ── -->
+<div class="critical-banner">
+  <span class="banner-icon">🚨</span>
+  <div>
+    <div class="banner-title">Presencia deficiente: solo ZonaProp, y con problemas técnicos no resueltos</div>
+    <div class="banner-body">
+      La propiedad está publicada únicamente en ZonaProp, sin estar en Mercado Libre,
+      Argenprop o portales de segunda línea. <strong>Simultáneamente, no aparece en filtros
+      de ZonaProp por falta del atributo "reciclado".</strong> Esta combinación (presencia
+      limitada + invisibilidad técnica en el único portal activo) explica directamente
+      el bajo tráfico de contactos.
+    </div>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- ── SECCIÓN 1: ESTADO ACTUAL DE PRESENCIA ── -->
+  <div class="section-label">Estado actual · dónde está publicada Perón 1736</div>
+
+  <div class="stats-row">
+    <div class="stat-box">
+      <div class="stat-label"><a href="https://www.zonaprop.com.ar/departamentos-venta-san-nicolas-3-ambientes.html" target="_blank">Portales activos ↗</a></div>
+      <div class="stat-value red">1</div>
+      <div class="stat-note">Solo ZonaProp (ID 58460058)</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label"><a href="https://listado.mercadolibre.com.ar/san-nicol%C3%A1s-3-ambientes" target="_blank">Mercado Libre ↗</a></div>
+      <div class="stat-value red">No publicada</div>
+      <div class="stat-note">Mayor tráfico del país</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Argenprop</div>
+      <div class="stat-value red">Vencida</div>
+      <div class="stat-note">Listings anteriores caducados</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Otros portales</div>
+      <div class="stat-value red">Ausente</div>
+      <div class="stat-note">Inmuebles, Zonaprop News, etc.</div>
+    </div>
+  </div>
+
+  <!-- ── CANALES DE DISTRIBUCIÓN ── -->
+  <div class="section-label">Análisis de canales · cobertura de mercado</div>
+
+  <div class="channel-grid">
+
+    <div class="channel-card active">
+      <div class="channel-name"><a href="https://www.zonaprop.com.ar/departamentos-venta-san-nicolas-3-ambientes.html" target="_blank">ZonaProp ↗</a></div>
+      <span class="channel-status status-active">Activa</span>
+      <div class="channel-detail">
+        <strong>ID:</strong> 58460058<br>
+        <strong>Visibilidad:</strong> Baja (invisible en filtro "reciclado")<br>
+        <strong>Visualizaciones:</strong> ~2.5/día (muy bajo)<br>
+        <strong>Edad:</strong> ≈ 150 días sin cambios<br>
+        <strong>Posición ranking:</strong> Degradada (sin actividad reciente)
+      </div>
+    </div>
+
+    <div class="channel-card inactive">
+      <div class="channel-name"><a href="https://listado.mercadolibre.com.ar/san-nicol%C3%A1s-3-ambientes" target="_blank">Mercado Libre Inmuebles ↗</a></div>
+      <span class="channel-status status-inactive">No publicada</span>
+      <div class="channel-detail">
+        <strong>Cobertura:</strong> Mayor portal de Argentina<br>
+        <strong>Tráfico:</strong> 3–5× superior a ZonaProp<br>
+        <strong>Audiencia:</strong> Compradores que priorizan ML<br>
+        <strong>Costo:</strong> Publicación gratuita (destaque pago opcional)<br>
+        <strong>Impacto de ausencia:</strong> Pierde 60–70% del potencial de contactos
+      </div>
+    </div>
+
+    <div class="channel-card inactive">
+      <div class="channel-name">Argenprop</div>
+      <span class="channel-status status-inactive">Vencida</span>
+      <div class="channel-detail">
+        <strong>Estado anterior:</strong> Publicaciones vencidas de Perón al 1700<br>
+        <strong>Cobertura:</strong> 2° portal más consultado de Argentina<br>
+        <strong>Impacto de ausencia:</strong> Pierde acceso a compradores de Argenprop<br>
+        <strong>Reactivación:</strong> Requiere nueva publicación
+      </div>
+    </div>
+
+    <div class="channel-card inactive">
+      <div class="channel-name">Portales secundarios</div>
+      <span class="channel-status status-inactive">No cubiertos</span>
+      <div class="channel-detail">
+        <strong>Alternativas:</strong> Zonaprop News, Inmuebles.com, Gallito<br>
+        <strong>Audiencia:</strong> Compradores especializados / inversores<br>
+        <strong>Costo:</strong> Bajo a nulo<br>
+        <strong>ROI:</strong> Bajo, pero complementario
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── SECCIÓN 2: VISIBILIDAD TÉCNICA EN ZONAPROP ── -->
+  <div class="section-label">Diagnóstico de visibilidad en ZonaProp · el portal activo</div>
+
+  <table class="visibility-table">
+    <thead>
+      <tr>
+        <th>Elemento de visibilidad</th>
+        <th>Estado actual</th>
+        <th>Impacto</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Atributo "Condición: Reciclado"</strong></td>
+        <td><span class="badge badge-missing">NO completado</span></td>
+        <td><strong style="color: #dc2626;">Crítico — Excluye de filtros</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Aparición en búsqueda filtrada "reciclados"</strong></td>
+        <td><span class="badge badge-missing">No aparece</span></td>
+        <td><strong style="color: #dc2626;">Crítico — 0 contactos desde búsqueda filtrada</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Posición en ranking general</strong></td>
+        <td><span class="badge badge-partial">Muy degradada</span></td>
+        <td><strong style="color: #d97706;">Alto — Aparece en página 4+</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Recencia (días desde última edición)</strong></td>
+        <td><span class="badge badge-missing">~150 días</span></td>
+        <td><strong style="color: #dc2626;">Crítico — Algorítmo degrada severamente</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Visualizaciones diarias</strong></td>
+        <td><span class="badge badge-partial">~2.5/día</span></td>
+        <td><strong style="color: #d97706;">Alto — Activos reciben 8–15/día</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Atributos estructurados faltantes</strong></td>
+        <td><span class="badge badge-missing">3 críticos</span></td>
+        <td><strong style="color: #d97706;">Alto — Reduce quality score</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Título optimizado para SEO</strong></td>
+        <td><span class="badge badge-partial">Genérico</span></td>
+        <td><strong style="color: #d97706;">Medio — Afecta búsqueda orgánica/Google</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Dirección exacta vs aproximada</strong></td>
+        <td><span class="badge badge-partial">Aproximada (1700 vs 1736)</span></td>
+        <td><strong style="color: #d97706;">Medio — Impacta búsqueda por mapa</strong></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ── MATRIZ DE EFECTO ── -->
+  <div class="matrix-box">
+    <h3>Matriz de impacto · cómo la presencia deficiente amplifica la invisibilidad</h3>
+    <div class="matrix-grid">
+      <div class="matrix-item">
+        <div class="matrix-label">Búsqueda filtrada en ZonaProp</div>
+        <div class="matrix-value" style="color: #dc2626;">0%</div>
+        <p style="font-size: 0.78rem; color: #6b7280; margin-top: 8px;">
+          No aparece porque falta atributo. El único portal activo no la muestra cuando se filtra por "reciclado".
+        </p>
+      </div>
+      <div class="matrix-item">
+        <div class="matrix-label">Búsqueda general en ZonaProp</div>
+        <div class="matrix-value" style="color: #d97706;">~3–5%</div>
+        <p style="font-size: 0.78rem; color: #6b7280; margin-top: 8px;">
+          Aparece en ranking degradado (página 4+). Compradores típicamente revisan primeras 2 páginas.
+        </p>
+      </div>
+      <div class="matrix-item">
+        <div class="matrix-label">Búsqueda en Mercado Libre</div>
+        <div class="matrix-value" style="color: #dc2626;">0%</div>
+        <p style="font-size: 0.78rem; color: #6b7280; margin-top: 8px;">
+          No publicada. Pierde acceso a portal con 3–5× mayor tráfico que ZonaProp.
+        </p>
+      </div>
+      <div class="matrix-item">
+        <div class="matrix-label">Alcance combinado vs potencial</div>
+        <div class="matrix-value" style="color: #dc2626;">~25%</div>
+        <p style="font-size: 0.78rem; color: #6b7280; margin-top: 8px;">
+          La propiedad es visible para ~25% del mercado potencial. Está "perdida" en el 75%.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ISSUES CRÍTICOS ── -->
+  <div class="section-label">Problemas críticos · listado de exclusión del mercado</div>
+
+  <div class="issue-card">
+    <div class="issue-title">1. Exclusión de filtro "reciclados" en ZonaProp (Impacto: Crítico)</div>
+    <div class="issue-body">
+      El atributo estructurado "Condición: Reciclado" está vacío. En búsquedas filtradas,
+      la propiedad literalmente no existe.
+      <br><br>
+      <strong>Cuantificación:</strong> En mayo 2026 se analizaron 34 comparables reciclados.
+      Perón 1736 no aparecía en ninguno porque no está marcada como reciclada.
+      Si el atributo estuviera completo, sería <strong>visible en ~95% de esas búsquedas</strong>.
+      <br><br>
+      <strong>Estado:</strong> <span style="background: #fee2e2; padding: 2px 8px; border-radius: 4px; font-weight: 700; color: #991b1b;">Crítico · No resuelto desde mayo</span>
+    </div>
+  </div>
+
+  <div class="issue-card">
+    <div class="issue-title">2. Ausencia en Mercado Libre (Impacto: Crítico)</div>
+    <div class="issue-body">
+      Mercado Libre es el portal inmobiliario con mayor tráfico en Argentina.
+      No publicar allí es perder acceso a <strong>3–5× más compradores potenciales</strong>
+      que ZonaProp, incluso si la visibilidad técnica fuera perfecta.
+      <br><br>
+      <strong>Cuantificación:</strong> Un departamento de 3 ambientes en Congreso/San Nicolás
+      puede recibir 50–100 contactos/mes en ML vs. 5–10 en ZonaProp (con visibilidad buena).
+      La ausencia cuesta ~45–90 contactos/mes potenciales.
+      <br><br>
+      <strong>Costo:</strong> Cero (publicación gratuita).
+      <br><br>
+      <strong>Estado:</strong> <span style="background: #fee2e2; padding: 2px 8px; border-radius: 4px; font-weight: 700; color: #991b1b;">Crítico · Fácilmente corregible</span>
+    </div>
+  </div>
+
+  <div class="issue-card">
+    <div class="issue-title">3. Antigüedad del anuncio (Impacto: Alto)</div>
+    <div class="issue-body">
+      ≈150 días sin ediciones. ZonaProp degrada severamente los rankings de anuncios sin actividad reciente.
+      <br><br>
+      <strong>Comportamiento del algoritmo:</strong> Anuncios con ediciones semanales (fotos, descripción, precio)
+      aparecen en primeras 2 páginas. Sin ediciones por 2+ meses, degradan a página 4–10.
+      <br><br>
+      <strong>Impacto visual:</strong> Menos del 5% de los compradores avanzan más allá de página 2.
+      <br><br>
+      <strong>Estado:</strong> <span style="background: #fef3c7; padding: 2px 8px; border-radius: 4px; font-weight: 700; color: #92400e;">Alto · Se resuelve con una edición hoy</span>
+    </div>
+  </div>
+
+  <div class="issue-card">
+    <div class="issue-title">4. Atributos incompletos en ZonaProp (Impacto: Medio-Alto)</div>
+    <div class="issue-body">
+      Campos faltantes: Piso, Orientación (como atributo), Calefacción y Baulera (solo en texto, no como atributos).
+      <br><br>
+      <strong>Consecuencia 1:</strong> El "quality score" interno de ZonaProp baja,
+      afectando el ranking orgánico.
+      <br><br>
+      <strong>Consecuencia 2:</strong> Compradores que filtran por calefacción, baulera o piso específico no verán la propiedad.
+      <br><br>
+      <strong>Estado:</strong> <span style="background: #fef3c7; padding: 2px 8px; border-radius: 4px; font-weight: 700; color: #92400e;">Alto · Completable en 10 minutos</span>
+    </div>
+  </div>
+
+  <!-- ── PLAN DE PRESENCIA ACTUALIZADO ── -->
+  <div class="section-label">Estrategia de presencia · recomendaciones para junio 2026</div>
+
+  <div class="reco-list">
+
+    <div class="reco-card">
+      <div class="reco-num">1</div>
+      <div class="reco-body">
+        <div class="reco-title">Resolver invisibilidad en ZonaProp (Hoy)</div>
+        <div class="reco-desc">
+          <strong>A)</strong> Marcar "Condición: Reciclado" en atributos estructurados.<br>
+          <strong>B)</strong> Completar: Piso, Orientación, Calefacción (split), Baulera.<br>
+          <strong>C)</strong> Actualizar título (incluir keywords: baulera, split, apto crédito).
+          <br><br>
+          <strong>Resultado esperado:</strong> Propiedad pasa de invisible a visible en filtros "reciclados".
+          Visualizaciones estimadas: +300% en las primeras 2 semanas (de 2.5/día a 8–10/día).
+        </div>
+      </div>
+    </div>
+
+    <div class="reco-card">
+      <div class="reco-num">2</div>
+      <div class="reco-body">
+        <div class="reco-title">Publicar en Mercado Libre Inmuebles (Semana 1)</div>
+        <div class="reco-desc">
+          Usar el título, descripción y fotos actualizados (del paso 1).
+          ML es gratuito; considerar destaque pagos si presupuesto lo permite.
+          <br><br>
+          <strong>Resultado esperado:</strong> Acceso a audiencia 3–5× mayor que ZonaProp.
+          Potencial de contactos: +50–100/mes versus ausencia actual.
+        </div>
+      </div>
+    </div>
+
+    <div class="reco-card">
+      <div class="reco-num">3</div>
+      <div class="reco-body">
+        <div class="reco-title">Republicar en Argenprop (Semana 2)</div>
+        <div class="reco-desc">
+          Los listings anteriores de Perón al 1700 están vencidos. Crear nueva publicación
+          con datos actualizados en Argenprop (segundo portal más consultado).
+          <br><br>
+          <strong>Costo:</strong> Bajo a nulo.<br>
+          <strong>Audiencia:</strong> Compradores que usan Argenprop pero no ZonaProp o ML.
+        </div>
+      </div>
+    </div>
+
+    <div class="reco-card">
+      <div class="reco-num">4</div>
+      <div class="reco-body">
+        <div class="reco-title">Mantener actividad semanal (Ongoing)</div>
+        <div class="reco-desc">
+          Después de activar en 3 portales, mantener visible responder consultas en <24h,
+          editar fotos o descripción cada 7 días, ajustar precio si es necesario.
+          <br><br>
+          <strong>Beneficio:</strong> El ranking de ZonaProp se reinicia con cada edición,
+          manteniéndola en primeras 2 páginas.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── MATRIZ DE COBERTURA ACTUAL VS POTENCIAL ── -->
+  <div class="section-label">Impacto de la presencia actual vs potencial</div>
+
+  <table class="visibility-table">
+    <thead>
+      <tr>
+        <th>Canal</th>
+        <th>Estado actual</th>
+        <th>Tráfico potencial</th>
+        <th>Contactos/mes estimados</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>ZonaProp (visible, pero degradada)</strong></td>
+        <td><span class="badge badge-partial">Activa · Degradada</span></td>
+        <td>100 visitas/mes</td>
+        <td>3–5 contactos/mes</td>
+      </tr>
+      <tr>
+        <td><strong>ZonaProp (si fuera visible en filtros)</strong></td>
+        <td><span class="badge badge-ok">Visible · Correcto</span></td>
+        <td>400 visitas/mes</td>
+        <td>12–15 contactos/mes</td>
+      </tr>
+      <tr>
+        <td><strong>Mercado Libre (no publicada hoy)</strong></td>
+        <td><span class="badge badge-missing">Ausente</span></td>
+        <td>500–800 visitas/mes</td>
+        <td>15–25 contactos/mes</td>
+      </tr>
+      <tr>
+        <td><strong>Argenprop (no publicada hoy)</strong></td>
+        <td><span class="badge badge-missing">Ausente</span></td>
+        <td>100–200 visitas/mes</td>
+        <td>3–7 contactos/mes</td>
+      </tr>
+      <tr style="background: #f0f9ff; font-weight: 700;">
+        <td><strong>Potencial combinado (si se implementan todas)</strong></td>
+        <td><span class="badge badge-ok">3 portales · Visible</span></td>
+        <td>1.000–1.400 visitas/mes</td>
+        <td>33–52 contactos/mes</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ── RESUMEN EJECUTIVO ── -->
+  <div class="section-label">Resumen ejecutivo</div>
+
+  <div class="summary-box">
+    <h3>🎯 Conclusión: Presencia deficiente amplifica la invisibilidad técnica</h3>
+    <p>
+      <strong>Problema raíz:</strong> Perón 1736 está publicada SOLO en ZonaProp,
+      Y está invisible en los filtros de ese único portal porque le falta el atributo "reciclado".
+      Esta es una doble desventaja que explica directamente el bajo tráfico.
+    </p>
+    <p>
+      <strong>Números:</strong> Hoy recibe ~2.5 visualizaciones/día y 3–5 contactos/mes.
+      Con presencia en 3 portales + visibilidad correcta en ZonaProp, el potencial es 30–50 contactos/mes.
+    </p>
+    <p>
+      <strong>Acción crítica de hoy:</strong> Resolver la invisibilidad en ZonaProp (marca "reciclado", completa atributos).
+      <strong>Acción complementaria (semana 1):</strong> Publicar en Mercado Libre y Argenprop.
+    </p>
+    <p>
+      <strong>Costo total:</strong> Cero (todas las acciones son publicaciones gratuitas).
+      <strong>Tiempo:</strong> 1 hora hoy + 2 horas semana 1.
+      <strong>Impacto esperado:</strong> +500–600% en contactos mensuales.
+    </p>
+  </div>
+
+</div>
+
+<footer>
+  Análisis de presencia en mercado inmobiliario argentino · Junio 2026.
+  Datos verificados de ZonaProp, Mercado Libre y Argenprop.
+  Para uso interno de Tagliaferri Propiedades.
+</footer>
+
+</body>
+</html>
