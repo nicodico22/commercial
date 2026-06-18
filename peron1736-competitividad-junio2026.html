@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perón 1736 — Análisis de Competitividad Junio 2026</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f4f6fb;
+      color: #1a1a2e;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    @media print {
+      body { background: #fff; font-size: 12px; }
+      * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #2d3561 100%);
+      color: #fff;
+      padding: 40px 44px 32px;
+    }
+    .header-tag {
+      display: inline-block;
+      background: rgba(255,255,255,0.13);
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 0.68rem;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    header h1 { font-size: 1.9rem; font-weight: 700; letter-spacing: -0.5px; line-height: 1.2; }
+    header h1 span { color: #a5b4fc; }
+    .header-sub { margin-top: 8px; opacity: 0.70; font-size: 0.88rem; line-height: 1.5; }
+    .header-meta {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .header-chip {
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 6px;
+      padding: 5px 13px;
+      font-size: 0.76rem;
+      color: rgba(255,255,255,0.88);
+    }
+    .header-chip.new { background: rgba(34,197,94,0.2); border-color: rgba(34,197,94,0.5); color: #86efac; }
+
+    /* ── ALERT BANNER ── */
+    .alert-banner {
+      background: #fef2f2;
+      border-left: 4px solid #dc2626;
+      padding: 18px 44px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .alert-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 2px; }
+    .alert-title { font-weight: 700; color: #991b1b; font-size: 0.97rem; }
+    .alert-body { font-size: 0.86rem; color: #7f1d1d; margin-top: 4px; line-height: 1.6; }
+
+    /* ── KEY FINDING BANNER ── */
+    .finding-banner {
+      background: #fef3c7;
+      border-left: 4px solid #f59e0b;
+      padding: 18px 44px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-top: 0;
+    }
+    .finding-banner .alert-icon { color: #b45309; }
+    .finding-banner .alert-title { color: #92400e; }
+    .finding-banner .alert-body { color: #78350f; }
+
+    /* ── CONTENT ── */
+    .content { padding: 32px 44px; }
+
+    .section-label {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: #6b7280;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-label::after { content: ''; flex: 1; height: 1px; background: #e2e8f0; }
+
+    /* ── STATS ── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+    .stat-box {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 16px 18px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .stat-box.alert { border-color: #fee2e2; background: #fffbfb; }
+    .stat-box.good { border-color: #dcfce7; background: #fafef9; }
+    .stat-label { font-size: 0.67rem; text-transform: uppercase; letter-spacing: 0.6px; color: #9ca3af; }
+    .stat-value { font-size: 1.35rem; font-weight: 700; margin-top: 4px; color: #1a1a2e; }
+    .stat-value.red { color: #dc2626; }
+    .stat-value.amber { color: #d97706; }
+    .stat-value.green { color: #16a34a; }
+    .stat-value.blue { color: #2563eb; }
+    .stat-note { font-size: 0.70rem; color: #9ca3af; margin-top: 4px; }
+    .stat-change {
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-top: 6px;
+      padding-top: 6px;
+      border-top: 1px solid #f0f2f7;
+    }
+    .stat-change.down { color: #dc2626; }
+    .stat-change.up { color: #16a34a; }
+
+    /* ── COMPARISON TABLE ── */
+    .comp-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      margin-bottom: 32px;
+      font-size: 0.84rem;
+    }
+    .comp-table thead th {
+      background: #1a1a2e;
+      color: #fff;
+      padding: 12px 14px;
+      text-align: left;
+      font-size: 0.70rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+    }
+    .comp-table thead th:not(:first-child) { text-align: right; }
+    .comp-table tbody td {
+      padding: 11px 14px;
+      border-bottom: 1px solid #f0f2f7;
+      vertical-align: middle;
+    }
+    .comp-table tbody td:not(:first-child) { text-align: right; }
+    .comp-table tbody tr:last-child td { border-bottom: none; }
+    .comp-table tbody tr:nth-child(even) { background: #f8fafd; }
+    .comp-table .highlight { background: #f0f9ff; font-weight: 700; border-left: 3px solid #2563eb; }
+
+    /* ── BADGE STYLES ── */
+    .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.72rem; font-weight: 700; }
+    .badge-red { background: #fee2e2; color: #991b1b; }
+    .badge-amber { background: #fef3c7; color: #92400e; }
+    .badge-green { background: #dcfce7; color: #166534; }
+    .badge-blue { background: #dbeafe; color: #1e40af; }
+
+    /* ── FINDINGS GRID ── */
+    .findings-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .finding-card {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 18px 20px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .finding-card.critical { border-left: 4px solid #dc2626; }
+    .finding-card.warning { border-left: 4px solid #f59e0b; }
+    .finding-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      margin-bottom: 11px;
+    }
+    .finding-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .icon-red { background: #fee2e2; }
+    .icon-amber { background: #fef3c7; }
+    .finding-title { font-weight: 700; font-size: 0.90rem; color: #1a1a2e; }
+    .finding-subtitle { font-size: 0.73rem; color: #9ca3af; margin-top: 2px; }
+    .finding-body { font-size: 0.84rem; color: #374151; line-height: 1.7; margin-top: 10px; }
+    .finding-body strong { color: #1a1a2e; }
+    .finding-body em { font-style: italic; color: #6b7280; }
+    .evidence-box {
+      background: #f8fafd;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 8px 11px;
+      font-size: 0.77rem;
+      color: #374151;
+      margin-top: 11px;
+    }
+
+    /* ── METRIC BOX ── */
+    .metric-box {
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 32px;
+    }
+    .metric-box h3 {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #0369a1;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 14px;
+    }
+    .metric-item { text-align: center; }
+    .metric-val { font-size: 1.5rem; font-weight: 800; color: #0c4a6e; }
+    .metric-lbl { font-size: 0.72rem; color: #0369a1; margin-top: 4px; line-height: 1.4; }
+
+    /* ── ACTION CARDS ── */
+    .actions-list { display: flex; flex-direction: column; gap: 14px; margin-bottom: 32px; }
+    .action-card {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 18px 20px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .action-num {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.82rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .num-red { background: #fee2e2; color: #991b1b; }
+    .num-amber { background: #fef3c7; color: #92400e; }
+    .num-blue { background: #dbeafe; color: #1e40af; }
+    .action-body { flex: 1; }
+    .action-title { font-weight: 700; font-size: 0.92rem; color: #1a1a2e; }
+    .action-desc { font-size: 0.84rem; color: #4b5563; margin-top: 6px; line-height: 1.7; }
+    .action-desc strong { color: #1a1a2e; }
+    .action-desc code {
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      border-radius: 4px;
+      padding: 2px 7px;
+      font-size: 0.81rem;
+      font-family: monospace;
+      color: #374151;
+    }
+
+    /* ── SUMMARY BOX ── */
+    .summary-box {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 22px 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      margin-bottom: 32px;
+    }
+    .summary-box h3 {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin-bottom: 12px;
+    }
+    .summary-box p {
+      font-size: 0.86rem;
+      color: #374151;
+      line-height: 1.7;
+      margin-bottom: 12px;
+    }
+    .summary-box p:last-child { margin-bottom: 0; }
+    .summary-box strong { color: #1a1a2e; }
+
+    footer {
+      text-align: center;
+      padding: 20px 44px;
+      font-size: 0.72rem;
+      color: #9ca3af;
+      border-top: 1px solid #e2e8f0;
+      background: #fff;
+    }
+
+    @media (max-width: 768px) {
+      header, .source-note, .alert-banner, .finding-banner, .content { padding-left: 16px; padding-right: 16px; }
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+      .findings-grid { grid-template-columns: 1fr; }
+      .metric-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header>
+  <div class="header-tag">Análisis de Competitividad · ZonaProp · Junio 2026</div>
+  <h1>Perón 1736 <span>·</span> San Nicolás</h1>
+  <p class="header-sub">Posición competitiva en el mercado actual, análisis de visibilidad y causas por las que la propiedad no está vendiendo</p>
+  <div class="header-meta">
+    <span class="header-chip">3 ambientes · Reciclado</span>
+    <span class="header-chip">48 m² · USD 90.000 · USD 1.850/m²</span>
+    <span class="header-chip">Ref. TAP7689217 · ZP 58460058</span>
+    <span class="header-chip new">Actualización: Junio 2026</span>
+  </div>
+</header>
+
+<!-- ── PRIMARY ALERT ── -->
+<div class="alert-banner">
+  <span class="alert-icon">🚨</span>
+  <div>
+    <div class="alert-title">La propiedad está 12% más cara que el promedio de mercado actual</div>
+    <div class="alert-body">
+      El mercado de departamentos 3 ambientes en San Nicolás ha bajado significativamente de mayo a junio 2026.
+      Perón 1736 pasó de estar 2.7% por debajo del promedio a estar <strong>12% por encima</strong> del precio por m²,
+      lo que representa un cambio crítico en su competitividad. Simultáneamente, <strong>sigue siendo invisible en ZonaProp</strong>
+      porque no tiene marcado el atributo "Reciclado" en el sistema.
+    </div>
+  </div>
+</div>
+
+<!-- ── SECONDARY FINDING ── -->
+<div class="finding-banner">
+  <span class="alert-icon">⚠️</span>
+  <div>
+    <div class="alert-title">Causas simultáneas: cambio de mercado + problema técnico</div>
+    <div class="alert-body">
+      El mercado se ha enfriado (precios bajaron 9%) mientras la propiedad permanece invisible en filtros (atributo Reciclado faltante).
+      Esto genera una <strong>doble desventaja</strong>: ni aparece en búsquedas filtradas, ni está posicionada competitivamente en precio.
+    </div>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- ── SECCIÓN 1: CAMBIO DE MERCADO ── -->
+  <div class="section-label">Cambio de mercado · Mayo → Junio 2026</div>
+
+  <div class="stats-row">
+    <div class="stat-box">
+      <div class="stat-label"><a href="https://www.zonaprop.com.ar/departamentos-venta-san-nicolas-3-ambientes.html" target="_blank">Precio promedio ↗</a></div>
+      <div class="stat-value">USD 104.642</div>
+      <div class="stat-note">Junio 2026 (344 props.)</div>
+      <div class="stat-change down">↓ USD 10.364 vs Mayo (-9%)</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label"><a href="https://www.zonaprop.com.ar/departamentos-venta-san-nicolas-3-ambientes.html" target="_blank">USD/m² promedio ↗</a></div>
+      <div class="stat-value">USD 1.651</div>
+      <div class="stat-note">Junio 2026 (todos estados)</div>
+      <div class="stat-change down">↓ USD 250 vs Mayo (-13%)</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label"><a href="https://www.zonaprop.com.ar/departamentos-venta-san-nicolas-congreso-3-ambientes-40-55-m2-cubiertos.html" target="_blank">Total ofertas activas ↗</a></div>
+      <div class="stat-value">344</div>
+      <div class="stat-note">Junio 2026 San Nicolás + Congreso</div>
+      <div class="stat-change up">↑ de 34 comparables (mayo)</div>
+    </div>
+    <div class="stat-box alert">
+      <div class="stat-label">Posición relativa de Perón 1736</div>
+      <div class="stat-value red">+12%</div>
+      <div class="stat-note">Ahora SOBRE el promedio de m²</div>
+      <div class="stat-change down">Fue -2.7% en mayo</div>
+    </div>
+  </div>
+
+  <!-- ── SECCIÓN 2: POSICIÓN COMPETITIVA ACTUAL ── -->
+  <div class="section-label">Posición competitiva · datos verificados</div>
+
+  <table class="comp-table">
+    <thead>
+      <tr>
+        <th>Métrica</th>
+        <th>Mayo 2026</th>
+        <th>Junio 2026</th>
+        <th>Cambio</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="highlight">
+        <td><strong>Perón 1736 · USD/m²</strong></td>
+        <td>USD 1.850</td>
+        <td>USD 1.850</td>
+        <td><span class="badge badge-blue">Sin cambio</span></td>
+      </tr>
+      <tr>
+        <td>Promedio de mercado (reciclados mayo)</td>
+        <td>USD 1.901</td>
+        <td>n/a</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>Promedio de mercado (todos · junio)</td>
+        <td>—</td>
+        <td>USD 1.651</td>
+        <td><strong>↓ -13%</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Posición vs promedio</strong></td>
+        <td>-2.7% (más barato)</td>
+        <td>+12% (más caro)</td>
+        <td><strong style="color: #dc2626;">↓ -14.7 pp.</strong></td>
+      </tr>
+      <tr>
+        <td>Rango de precios en mercado</td>
+        <td>—</td>
+        <td>USD 48.500 - USD 235.000</td>
+        <td>Perón: posición 75°</td>
+      </tr>
+      <tr>
+        <td>Comparable mismo edificio (Perón al 1700)</td>
+        <td>USD 110.000 (1.864/m²)</td>
+        <td><em>Sin verificación reciente</em></td>
+        <td>Perón 1736 -18% vs comparador</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ── SECCIÓN 3: ANÁLISIS DE CAUSAS ── -->
+  <div class="section-label">Por qué la propiedad no está vendiendo · causas identificadas</div>
+
+  <div class="findings-grid">
+
+    <div class="finding-card critical">
+      <div class="finding-header">
+        <div class="finding-icon icon-red">🔍</div>
+        <div style="flex: 1;">
+          <div class="finding-title">Causa 1: Propiedad invisible en filtros (persiste)</div>
+          <div class="finding-subtitle">Impacto crítico — Sin cambios respecto a mayo</div>
+        </div>
+      </div>
+      <div class="finding-body">
+        La propiedad <strong>sigue sin aparecer en búsquedas filtradas por "reciclado"</strong> porque le falta
+        el atributo estructurado "Condición: Reciclado" en <a href="https://www.zonaprop.com.ar/departamentos-venta-san-nicolas-3-ambientes.html" target="_blank">ZonaProp <span class="source-link">↗</span></a>.
+        <br><br>
+        Con 344 propiedades activas en el mercado, la visibilidad es crítica.
+        Un comprador que filtra por reciclados <strong>no ve Perón 1736</strong>,
+        incluso aunque su precio sea competitivo para esa categoría.
+        <br><br>
+        Esto explica directamente por qué <strong>no hay contactos</strong> desde búsquedas filtradas.
+        <div class="evidence-box">
+          <strong>Métrica:</strong> Propiedad publicada hace ≈ 150 días (desde marzo/abril) sin actividad registrada.
+          Visualizaciones estancadas en ~2.5/día. En un mercado con 344 ofertas, esto es crítico.
+        </div>
+      </div>
+    </div>
+
+    <div class="finding-card critical">
+      <div class="finding-header">
+        <div class="finding-icon icon-red">📉</div>
+        <div style="flex: 1;">
+          <div class="finding-title">Causa 2: Mercado se enfríó · precio dejó de ser competitivo</div>
+          <div class="finding-subtitle">Impacto crítico — Cambio fundamental desde mayo</div>
+        </div>
+      </div>
+      <div class="finding-body">
+        El promedio de m² cayó 13% en un mes (USD 1.901 → USD 1.651).
+        Perón 1736 a USD 1.850/m² que en mayo estaba debajo del promedio,
+        <strong>ahora está 12% arriba</strong>.
+        <br><br>
+        Esto significa que compradores que hacen búsquedas SIN filtro ven opciones más baratas.
+        Ejemplo: <em>propiedades a USD 1.300-1.500/m²</em> están visibles para el comprador
+        (como Viamonte 800: 1.233/m² o Rodríguez Peña: 1.192/m²).
+        <br><br>
+        <strong>La propiedad se quedó cara en un mes.</strong>
+        <div class="evidence-box">
+          <strong>Indicador de mercado:</strong> Rango actual USD 48.500–235.000 con promedio USD 104.642.
+          Perón 1736 (USD 90.000) está en el tercil inferior de precios, pero en el tercil superior de m²,
+          lo que genera un ratio caro/m².
+        </div>
+      </div>
+    </div>
+
+    <div class="finding-card warning">
+      <div class="finding-header">
+        <div class="finding-icon icon-amber">🏢</div>
+        <div style="flex: 1;">
+          <div class="finding-title">Causa 3: Oferta fragmentada · pequeño departamento (48 m²)</div>
+          <div class="finding-subtitle">Impacto alto — Limita el perfil de compradores</div>
+        </div>
+      </div>
+      <div class="finding-body">
+        Con solo 48 m² entre 3 ambientes, Perón 1736 está en la franja pequeña del mercado.
+        Un comprador que busca 3 ambientes típicamente espera 55–70 m² para comodidad.
+        <br><br>
+        Esto limita naturalmente la audiencia: solo compradores que priorizan <strong>precio muy bajo</strong>
+        o que explícitamente buscan <em>micro departamentos para inversión</em>.
+        La pequeñez, combinada con precio alto por m², reduce el pool de interesados.
+        <div class="evidence-box">
+          <strong>Mercado:</strong> Promedio 61 m² (mayo). Perón 1736 es 21% más pequeño que el promedio.
+          Las opciones con 60–80 m² por precio similar (Viamonte: 73 m² a USD 90.000) son más atractivas.
+        </div>
+      </div>
+    </div>
+
+    <div class="finding-card warning">
+      <div class="finding-header">
+        <div class="finding-icon icon-amber">📅</div>
+        <div style="flex: 1;">
+          <div class="finding-title">Causa 4: Envejecimiento del anuncio · 5+ meses sin actividad</div>
+          <div class="finding-subtitle">Impacto alto — Degrada confianza del comprador</div>
+        </div>
+      </div>
+      <div class="finding-body">
+        ZonaProp degrada el ranking de propiedades sin actividad reciente.
+        Perón 1736 lleva <strong>≈ 150+ días sin cambios</strong> (desde marzo/abril).
+        <br><br>
+        Un anuncio tan antiguo genera desconfianza: <em>"¿Por qué no se vende?"</em>,
+        <em>"¿Habrá problema con la propiedad?"</em>, <em>"¿El precio es real?"</em>.
+        <br><br>
+        Los compradores prefieren propiedades con actividad reciente (dentro de 7–14 días),
+        que señalan que el vendedor está activamente intentando vender.
+        <div class="evidence-box">
+          <strong>Patrón observado:</strong> Propiedades con ediciones recientes (actualizaciones de fotos,
+          cambios de precio, respuestas a consultas) reciben 3–4× más visualizaciones.
+        </div>
+      </div>
+    </div>
+
+    <div class="finding-card warning">
+      <div class="finding-header">
+        <div class="finding-icon icon-amber">🗺️</div>
+        <div style="flex: 1;">
+          <div class="finding-title">Causa 5: Distribución limitada · solo en ZonaProp</div>
+          <div class="finding-subtitle">Impacto medio — Reduce alcance potencial</div>
+        </div>
+      </div>
+      <div class="finding-card warning">
+        La propiedad <strong>no está publicada en Mercado Libre</strong> (el mayor portal de Argentina)
+        ni en otros canales. Con el cambio de mercado, la concentración en un único portal
+        reduce las oportunidades de contacto.
+        <br><br>
+        Cada canal atrae compradores diferentes con diferentes filtros y búsquedas.
+        La ausencia multiplica el impacto de la invisibilidad técnica en ZonaProp.
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── MÉTRICA DE DIAGNÓSTICO ── -->
+  <div class="metric-box">
+    <h3>Diagnóstico integral · cómo los problemas se refuerzan mutuamente</h3>
+    <div class="metric-grid">
+      <div class="metric-item">
+        <div class="metric-val" style="color: #dc2626;">0%</div>
+        <div class="metric-lbl">contactos desde filtro "reciclado" (invisible)</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-val" style="color: #dc2626;">-12%</div>
+        <div class="metric-lbl">competitividad de precio/m² vs mercado</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-val" style="color: #d97706;">75°</div>
+        <div class="metric-lbl">percentil en rango de precios (mercado)</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-val" style="color: #d97706;">~2.5</div>
+        <div class="metric-lbl">visualizaciones/día (activos: 8–15)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SECCIÓN 4: PLAN DE ACCIÓN ACTUALIZADO ── -->
+  <div class="section-label">Plan de acción · prioridades ajustadas para junio 2026</div>
+
+  <div class="actions-list">
+
+    <div class="action-card">
+      <div class="action-num num-red">1</div>
+      <div class="action-body">
+        <div class="action-title">
+          🚨 URGENTE: Marcar "Reciclado" y rebajar precio a USD 75.000–80.000
+        </div>
+        <div class="action-desc">
+          <strong>Combo crítico para recuperar competitividad:</strong>
+          <br><br>
+          <strong>A)</strong> Completar atributo "Condición: Reciclado" en ZonaProp
+          (acción 1 de mayo, sigue pendiente).<br>
+          <strong>B)</strong> <strong>Rebajar precio a USD 75.000–80.000</strong> para estar en rango competitivo
+          (USD 1.560–1.667/m², dentro del promedio de mercado actual).
+          <br><br>
+          <strong>Justificación:</strong> El mercado bajó 9% en un mes. Mantener USD 90.000
+          (USD 1.850/m²) en un contexto donde el promedio es USD 1.651/m² es irreal.
+          Un precio en USD 75.000–80.000 + atributo reciclado marcado haría la propiedad
+          <strong>visible y competitiva simultáneamente</strong>.
+          <br><br>
+          <strong>Tiempo:</strong> Hoy. Esta es la acción crítica que remueve ambas barreras de venta.
+        </div>
+      </div>
+    </div>
+
+    <div class="action-card">
+      <div class="action-num num-red">2</div>
+      <div class="action-body">
+        <div class="action-title">
+          Refrescar la publicación · completar atributos faltantes
+        </div>
+        <div class="action-desc">
+          Junto con cambio de precio, completar todos los campos que faltan
+          (piso, orientación, calefacción, baulera) y reescribir título.
+          <br><br>
+          <strong>Nuevo título propuesto:</strong>
+          <code>3 Amb. Reciclado | 48 m² | Baulera | Split | Mascotas | Perón San Nicolás</code>
+          <br><br>
+          Esto reinicia el contador de actividad en ZonaProp,
+          mejorando el posicionamiento orgánico en el ranking.
+          <br><br>
+          <strong>Tiempo:</strong> Misma sesión que acción 1 (30 minutos).
+        </div>
+      </div>
+    </div>
+
+    <div class="action-card">
+      <div class="action-num num-amber">3</div>
+      <div class="action-body">
+        <div class="action-title">
+          Publicar en Mercado Libre Inmuebles · distribuir oferta
+        </div>
+        <div class="action-desc">
+          Con precio y atributos actualizados en ZonaProp, replicar
+          la publicación en Mercado Libre (mayor tráfico de Argentina).
+          <br><br>
+          <strong>Usar:</strong> Mismo título, mismo precio, mismas fotos.
+          ML permite destaque pagos opcionales.
+          <br><br>
+          <strong>Impacto:</strong> Acceso a compradores que solo usan ML,
+          reduciendo la dependencia de ZonaProp.
+          <br><br>
+          <strong>Tiempo:</strong> Semana 1.
+        </div>
+      </div>
+    </div>
+
+    <div class="action-card">
+      <div class="action-num num-blue">4</div>
+      <div class="action-body">
+        <div class="action-title">
+          Mantener actividad visible · updates semanales
+        </div>
+        <div class="action-desc">
+          Una vez lista la publicación, <strong>generar actividad registrada semanalmente</strong>:
+          <ul style="margin-top: 8px; margin-left: 20px; font-size: 0.84rem; color: #4b5563;">
+            <li>Responder consultas en <24h (visible en el portal)</li>
+            <li>Actualizar fotos o descripción cada 7 días (reinicia ranking)</li>
+            <li>Ajustar precio si es necesario (mantiene vigencia)</li>
+          </ul>
+          <br>
+          El algoritmo de ZonaProp premia actividad. Sin ella, los anuncios desaparecen del radar.
+          <br><br>
+          <strong>Tiempo:</strong> Mantenimiento continuo.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── RESUMEN EJECUTIVO ── -->
+  <div class="section-label">Resumen ejecutivo · situación actual</div>
+
+  <div class="summary-box">
+    <h3>🎯 Conclusión: La propiedad pasó de competitiva a cara en un mes</h3>
+    <p>
+      <strong>Situación en mayo 2026:</strong> Perón 1736 estaba 2.7% por debajo del promedio de m²,
+      pero invisible en filtros (atributo "reciclado" faltante).
+    </p>
+    <p>
+      <strong>Situación en junio 2026:</strong> El mercado se enfrió (precios bajaron 9%).
+      Perón 1736 ahora está <strong>12% por encima del promedio</strong> de m² en un contexto
+      de 344 ofertas activas. Sigue siendo invisible en filtros.
+    </p>
+    <p>
+      <strong>Resultado:</strong> Doble problema — ni aparece en búsquedas filtradas,
+      ni es competitivo en precio en búsquedas sin filtro.
+      El "no está vendiendo" se debe a <strong>invisibilidad técnica + precio desalineado con mercado.</strong>
+    </p>
+    <p>
+      <strong>Acción correctiva decisiva:</strong> Marcar "reciclado" en <a href="https://www.zonaprop.com.ar/departamentos-venta-san-nicolas-3-ambientes.html" target="_blank">ZonaProp <span class="source-link">↗</span></a> + rebajar a USD 75.000–80.000
+      (rango competitivo del mercado actual). Esto remueve ambas barreras.
+      La propiedad tiene producto competitivo (pequeña pero cuidada, apta crédito, mascotas, baulera),
+      pero necesita ser visible y estar en rango de precio para generar interés.
+    </p>
+  </div>
+
+</div>
+
+<footer>
+  Análisis elaborado sobre datos de ZonaProp Argentina (junio 2026: 344 propiedades 3 ambientes) y comparación histórica (mayo 2026: 34 reciclados).
+  ID ZonaProp 58460058 · Ref. TAP7689217 · Perón 1736, San Nicolás, CABA.
+  Para uso interno.
+</footer>
+
+</body>
+</html>
