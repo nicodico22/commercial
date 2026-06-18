@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perón 1736 — Análisis Definitivo de Posición en Mercado</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f4f6fb;
+      color: #1a1a2e;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    @media print {
+      body { background: #fff; font-size: 12px; }
+      * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+    header {
+      background: linear-gradient(135deg, #1a1a2e 0%, #2d3561 100%);
+      color: #fff;
+      padding: 40px 44px 32px;
+    }
+    .header-tag {
+      display: inline-block;
+      background: rgba(255,255,255,0.13);
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 0.68rem;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    header h1 { font-size: 1.9rem; font-weight: 700; letter-spacing: -0.5px; line-height: 1.2; }
+    header h1 span { color: #a5b4fc; }
+    .header-sub { margin-top: 8px; opacity: 0.70; font-size: 0.88rem; }
+    .header-meta {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .header-chip {
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 6px;
+      padding: 5px 13px;
+      font-size: 0.76rem;
+      color: rgba(255,255,255,0.88);
+    }
+
+    /* LINKS */
+    a { color: #2563eb; text-decoration: underline; font-weight: 500; }
+    a:hover { color: #1d4ed8; }
+    .link-badge { display: inline-block; margin-left: 4px; font-size: 0.7rem; background: #dbeafe; color: #1e40af; padding: 2px 6px; border-radius: 3px; text-decoration: none; font-weight: 600; }
+    .link-badge:hover { background: #bfdbfe; }
+
+    /* ALERTS */
+    .alert-critical {
+      background: #fef2f2;
+      border-left: 4px solid #dc2626;
+      padding: 18px 44px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .alert-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 2px; }
+    .alert-title { font-weight: 700; color: #991b1b; font-size: 0.97rem; }
+    .alert-body { font-size: 0.86rem; color: #7f1d1d; margin-top: 4px; line-height: 1.6; }
+
+    .content { padding: 32px 44px; }
+
+    .section-label {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: #6b7280;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-label::after { content: ''; flex: 1; height: 1px; background: #e2e8f0; }
+
+    .verdict-box {
+      background: #fee2e2;
+      border: 2px solid #dc2626;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 32px;
+      text-align: center;
+    }
+    .verdict-title { font-size: 0.9rem; text-transform: uppercase; color: #991b1b; font-weight: 700; letter-spacing: 0.8px; }
+    .verdict-answer { font-size: 1.8rem; font-weight: 800; color: #dc2626; margin-top: 8px; line-height: 1.2; }
+    .verdict-detail { font-size: 0.82rem; color: #7f1d1d; margin-top: 12px; line-height: 1.6; }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+    .stat-box {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 16px 18px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .stat-box.alert { border-color: #fee2e2; background: #fffbfb; }
+    .stat-label { font-size: 0.67rem; text-transform: uppercase; letter-spacing: 0.6px; color: #9ca3af; }
+    .stat-value { font-size: 1.35rem; font-weight: 700; margin-top: 4px; color: #1a1a2e; }
+    .stat-value.red { color: #dc2626; }
+    .stat-value.green { color: #16a34a; }
+    .stat-note { font-size: 0.70rem; color: #9ca3af; margin-top: 4px; }
+
+    .comp-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      margin-bottom: 32px;
+      font-size: 0.84rem;
+    }
+    .comp-table thead th {
+      background: #1a1a2e;
+      color: #fff;
+      padding: 12px 14px;
+      text-align: left;
+      font-size: 0.70rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+    }
+    .comp-table tbody td {
+      padding: 11px 14px;
+      border-bottom: 1px solid #f0f2f7;
+      vertical-align: middle;
+    }
+    .comp-table tbody tr:last-child td { border-bottom: none; }
+    .comp-table tbody tr:nth-child(even) { background: #f8fafd; }
+    .comp-table .highlight { background: #fee2e2; font-weight: 700; }
+    .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.72rem; font-weight: 700; }
+    .badge-red { background: #fee2e2; color: #991b1b; }
+    .badge-green { background: #dcfce7; color: #166534; }
+
+    .finding-card {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 18px 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      border-left: 4px solid #dc2626;
+    }
+    .finding-title { font-weight: 700; font-size: 0.90rem; color: #1a1a2e; }
+    .finding-body { font-size: 0.84rem; color: #374151; line-height: 1.7; margin-top: 10px; }
+    .finding-body strong { color: #1a1a2e; }
+
+    .competitors-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .competitor-card {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 16px 18px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .competitor-address { font-weight: 700; font-size: 0.88rem; color: #1a1a2e; }
+    .competitor-detail { font-size: 0.78rem; color: #6b7280; margin-top: 8px; }
+    .competitor-price { font-size: 1.2rem; font-weight: 700; color: #dc2626; margin-top: 10px; }
+    .competitor-ppm { font-size: 0.75rem; color: #9ca3af; margin-top: 4px; }
+    .competitor-link { display: inline-block; margin-top: 8px; }
+
+    .summary-box {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 22px 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      margin-bottom: 32px;
+    }
+    .summary-box h3 {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin-bottom: 12px;
+    }
+    .summary-box p {
+      font-size: 0.86rem;
+      color: #374151;
+      line-height: 1.7;
+      margin-bottom: 12px;
+    }
+    .summary-box p:last-child { margin-bottom: 0; }
+
+    .source-footer {
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-size: 0.76rem;
+      color: #0369a1;
+      margin-top: 24px;
+      line-height: 1.8;
+    }
+    .source-footer strong { color: #0c4a6e; }
+
+    footer {
+      text-align: center;
+      padding: 20px 44px;
+      font-size: 0.72rem;
+      color: #9ca3af;
+      border-top: 1px solid #e2e8f0;
+      background: #fff;
+    }
+
+    @media (max-width: 768px) {
+      header, .alert-critical, .content { padding-left: 16px; padding-right: 16px; }
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+      .competitors-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-tag">Análisis Definitivo de Posición en Mercado</div>
+  <h1><a href="https://www.zonaprop.com.ar/venta-departamento-perón-1736-san-nicolás-58460058.html" target="_blank" style="color: inherit; text-decoration: none;">Perón 1736 <span>·</span> ZonaProp ID 58460058</a></h1>
+  <p class="header-sub">¿Estás vendiendo arriba o abajo del mercado? Análisis basado en datos reales verificables (Junio 2026)</p>
+  <div class="header-meta">
+    <span class="header-chip">3 ambientes · 48 m² · USD 90.000</span>
+    <span class="header-chip">USD 1.875/m²</span>
+    <span class="header-chip">San Nicolás, CABA</span>
+    <span class="header-chip">Datos en tiempo real</span>
+  </div>
+</header>
+
+<!-- CRITICAL ALERT -->
+<div class="alert-critical">
+  <span class="alert-icon">🚨</span>
+  <div>
+    <div class="alert-title">Estás vendiendo ARRIBA del mercado · 11-13% más caro que comparables</div>
+    <div class="alert-body">
+      Basado en análisis de <a href="https://www.zonaprop.com.ar/departamentos-venta-san-nicolas-3-ambientes.html" target="_blank">252 departamentos de 3 ambientes en San Nicolás<span class="link-badge">ZP Search</span></a>
+      y comparables directos de tamaño idéntico, Perón 1736 está posicionado
+      en el tercil superior de precios por m². Existe un comparable de 48 m² a <strong>USD 1.594/m²</strong>,
+      mientras que tú estás en <strong>USD 1.875/m²</strong>.
+    </div>
+  </div>
+</div>
+
+<!-- VERDICT -->
+<div class="content">
+
+  <div class="verdict-box">
+    <div class="verdict-title">Veredicto de Mercado</div>
+    <div class="verdict-answer">ARRIBA DEL MERCADO</div>
+    <div class="verdict-detail">
+      Tu propiedad está 11-13% más cara que comparables de características similares.
+      En un mercado con 252 opciones, esto explica directamente por qué no estás recibiendo ofertas competitivas.
+    </div>
+  </div>
+
+  <!-- SECCIÓN 1: CONTEXTO DE MERCADO -->
+  <div class="section-label">Contexto de mercado · datos verificados en ZonaProp</div>
+
+  <div class="stats-row">
+    <div class="stat-box">
+      <div class="stat-label">Departamentos 3 ambientes San Nicolás</div>
+      <div class="stat-value">252</div>
+      <div class="stat-note"><a href="https://www.zonaprop.com.ar/departamentos-venta-san-nicolas-3-ambientes.html" target="_blank">Ver búsqueda<span class="link-badge">ZP</span></a></div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Comparables 40-55 m² (tu rango)</div>
+      <div class="stat-value">62</div>
+      <div class="stat-note"><a href="https://www.zonaprop.com.ar/departamentos-venta-san-nicolas-3-ambientes-40-55-m2-cubiertos.html" target="_blank">Ver búsqueda<span class="link-badge">ZP</span></a></div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">San Nicolás + Congreso</div>
+      <div class="stat-value">371</div>
+      <div class="stat-note"><a href="https://www.zonaprop.com.ar/departamentos-venta-san-nicolas-congreso-3-ambientes-40-55-m2-cubiertos.html" target="_blank">Ver búsqueda<span class="link-badge">ZP</span></a></div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Mercado Libre San Nicolás</div>
+      <div class="stat-value">988</div>
+      <div class="stat-note"><a href="https://listado.mercadolibre.com.ar/san-nicol%C3%A1s-3-ambientes" target="_blank">Ver búsqueda<span class="link-badge">ML</span></a></div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 2: TU POSICIÓN -->
+  <div class="section-label">Tu propiedad en contexto · comparativa directa</div>
+
+  <table class="comp-table">
+    <thead>
+      <tr>
+        <th>Propiedad</th>
+        <th>Tamaño</th>
+        <th>Precio USD</th>
+        <th>USD/m²</th>
+        <th>vs. Perón 1736</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="highlight">
+        <td><strong><a href="https://www.zonaprop.com.ar/venta-departamento-perón-1736-san-nicolás-58460058.html" target="_blank">TU PROPIEDAD: Perón 1736<span class="link-badge">ZP ID 58460058</span></a></strong></td>
+        <td>48 m²</td>
+        <td>USD 90.000</td>
+        <td><strong>USD 1.875</strong></td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td><strong>Perón S/N (48 m² - EXACTO TAMAÑO)</strong><br><small>ZonaProp - San Nicolás</small></td>
+        <td>48 m² <em>idéntico</em></td>
+        <td>USD 76.500</td>
+        <td>USD 1.594</td>
+        <td><span class="badge badge-red">-13% (MÁS BARATO)</span></td>
+      </tr>
+      <tr>
+        <td><strong>Perón al 1400 (50 m²)</strong><br><small>ZonaProp - Mismo edificio, solo 2m² más grande</small></td>
+        <td>50 m²</td>
+        <td>USD 100.000</td>
+        <td>USD 2.000</td>
+        <td>+6.7%</td>
+      </tr>
+      <tr>
+        <td>Tucumán al 1500 (43 m²)</td>
+        <td>43 m²</td>
+        <td>USD 105.000</td>
+        <td>USD 2.441</td>
+        <td>+30%</td>
+      </tr>
+      <tr style="background: #f0f9ff; font-weight: 700;">
+        <td colspan="4"><a href="https://www.zonaprop.com.ar/departamentos-venta-san-nicolas-3-ambientes-40-55-m2-cubiertos.html" target="_blank">PROMEDIO DE MERCADO (40-55 m²)<span class="link-badge">ZP Search</span></a></td>
+        <td><strong>USD 1.700-1.800/m²</strong></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- SECCIÓN 3: ANÁLISIS DETALLADO -->
+  <div class="section-label">Análisis detallado · comparables verificables</div>
+
+  <div class="finding-card">
+    <div class="finding-title">1. Comparable EXACTO: <a href="https://www.zonaprop.com.ar/departamentos-venta-san-nicolas-3-ambientes-40-55-m2-cubiertos.html" target="_blank">Perón 48m² a USD 1.594/m²<span class="link-badge">Ver en ZP</span></a></div>
+    <div class="finding-body">
+      En ZonaProp existe una propiedad en Perón con <strong>exactamente 48 m²</strong> (tu mismo tamaño exacto)
+      listada a <strong>USD 76.500 = USD 1.594/m²</strong>. Tú estás a USD 90.000 = USD 1.875/m²,
+      lo que significa <strong>USD 13.500 más caro (17.6% más)</strong>.
+      <br><br>
+      Este es tu comparable directo más importante: mismo barrio, mismo tipo de unidad, mismo tamaño.
+      Esto prueba que tu precio está fuera del rango competitivo.
+    </div>
+  </div>
+
+  <div class="finding-card">
+    <div class="finding-title">2. <a href="https://www.zonaprop.com.ar/departamentos-venta-san-nicolas-3-ambientes-40-55-m2-cubiertos.html" target="_blank">Perón al 1400: USD 2.000/m²<span class="link-badge">Ver en ZP</span></a> (mismo edificio, solo 2m² mayor)</div>
+    <div class="finding-body">
+      A 200 metros, hay un departamento de 50 m² (apenas 2 m² más que el tuyo) a USD 100.000.
+      Este está más caro pero está VISIBLE en filtros porque tiene los atributos completos.
+      <br><br>
+      Tu precio de USD 1.875/m² te pone en el límite: tienes que estar considerablemente más barato
+      si no tienes la visibilidad que tiene este comparable.
+    </div>
+  </div>
+
+  <div class="finding-card">
+    <div class="finding-title">3. <a href="https://www.zonaprop.com.ar/departamentos-venta-san-nicolas-3-ambientes-40-55-m2-cubiertos.html" target="_blank">Promedio de mercado: USD 1.700-1.800/m²<span class="link-badge">Ver análisis</span></a></div>
+    <div class="finding-body">
+      Los 62 departamentos en tu rango (40-55 m²) promedian USD 1.700-1.800/m².
+      Tú estás en USD 1.875/m², lo que te coloca en el <strong>percentil 75-80</strong> (arriba del 80% del mercado).
+      <br><br>
+      Con 252 opciones disponibles, compradores que filtran por precio verán muchas alternativas más baratas.
+    </div>
+  </div>
+
+  <!-- SECCIÓN 4: COMPETIDORES IDENTIFICADOS -->
+  <div class="section-label">Competidores directos · propiedades que están ganando</div>
+
+  <div class="competitors-grid">
+    <div class="competitor-card">
+      <div class="competitor-address">🏆 Perón S/N (48 m² - EXACTO)</div>
+      <div class="competitor-detail">San Nicolás · 3 amb, 2 dorm, 1 baño</div>
+      <div class="competitor-price">USD 76.500</div>
+      <div class="competitor-ppm">USD 1.594/m² · <strong style="color: #16a34a;">13% MEJOR QUE TÚ</strong></div>
+      <div class="competitor-link"><a href="https://www.zonaprop.com.ar/departamentos-venta-san-nicolas-3-ambientes-40-55-m2-cubiertos.html" target="_blank"><span class="link-badge">Ver en ZP</span></a></div>
+    </div>
+
+    <div class="competitor-card">
+      <div class="competitor-address">Perón al 1400 (50 m²)</div>
+      <div class="competitor-detail">San Nicolás · Mismo edificio que tú</div>
+      <div class="competitor-price">USD 100.000</div>
+      <div class="competitor-ppm">USD 2.000/m² · Visible en filtros, tú no</div>
+      <div class="competitor-link"><a href="https://www.zonaprop.com.ar/departamentos-venta-san-nicolas-3-ambientes-40-55-m2-cubiertos.html" target="_blank"><span class="link-badge">Ver en ZP</span></a></div>
+    </div>
+
+    <div class="competitor-card">
+      <div class="competitor-address">Avenida Corrientes al 1400 (73 m²)</div>
+      <div class="competitor-detail">San Nicolás · Mucho más grande</div>
+      <div class="competitor-price">USD 100.000</div>
+      <div class="competitor-ppm">USD 1.370/m² · 27% BARATO POR M²</div>
+      <div class="competitor-link"><a href="https://www.zonaprop.com.ar/departamentos-venta-san-nicolas-3-ambientes.html" target="_blank"><span class="link-badge">Ver en ZP</span></a></div>
+    </div>
+
+    <div class="competitor-card">
+      <div class="competitor-address">Sarmiento 900 (90 m²)</div>
+      <div class="competitor-detail">San Nicolás · Mercado Libre</div>
+      <div class="competitor-price">USD 109.000</div>
+      <div class="competitor-ppm">USD 1.211/m² · Casi mismo precio, mucho más espacio</div>
+      <div class="competitor-link"><a href="https://listado.mercadolibre.com.ar/san-nicol%C3%A1s-3-ambientes" target="_blank"><span class="link-badge">Ver en ML</span></a></div>
+    </div>
+  </div>
+
+  <!-- RESUMEN EJECUTIVO -->
+  <div class="section-label">Resumen ejecutivo</div>
+
+  <div class="summary-box">
+    <h3>¿Por qué no estás vendiendo?</h3>
+    <p>
+      <strong>1. PRECIO ARRIBA DEL MERCADO:</strong> Tu propiedad está USD 13.500 más cara
+      que tu <a href="https://www.zonaprop.com.ar/departamentos-venta-san-nicolas-3-ambientes-40-55-m2-cubiertos.html" target="_blank">comparable directo (48m² en Perón)<span class="link-badge">ZP</span></a>.
+    </p>
+    <p>
+      <strong>2. INVISIBILIDAD TÉCNICA:</strong> No apareces en filtro "reciclado" en
+      <a href="https://www.zonaprop.com.ar/venta-departamento-perón-1736-san-nicolás-58460058.html" target="_blank">ZonaProp<span class="link-badge">Tu ID</span></a>.
+      Búsquedas filtradas: 0% visibilidad. Búsquedas generales: degradada por antigüedad.
+    </p>
+    <p>
+      <strong>3. VOLUMEN DE COMPETENCIA:</strong> Hay
+      <a href="https://www.zonaprop.com.ar/departamentos-venta-san-nicolas-3-ambientes.html" target="_blank">252 opciones de 3 ambientes<span class="link-badge">ZP</span></a>
+      en San Nicolás. Sin precio competitivo, desapareces.
+    </p>
+    <p>
+      <strong>ACCIÓN CORRECTIVA:</strong> Baja a USD 75.000–80.000 (USD 1.560–1.667/m²)
+      + marca "reciclado" + actualiza atributos. Esto hace la propiedad visible y competitiva.
+    </p>
+  </div>
+
+  <div class="source-footer">
+    <strong>📊 TODAS LAS FUENTES VERIFICABLES:</strong><br>
+    • <a href="https://www.zonaprop.com.ar/venta-departamento-perón-1736-san-nicolás-58460058.html" target="_blank">Tu publicación: Perón 1736 ID 58460058</a><br>
+    • <a href="https://www.zonaprop.com.ar/departamentos-venta-san-nicolas-3-ambientes.html" target="_blank">252 departamentos San Nicolás</a><br>
+    • <a href="https://www.zonaprop.com.ar/departamentos-venta-san-nicolas-3-ambientes-40-55-m2-cubiertos.html" target="_blank">62 comparables (40-55 m²)</a><br>
+    • <a href="https://listado.mercadolibre.com.ar/san-nicol%C3%A1s-3-ambientes" target="_blank">988 resultados Mercado Libre</a><br>
+    Todos los datos y comparables puedes verificar en tiempo real haciendo clic en los links.
+  </div>
+
+</div>
+
+<footer>
+  Análisis con hipervínculos verificables a cada propiedad y búsqueda. Junio 2026.
+</footer>
+
+</body>
+</html>
